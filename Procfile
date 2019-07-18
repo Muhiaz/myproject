@@ -1,1 +1,1 @@
-web: gunicorn musicapp.wsgi --log-file -
+web: gunicorn codeigniter_register_email.wsgi --log-file -
