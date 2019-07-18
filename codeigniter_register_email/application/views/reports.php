@@ -8,79 +8,117 @@
     <meta name="keyword" content="Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal">
     <link rel="shortcut icon" href="../img/favicon.png">
     <title></title>
-    <script type='text/javascript' src='//ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js'></script>
-<script type="text/javascript" src="<?php echo base_url('js/dynamicpage.js');?>"></script>
-<style type="text/css">
-  /* Dropdown Button */
-.dropbtn {
-  background-color: #3498DB;
-  color: white;
-  padding: 10px;
-  font-size: 12px;
-  border: none;
-  cursor: pointer;
-}
-.dropbtn1 {
-  background-color: green;
-  color: white;
-  padding: 10px;
-  font-size: 12px;
-  border: none;
-  cursor: pointer;
-}
-/* Dropdown button on hover & focus */
-.dropbtn:hover, .dropbtn:focus {
-  background-color: #2980B9;
-}
-
-/* The container <div> - needed to position the dropdown content */
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-/* Dropdown Content (Hidden by Default) */
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f1f1f1;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
-
-/* Links inside the dropdown */
-.dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
-
-/* Change color of dropdown links on hover */
-.dropdown-content a:hover {background-color: #ddd}
-
-/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
-.show {display:block;}
-</style>
-<script type="text/javascript" src="<?php echo base_url('js/jquery.ba-hashchange.min.js');?>"></script>
-     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-     <link href="<?php echo base_url('css/main1.css');?>" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/bootstrap-theme.css" rel="stylesheet">
     <link href="../css/elegant-icons-style.css" rel="stylesheet" />
     <link href="../css/font-awesome.min.css" rel="stylesheet" />    
     <link href="../assets/fullcalendar/fullcalendar/bootstrap-fullcalendar.css" rel="stylesheet" />
-    <link href="../assets/fullcalendar/fullcalendar/fullcalendar.css" rel="stylesheet" />
+	<link href="../assets/fullcalendar/fullcalendar/fullcalendar.css" rel="stylesheet" />
     <link href="../assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css" media="screen"/>
     <link rel="stylesheet" href="../css/owl.carousel.css" type="text/css">
-    <link href="../css/jquery-jvectormap-1.2.2.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/fullcalendar.css">
-    <link href="../css/widgets.css" rel="stylesheet">
+	<link href="../css/jquery-jvectormap-1.2.2.css" rel="stylesheet">
+	<link rel="stylesheet" href="../css/fullcalendar.css">
+	<link href="../css/widgets.css" rel="stylesheet">
     <link href="../css/style1.css" rel="stylesheet">
     <link href="../css/style-responsive.css" rel="stylesheet" />
-    <link href="../css/xcharts.min.css" rel=" stylesheet">  
-    <link href="../css/jquery-ui-1.10.4.min.css" rel="stylesheet">
+	<link href="../css/xcharts.min.css" rel=" stylesheet">	
+	<link href="../css/jquery-ui-1.10.4.min.css" rel="stylesheet">
+  <style type="text/css">
+    .fa-casual{
+      font-color: #FFDF00;
+    }
+      .btnreport {
+  background-color: green;
+  color: white;
+  padding: 10px;
+  width: 100%;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+    .dropbtn {
+  background-color: #394a59;
+  height: 20px !important;
+  color: white;
+  font-weight: 300;
+  padding: 0px 98.5px 10px 10px;
+  width: 100%;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+.dropbtn1 {
+  background-color: #394a59;
+  height: 20px !important;
+  color: white;
+  font-weight: 300;
+  padding: 0px 50.5px 15px 10px;
+  width: 100%;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+.dropbtn2 {
+  background-color: #394a59;
+  height: 20px !important;
+  color: white;
+  font-weight: 300;
+  padding: 0px 75.5px 15px 10px;
+  width: 100%;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+.dropdown-content {
+  display: none;
+  position:relative;
+  margin-left: 100%;
+  background-color: #000000;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: #000;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1;}
+.dropdown:hover .dropdown-content {display: inline-block;float:right;}
+.dropdown:hover .dropbtn {background-color: #394a59;}
+.flex-container {
+  display: flex;
+  height: 300px;
+  justify-content: center;
+  align-items: center;
+}
+.items{
+	box-shadow: 5px 3px 5px 8px #888888;
+	border-radius: 5px;
+	height: 250px;
+	width: 250px;
+	margin:10px;
+}
+.fa-reports{
+	font-size: 50px;
+	text-align: center;
+	margin: 20px 70px 20px 70px;
+}
+.divbtn{
+	padding-bottom: 0px;
+}
+.divcontent{
+	margin: 10px;
+}
+  </style>
   </head>
   <body>
   <section id="container" class=""> 
@@ -89,7 +127,7 @@
                 <div class="icon-reorder tooltips" data-original-title="Toggle Navigation" data-placement="bottom"><i class="icon_menu"></i></div>
             </div>
             <a href="#" class="logo">RICH <span class="lite">TECH</span></a>
-            <div class="nav search-row" id="top_menu">
+             <div class="nav search-row" id="top_menu">
                 <!--  search form start -->
                 <ul class="nav top-menu">                    
                     <li>
@@ -106,7 +144,7 @@
                 <ul class="nav pull-right top-menu">
                     
                     <!-- task notificatoin start -->
-                    <li id="task_notificatoin_bar" class="dropdown">
+                     <li id="task_notificatoin_bar" class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <i class="fa fa-comment"></i>
                             <span class="badge bg-important">0</span>
@@ -134,7 +172,7 @@
                     </li>
                     <li id="task_notificatoin_bar" class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <i class="icon-task-l"></i>
+                            <i class="icon-task-l" style="color: #FFDF00;"></i>
                             <span class="badge bg-important">0</span>
                         </a>
                         <ul class="dropdown-menu extended tasks-bar">
@@ -179,7 +217,7 @@
                     <li id="alert_notificatoin_bar" class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
 
-                            <i class="icon-bell-l"></i>
+                            <i class="icon-bell-l" style="color: #FFDF00;"></i>
                             <span class="badge bg-important">0</span>
                         </a>
                         <ul class="dropdown-menu extended notification">
@@ -206,7 +244,8 @@
                             <span class="profile-ava">
                                 <img alt="" src="img/avatar1_small.jpg">
                             </span>
-                            <span class="username"><?php 
+                            <span class="username">
+                              <?php 
                                 if($fetch_logo->num_rows()>0){
                                   foreach ($fetch_logo->result() as $row) {
                                     $image_arr = explode(",", $row->logo);
@@ -219,7 +258,7 @@
                                       <?php
                                     }
                                   }
-                                }?></span>
+                                }?></span></a></li>
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu extended logout">
@@ -228,7 +267,10 @@
                                 <a href="uploadpic"><i class="icon_profile"></i>Add Company logo</a>
                             </li>
                             <li class="eborder-top">
-                                <a href="#"><i class="icon_profile"></i> My Profile</a>
+                              <?php
+
+                              ?>
+                                <a href="companies"><i class="icon_profile"></i> Company Profile</a>
                             </li>
                             <li>
                                 <a href="#"><i class="icon_key_alt"></i> Log Out</a>
@@ -251,8 +293,8 @@
                       </a>
                   </li>
                    <li class="sub-menu">
-                      <a href="<?php echo base_url();?>user/clients" class="">
-                         <i class="fa fa-users" style="color: #FFDF00;"></i>
+                      <a href="clients" class="">
+                        <i class="fa fa-users" style="color: #FFDF00;"></i>
                           <span>Clients</span>
                       </a>
                   </li>  
@@ -262,24 +304,29 @@
                           <span>Products/Services</span>
                       </a>
                   </li>
-                   <!-- <li class="sub-menu">
-                      <a href="<?php echo base_url();?>user/services" class="">
-                         <i class="fa fa-cloud" style="color: #FFDF00;"></i>
-                          <span>Services</span>
-                      </a>
-                  </li>   -->
-                  <li class="sub-menu">
-                      <a href="#" class="">
-                         <i class="fa fa-address-book" style="color: #FFDF00;"></i>
-                          <span>Human Resource</span>
-                      </a>
-                  </li>       
-                  <li class="sub-menu">
-                      <a href="<?php echo base_url();?>user/invoices" class="">
+                  <li class="sub-menu dropdown" style="float:right;">
+                      <a href="" class="">
                           <i class="fa fa-file" style="color: #FFDF00;"></i>
-                          <span>Invoices</span>
+                          <span> <button class="dropbtn2">Acounts</button>
+                        <div class="dropdown-content" style="left:0;">
+                          <a href="accounts">Income</a>
+                          <a href="undeposited">Undeposited</a>
+                           <a href="pettycash">Petty Cash</a>
+                            <a href="bankaccount">Bank</a>
+
+                        </div></span>
                       </a>
-                  </li>
+                  </li><br><br>     
+                  <li class="sub-menu dropdown" style="float:left;">
+                      <a href="" class="">
+                          <i class="fa fa-file" style="color: #FFDF00;"></i>
+                          <span> <button class="dropbtn">Sales</button>
+                        <div class="dropdown-content" style="left:0;">
+                          <a href="invoices">Invoices</a>
+                          <a href="allcash">Cash</a>
+                        </div></span>
+                      </a>
+                  </li><br><br><br>
                   <li>
                       <a class="" href="#">
                          <i class="fa fa-pie-chart" style="color: #FFDF00;"></i>
@@ -291,27 +338,31 @@
                          <i class="fa fa-files-o" style="color: #FFDF00;"></i>
                           <span>Reports</span>
                       </a>                  
-                  </li> 
-                  <li class="sub-menu">
-                      <a href="#" class="">
-                         <i class="fa fa-dollar" style="color: #FFDF00;"></i>
-                          <span>Expenses</span>
+                  </li>
+                  <li class="sub-menu dropdown" style="float:right;">
+                      <a href="" class="">
+                          <i class="fa fa-file" style="color: #FFDF00;"></i>
+                          <span> <button class="dropbtn1">Expenditure</button>
+                        <div class="dropdown-content" style="left:0;">
+                          <a href="allexpenses">Expenses</a>
+                          <a href="allpurchases">Purchases</a>
+                        </div></span>
                       </a>
-                  </li> 
-                  <li class="sub-menu">
-                      <a href="#" class="">
-                         <i class="fa fa-bank" style="color: #FFDF00;"></i>
-                          <span>Bank</span>
+                  </li><br><br>
+                   <li class="sub-menu">
+                      <a href="humanresource" class="">
+                        <i class="fa fa-address-book" style="color: #FFDF00;"></i>
+                          <span>Human Resource</span>
                       </a>
-                  </li>           
+                  </li>       
                   <li class="sub-menu">
                       <a href="#" class="">
                           <i class="fa fa-user-circle" style="color: #FFDF00;"></i>
                           <span>Admin</span>
                       </a>
                   </li>
-                   <li class="sub-menu">
-                      <a href="<?php echo base_url();?>user/companies" class="">
+                  <li class="sub-menu">
+                      <a href="companies" class="">
                           <i class="fa fa-user" style="color: #FFDF00;"></i>
                           <span>Companyprofile</span>
                       </a>
@@ -320,69 +371,80 @@
           </div>
       </aside>
       <section id="main-content">
-          <section class="wrapper">            
-              <div class="row">
-                <div class="col-lg-12">
-                    <h3 class="page-header" style="margin-left: 45%;">Products</h3>
-          <?php ?>
-                </div>
-            </div>           
-           </div> 
-                          
-      <div class="dropdown" style="margin-left: 75%;">
-  <button onclick="myFunction()" class="dropbtn">Add Product/Service</button>
-  <div id="myDropdown" class="dropdown-content">
-    <a href="<?php echo base_url('user/add_client');?>">Add Product</a>
-    <a href="<?php echo base_url('user/add_client');?>">Add Service</a>
-  </div>
-</div>
-            <div class="row">       
-                <div class="col-lg-9 col-md-12">    
-                    <div class="container">          
-  <table class="table table-striped" style="margin-left: 15%;">
-    <thead>
-      <tr>
-        <th>Product Name</th>
-        <th>Product Description</th>
-        <th>Product Category</th>
-        <th>Product Quantity</th>
-        <th>As of Date</th>
-         <th>Unit Price</th>
-         <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-     <?php
-     if ($fetch_product->num_rows()>0) {
-       foreach ($fetch_product->result() as $row) {
-         ?>
-         <tr>
-           <td><?php echo $row->productname;  ?></td>
-           <td><?php echo $row->productdescription;  ?></td>
-           <td><?php echo $row->productcategory;  ?></td>
-           <td><?php echo $row->productquantity;  ?></td>
-           <td><?php echo $row->productdate;  ?></td>
-           <td><?php echo $row->unitprice;  ?></td>
-           <!--  -->
-                  <td><?php echo anchor("user/viewproduct/{$row->id}","View Product",['class'=>'dropbtn'])?></td>
-         </tr>
-         <?php
-       }
-     }
-     else{
-      ?>
-      <tr>
-        <td colspan="3">No data Found!</td>
-      </tr>
-      <?php
-     }
-     ?>
-    </tbody>
-  </table>
-  <div style="margin-left: 50%;">
-  </div>
-</div>
-                </div>
+
+          <section class="wrapper"> 
+          
+		  <!-- Today status end -->
+			<div class="row flex-container">
+				<div class="col-md-3 items">
+					<i class="fa fa-map-o fa-reports"></i>
+					<div class="divcontent">
+						<p>You can generate the sales report. To keep track of the sales transactions. Transacted both in terms of cash and on credit.</p>
+						</div>
+					<div class="divbtn">
+				       <a href="salesreport"><button class="btnreport ">Sales Report</button></a>
+				    </div>
+				</div>
+        <div class="col-md-3 items">
+          <i class="fa fa-map-o fa-reports"></i>
+          <div class="divcontent">
+            <p>You can generate the sales report. To keep track of the sales transactions. Transacted both in terms of cash and on credit.</p>
+            </div>
+          <div class="divbtn">
+               <a href="salesreport"><button class="btnreport ">Clients and Suppliers Report</button></a>
+            </div>
+        </div>
+				<div class="col-md-3 items">
+					<i class="fa fa-folder-open fa-reports"></i>
+					<div class="divcontent">
+						<p>The expenditure report enables you to monitor the business expenditure for both the purchases and the expenses.</p>		
+						</div>
+					<div class="divbtn">
+				<a href="expenditurereport"><button class="btnreport ">Expenditure Report</button></a>
+				</div>	
+				</div>
+				<div class="col-md-3 items">
+					<i class="fa fa-map-o fa-reports"></i>
+					<div class="divcontent">
+						<p>The profit and Loss report enables you to monitor both income and expense accounts of the business.</p>		
+						</div>
+					<div class="divbtn">
+					<a href="profitandlossreport"><button class="btnreport ">Profit and Loss Report</button></a>
+					</div>
+				</div>
+			</div>
+			<div class="row flex-container" style="margin-top:-20px; ">
+				<div class="col-md-4 items">
+					<i class="fa fa-folder-open fa-reports"></i>
+					<div class="divcontent">
+						<p>The invoices report enables you to monitor all the invoices and know how many invoices are paid and how many aren't</p>		
+						</div>
+					<div class="divbtn">
+					<a href="<?php echo base_url('user/invoicesreport'); ?>"><button class="btnreport ">Invoices Report</button></a>
+					</div>
+				</div>
+				<div class="col-md-4 items">
+					<i class="fa fa-folder-open-o fa-reports"></i>
+					<div class="divcontent">
+						<p>The accounts report enables you to monitor all the business accounts and know how much flows in and out of each.</p>		
+						</div>
+					<div class="divbtn">
+					<a href="accountsreport"><button class="btnreport ">Accounts Report</button></a>
+					</div>
+				</div>
+				<div class="col-md-4 items">
+					<i class="fa fa-briefcase fa-reports"></i>
+					<div class="divcontent">
+						<p>You can generate the financal report for the business assets. To account for the assets currently owned by the business.</p>		
+						</div>
+					<div class="divbtn">
+					<a href="assetsreport"><button class="btnreport ">Assets Report</button></a>
+					</div>
+				</div>
+               	</div>
+				<div class="col-lg-9 col-md-12">	
+
+				</div>
               </div>
           </section>
           <div class="text-right">
@@ -395,7 +457,7 @@
   <!-- container section start -->
     <!-- javascripts -->
     <script src="../js/jquery.js"></script>
-    <script src="../js/jquery-ui-1.10.4.min.js"></script>
+	<script src="../js/jquery-ui-1.10.4.min.js"></script>
     <script src="../js/jquery-1.8.3.min.js"></script>
     <script type="text/javascript" src="../js/jquery-ui-1.9.2.custom.min.js"></script>
     <!-- bootstrap -->
@@ -410,48 +472,29 @@
     <script src="../js/owl.carousel.js" ></script>
     <!-- jQuery full calendar -->
     <<script src="../js/fullcalendar.min.js"></script> <!-- Full Google Calendar - Calendar -->
-    <script src="../assets/fullcalendar/fullcalendar/fullcalendar.js"></script>
+	<script src="../assets/fullcalendar/fullcalendar/fullcalendar.js"></script>
     <!--script for this page only-->
     <script src="../js/calendar-custom.js"></script>
-    <script src="../js/jquery.rateit.min.js"></script>
+	<script src="../js/jquery.rateit.min.js"></script>
     <!-- custom select -->
     <script src="../js/jquery.customSelect.min.js" ></script>
-    <script src="../assets/chart-master/Chart.js"></script>
+	<script src="../assets/chart-master/Chart.js"></script>
     <!--custome script for all page-->
     <script src="../js/scripts.js"></script>
     <!-- custom script for this page-->
     <script src="../js/sparkline-chart.js"></script>
     <script src="../js/easy-pie-chart.js"></script>
-    <script src="../js/jquery-jvectormap-1.2.2.min.js"></script>
-    <script src="../js/jquery-jvectormap-world-mill-en.js"></script>
-    <script src="../js/xcharts.min.js"></script>
-    <script src="../js/jquery.autosize.min.js"></script>
-    <script src="../js/jquery.placeholder.min.js"></script>
-    <script src="../js/gdp-data.js"></script>   
-    <script src="../js/morris.min.js"></script>
-    <script src="../js/sparklines.js"></script> 
-    <script src="../js/charts.js"></script>
-    <script src="../js/jquery.slimscroll.min.js"></script>
+	<script src="../js/jquery-jvectormap-1.2.2.min.js"></script>
+	<script src="../js/jquery-jvectormap-world-mill-en.js"></script>
+	<script src="../js/xcharts.min.js"></script>
+	<script src="../js/jquery.autosize.min.js"></script>
+	<script src="../js/jquery.placeholder.min.js"></script>
+	<script src="../js/gdp-data.js"></script>	
+	<script src="../js/morris.min.js"></script>
+	<script src="../js/sparklines.js"></script>	
+	<script src="../js/charts.js"></script>
+	<script src="../js/jquery.slimscroll.min.js"></script>
   <script>
-    /* When the user clicks on the button, 
-toggle between hiding and showing the dropdown content */
-function myFunction() {
-  document.getElementById("myDropdown").classList.toggle("show");
-}
-
-// Close the dropdown menu if the user clicks outside of it
-window.onclick = function(event) {
-  if (!event.target.matches('.dropbtn')) {
-    var dropdowns = document.getElementsByClassName("dropdown-content");
-    var i;
-    for (i = 0; i < dropdowns.length; i++) {
-      var openDropdown = dropdowns[i];
-      if (openDropdown.classList.contains('show')) {
-        openDropdown.classList.remove('show');
-      }
-    }
-  }
-}
       //knob
       $(function() {
         $(".knob").knob({
@@ -474,23 +517,23 @@ window.onclick = function(event) {
       $(function(){
           $('select.styled').customSelect();
       });
-      /* ---------- Map ---------- */
-    $(function(){
-      $('#map').vectorMap({
-        map: 'world_mill_en',
-        series: {
-          regions: [{
-            values: gdpData,
-            scale: ['#000', '#000'],
-            normalizeFunction: 'polynomial'
-          }]
-        },
-        backgroundColor: '#eef3f7',
-        onLabelShow: function(e, el, code){
-          el.html(el.html()+' (GDP - '+gdpData[code]+')');
-        }
-      });
-    });
+	  /* ---------- Map ---------- */
+	$(function(){
+	  $('#map').vectorMap({
+	    map: 'world_mill_en',
+	    series: {
+	      regions: [{
+	        values: gdpData,
+	        scale: ['#000', '#000'],
+	        normalizeFunction: 'polynomial'
+	      }]
+	    },
+		backgroundColor: '#eef3f7',
+	    onLabelShow: function(e, el, code){
+	      el.html(el.html()+' (GDP - '+gdpData[code]+')');
+	    }
+	  });
+	});
   </script>
   </body>
 </html>

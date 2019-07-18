@@ -7,6 +7,9 @@
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <style type="text/css">
+  body{
+    font-size: 14px;
+  }
     #invoice{
     padding: 30px;
 }
@@ -15,6 +18,7 @@
     position: relative;
     background-color: #FFF;
     min-height: 680px;
+    max-width: 800px;
     padding: 15px
 }
 
@@ -187,7 +191,7 @@
         <hr>
     </div>
     <div class="invoice overflow-auto">
-        <div style="min-width: 600px">
+        <div style="min-width: 400px">
             <header>
                 <div class="row"style="justify-content: center;">
                    <?php 
@@ -219,17 +223,38 @@
 
                              <h2 style="text-align: center;">INVOICE</h2><br> 
                         </div>
+                        <div style="float: right;">
+                        <?php
+                        if (count($invoices)) {
+                          foreach ($invoices as $row) {
+                            if($row->amountpaid == $row->total OR $row->balancedue==0){
+                              echo "<p style='background-color:blue;color:#fff;padding:05px;'>Paid</p>".'<br>';
+                            }
+                            elseif ($row->amountpaid < $row->total && $row->amountpaid>0) {
+                              echo "<h6 style='background-color:green;color:#fff;padding:05px;'>Partially Paid</h6>";
+                            }
+                            elseif($row->amountpaid==0) {
+                              echo "<h6 style='background-color:red;color:#fff;padding:05px;'>Not Paid</h6>";
+                            }
+                            else{
+                              echo "Nothing To Show";
+                            }
+                          }
+                          # code...
+                        }
+                        ?>
+                        </div>
                         <hr style="width: 100%;background-color: blue;">
                          <h4>To:</h4> 
                          <div class="row">
                         <div class="col-md-6">
-                        <h5 class="to">Client Name:<?php
+                        <h6 class="to">Client Name:<?php
                                  if(count($invoices)){
                                   foreach ($invoices as $row) {
                                     echo $row->clientname;
                            }
                        }     
-                       ?></h5>
+                       ?></h6>
                         <div class="address">Client Address:<?php
                                  if(count($invoices)){
                                   foreach ($invoices as $row) {
@@ -269,7 +294,7 @@
                        </div>
                        <div class="col-md-6 ">
                        <div class="" style='margin-left: 55%;'>
-                        <h4 class="invoice-id">INVOICE <?php
+                        <h6 class="invoice-id">INVOICE <?php
                                  if($fetch_editinvoice->num_rows()>0){
                                   foreach ($fetch_editinvoice->result() as $row) {
                                     echo "#" . $row->invoiceprefix ;
@@ -281,8 +306,8 @@
                                     echo $row->invoice_id;
                            }
                        }     
-                       ?>    </h4>
-                        <div class="date">Date of Invoice: <?php
+                       ?>    </h6>
+                        <div class="date">Date: <?php
                                  if(count($invoices)){
                                   foreach ($invoices as $row) {
                                     echo $row->invoicedate;
@@ -349,7 +374,17 @@
                         </tr>
                         <tr>
                              <td colspan="4">AMOUNT PAID</td>
-                              <td><?php echo "KShs. " .$row->amountpaid; ?></td>
+                              <td><?php 
+                              if($row->newamountpaid>0){
+                                echo "KShs. " .$row->newamountpaid;
+                                }
+                                elseif($row->newamountpaid==0){
+                                  echo "KShs. " .$row->amountpaid;
+                                }
+                                else{
+                                  echo "Nothing to show";
+                                }
+                                 ?></td>
                         </tr>
                         <tr>
                              <td colspan="4">BALANCE DUE</td>

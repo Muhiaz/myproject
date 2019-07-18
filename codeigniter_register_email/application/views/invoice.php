@@ -32,7 +32,7 @@ function handleSelect(elm)
         input.name = input.name.replace(/\d+$/,num);
         input.value = '';
       }
-      tbody.insertBefore(row, tbody.rows[tbody.rows.length - 1]);
+      tbody.insertBefore(row, tbody.rows[tbody.rows.length -1]);
   }
 
   function updateRow(element) {
@@ -136,7 +136,7 @@ function handleSelect(elm)
              <option><?php 
                                 if($fetch_clientcompany->num_rows()>0){
                                   foreach ($fetch_clientcompany->result() as $row) {
-                                   echo "<option value='" .$row->id . "'>" . $row->email . "</option"; 
+                                   echo "<option value>" . $row->email . "</option"; 
                                   }
                                 }
                                 ?>
@@ -221,12 +221,10 @@ function handleSelect(elm)
    <form action="submit.php" name="main" method="post" style="margin-top: -20px" >
   <table style="border-collapse: collapse;" border="0" align="center"
    width="50%" id="customersAdd" class="table table-bordered" >
-    <tr>
       <td><br>
         <input class="dropbtn text" type="button" 
          align="middle"value="Add Aditional Row" class="form-control input-sm text-right" onclick="addRow(this)" onsubmit="return checkforblank()" id="add_data">
       </td>
-    </tr>
     <tr>
        <td>
         <input placeholder="" class="form-control input-sm text-right" name="no" onblur="updateRow(this);" id="no" readonly="true">
@@ -256,10 +254,8 @@ function handleSelect(elm)
         <input placeholder="Amount" class="form-control input-sm text-right" name="amount1" readonly id="amount" required>
       </td>
     </tr>
-    <tr>
       <td colspan="5" style="text-align: right" >Subtotal&nbsp;
       <td><input name="total" id="total" readonly>
-    </tr>
   </table>
 </form>
 </div>
@@ -293,12 +289,8 @@ function handleSelect(elm)
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-md-6">
-      <input type="submit" class="dropbtn1" id="save" value="Save" style="color: #000;font-weight: 800;margin-left:50%;">
-      </div>
-      <div class="col-md-6">
-       <input type="submit" class="dropbtn1" id="save" value="Save and Send" style="color: #000;font-weight: 800;margin-left:70%;">
-       </div>
+      <input type="submit" class="dropbtn0" id="save" value="Save Invoice" style="color: #fff;margin-left: 50%;">
+       <input type="submit" class="dropbtn" id="save" value="Save and Send" style="color: #fff;" >
        </div>
       </div>
     </div>
@@ -367,7 +359,7 @@ function handleSelect(elm)
       });
 $(function(){
 var set_number = function(){
-  var table_len = $('#customersAdd tbody tr').length+1;
+  var table_len = $('#customersAdd tbody').length;
   $('#no').val(table_len);
 }
 set_number();
@@ -379,12 +371,11 @@ var unitprice = $('#unitprice').val();
 var amount = $('#amount').val();
 
 //call the function to set new number
-set_number();
 });
 $('#save').click(function(){
   var table_data = [];
 //use .each to get all the data
-$('#customersAdd tr').each(function(row,tr){
+$('#customersAdd').each(function(row,tr){
 //create an array to store all the data in a row
 
 

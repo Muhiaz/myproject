@@ -120,13 +120,8 @@
                             </li>
                         </ul>
                     </li>
-                    <!-- task notificatoin end -->
-                    <!-- inbox notificatoin start-->
-                    <!-- inbox notificatoin end -->
-                    <!-- alert notification start-->
                     <li id="alert_notificatoin_bar" class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-
                             <i class="icon-bell-l"></i>
                             <span class="badge bg-important">0</span>
                         </a>
@@ -147,8 +142,6 @@
                             </li>
                         </ul>
                     </li>
-                    <!-- alert notification end-->
-                    <!-- user login dropdown start-->
                     <li class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <span class="profile-ava">
@@ -220,12 +213,16 @@
                           <span>Human Resource</span>
                       </a>
                   </li>       
-                  <li class="sub-menu">
-                      <a href="<?php echo base_url();?>user/invoices" class="">
+                  <li class="sub-menu dropdown" style="float:right;">
+                      <a href="" class="">
                           <i class="fa fa-file" style="color: #FFDF00;"></i>
-                          <span>Invoices</span>
+                          <span> <button class="dropbtn">Sales</button>
+                        <div class="dropdown-content" style="left:0;">
+                          <a href="invoices">Invoices</a>
+                          <a href="allcash">Cash</a>
+                        </div></span>
                       </a>
-                  </li>
+                  </li><br><br>
                   <li>
                       <a class="" href="#">
                          <i class="fa fa-pie-chart" style="color: #FFDF00;"></i>

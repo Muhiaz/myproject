@@ -25,6 +25,11 @@
 	<link href="../css/xcharts.min.css" rel=" stylesheet">	
 	<link href="../css/jquery-ui-1.10.4.min.css" rel="stylesheet">
   <style type="text/css">
+    table tr:hover{
+      color: green;
+      background-color: #fff;
+      cursor: pointer;
+    }
     .dropbtn1 {
   background-color: green;
   color: white;
@@ -225,7 +230,7 @@ display: block;
               <!-- sidebar menu start-->
               <ul class="sidebar-menu">                
                   <li class="active">
-                      <a class="" href="#">
+                      <a class="" href="admin">
                         <i class="fa fa-home" style="color: #FFDF00;"></i>
                           <span>Dashboard</span>
                       </a>
@@ -343,7 +348,6 @@ display: block;
         <th>Client Name</th>
         <th>Client Phone</th>
          <th>Date Of Receipt</th>
-        <th>Action</th>
       </tr>
     </thead>
     <tbody>
@@ -351,7 +355,7 @@ display: block;
      if($fetch_incomeaccounts->num_rows()>0 && $fetch_editinvoice->num_rows()>0){
       foreach ($fetch_incomeaccounts->result() as $row) {
         ?>
-        <tr>
+        <tr class="tablerow" data-href="<?php echo base_url("user/clientreceipt/{$row->id}", "",['class'=>'']); ?>">
           <td><?php echo $row->invoice_id;  ?></td>
           <td><?php echo $row->product;  ?></td>
           <td><?php echo $row->amountpaid;  ?></td>
@@ -360,9 +364,7 @@ display: block;
             <td><?php echo $row->clientphone;  ?></td>
           <td><?php echo $row->dateofreceipt;  ?></td>
             
-          <td cellspacing="2"><?php echo anchor("user/clientreceipt/{$row->id}", "Receipt",['class'=>'dropbtn1']); ?></td>
-          <td cellspacing="2"><?php echo anchor("user/bankreceipt/{$row->id}", "Bank",['class'=>'dropbtn']); ?></td>
-          <td></td>
+          <!-- <td cellspacing="2"><?php echo anchor("user/clientreceipt/{$row->id}", "Receipt",['class'=>'dropbtn1']); ?></td> -->
         </tr>
         <?php
       }
@@ -376,6 +378,7 @@ display: block;
   </table>
 </div>
 		  <!-- Today status end -->
+      
 			<div class="row">
                	
 				<div class="col-lg-9 col-md-12">	
@@ -431,6 +434,13 @@ display: block;
 	<script src="../js/charts.js"></script>
 	<script src="../js/jquery.slimscroll.min.js"></script>
   <script>
+    $('*[data-href]').on("click",function(){
+  window.location = $(this).data('href');
+  return false;
+});
+$("td > a").on("click",function(e){
+  e.stopPropagation();
+});
       //knob
       $(function() {
         $(".knob").knob({

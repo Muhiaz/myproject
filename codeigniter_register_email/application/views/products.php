@@ -351,7 +351,7 @@
                           <span>Human Resource</span>
                       </a>
                   </li>       
-                  <li class="sub-menu">
+                 <li class="sub-menu">
                       <a href="invoices" class="">
                           <i class="fa fa-file" style="color: #FFDF00;"></i>
                           <span>Invoices</span>
@@ -405,8 +405,8 @@
 <div class="dropdown" style="margin-left: 75%;">
   <button onclick="myFunction()" class="dropbtn">Add Product/Service</button>
   <div id="myDropdown" class="dropdown-content">
-    <a href="<?php echo base_url('user/add_client');?>">Add Product</a>
-    <a href="<?php echo base_url('user/add_client');?>">Add Service</a>
+    <a href="<?php echo base_url('user/addproducts');?>">Add Product</a>
+    <a href="<?php echo base_url('user/addservice');?>">Add Service</a>
   </div>
 </div>
           <!-- Today status end -->

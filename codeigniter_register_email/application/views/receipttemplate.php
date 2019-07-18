@@ -10,15 +10,15 @@
 <!------ Include the above in your HEAD tag ---------->
 
 <div class="container">
-    <button id="printInvoice" class="btn btn-info"> Print</button>
+     <button id="printInvoice" class="btn btn-info"> Print</button>
     <button id="printInvoice" class="btn btn-info"> Email</button>
     <div class="row">
         <div class="well col-xs-12 col-sm-12 col-md-8 col-xs-offset-1 col-sm-offset-1 col-md-offset-3">
             <div class="row">
-                <div class="col-xs-6 col-sm-6 col-md-6 receipt">
+                <div class="col-xs-6 col-sm-6 col-md-6 " style="margin-left: 0px;">
                    
                 </div>
-                <div class="container">
+                <div class="container receipt">
                  <div style="justify-content: center;">
                    <?php 
                                 if($fetch_logo->num_rows()>0){
@@ -46,18 +46,12 @@
                             ?></span>
                           </div>
                           </div>
-                <div class="col-xs-6 col-sm-6 col-md-6 text-left" style="margin-left: 65%;" >
-                    <h5>Received From:</h5>
-                        <em><?php
-                                 if(count($receipts)){
-                                  foreach ($receipts as $row) {
-                                    echo "Date: " . $row->dateofreceipt;
-                           }
-                       }     
-                       ?>
-                           <br>
-                       </em>
-                        <em>Receipt #: <?php
+             <h2 style="text-align: center;">Receipt</h2>
+                           <hr style="width: 100%;background-color: blue;">
+                          <div class="row container" >
+                        <div class="col-md-6">
+                        <h5>Receipt Details</h5>
+     <em>Receipt #: <?php
                                  if($fetch_editinvoice->num_rows()>0){
                                   foreach ($fetch_editinvoice->result() as $row) {
                                     echo "#" . $row->invoiceprefix ;
@@ -69,23 +63,20 @@
                                     echo $row->id;
                            }
                        }     
-                       ?></em>
-                       <br>
-                       <?php
-                                 if($fetch_editinvoice->num_rows()>0){
-                                  foreach ($fetch_editinvoice->result() as $row) {
-                                    echo "REF: Invoice #" . $row->invoiceprefix ;
-                           }
-                       }     
-                       ?>
-                        <?php
+                       ?></em><br>
+                       <em><?php
                                  if(count($receipts)){
                                   foreach ($receipts as $row) {
-                                    echo $row->invoice_id;
+                                    echo "Date: " . $row->dateofreceipt;
                            }
                        }     
                        ?>
-                       <br>
+                           <br>
+                       </em>
+                       </div>
+                       <div class="col-md-6 ">
+                       <div class="" style='margin-left: 30%;'>
+                        <h5>Received From:</h5>
                        <?php
                                  if(count($receipts)){
                                   foreach ($receipts as $row) {
@@ -109,12 +100,10 @@
                            }
                        }     
                        ?>
-                </div>
-            </div>
-            <div class="row container">
-                <div class="text-center">
-                    <h1>Receipt</h1>
-                </div>
+                    </div>
+                    </div>
+                     <hr style="width: 100%;background-color: blue;">
+            <div class="row container" style="margin-left:1%;margin-right:1%">
                 <h4>For: </h4>
                 </span>
                 <table class="table table-hover">
@@ -201,9 +190,17 @@
                             <td class="text-center text-danger"><h4><strong> <?php
                                  if(count($receipts)){
                                   foreach ($receipts as $row) {
+                                    if($row->newamountpaid>0){
+                                      echo $row->newamountpaid; 
+                                    }
+                                    elseif($row->newamountpaid==0){
                                     echo $row->amountpaid;
                            }
-                       }     
+                           else{
+                             echo "Nothing to display";
+                           }
+                       } 
+                       }    
                        ?> </strong></h4></td>
                         </tr>
                          <tr>
@@ -221,43 +218,57 @@
                 </table>
                 </td>
             </div>
-             <h5>Received By:</h5>
+            </div>
+             <h5 style="margin-left:5%;">Received By:</h5>
                     <address>
-                        <strong><?php 
-                                if($fetch_company->num_rows()>0){
+                        <hr style="width: 100%;background-color: blue;">
+        <div class="">
+        <div style="min-width: 600px">
+            <header>
+                <div>
+          
+                         <div class="row" style=" text-align:center;justify-content: center;">
+                        <div class="col-md-12">
+                          <span>
+                            <?php
+                            if($fetch_company->num_rows()>0){
                                   foreach ($fetch_company->result() as $row) {
                             
-                                       echo "<h6 style=''>" .$row->companyname  . ' company' . "</h6>";
-                                    }
-                                  }
-                            ?></strong>
-                             <?php 
-                                if($fetch_company->num_rows()>0){
-                                  foreach ($fetch_company->result() as $row) {
-                            
-                                       echo "<h6 style=''>" .$row->streetlocation . ', ' . $row->avenuelocation . ', ' .$row->town ."</h6>";
-                                    }
-                                  }
-                            ?>
-                        <?php 
-                                if($fetch_company->num_rows()>0){
-                                  foreach ($fetch_company->result() as $row) {
-                            
-                                       echo "<h6 style=''>" .$row->street  . '-' .$row->postalcode . ' ' .$row->county . ', ' . $row->companylocation ."</h6>";
+                                       echo "<h5>" . $row->companyname . "</h5>";
                                     }
                                   }
                             ?>
-                     <?php 
+                          </span>
+                         <span><?php 
                                 if($fetch_company->num_rows()>0){
                                   foreach ($fetch_company->result() as $row) {
                             
-                                       echo "<h6 style=''>Tel : " .$row->companyphone  . "</h6>";
+                                       echo "<h5>".$row->building  . ', ' . $row->streetlocation . " Off " .$row->avenuelocation  . ', ' . $row->town . " ," . $row->county . ', ' . $row->companylocation . "</h5>";
                                     }
                                   }
-                            ?>
+                            ?></span>
+                             <div class=""><span><?php 
+                                if($fetch_company->num_rows()>0){
+                                  foreach ($fetch_company->result() as $row) {
+                            
+                                       echo "<h5 style=''>Tel: " . $row->companyphone .", " . $row->companyemail . ", " . $row->companywebsite . " </h5>";
+                                    }
+                                  }
+                            ?></span></div>
+                       </div>
+        </div>
+    </div>
+</div>
                     </address>
         </div>
     </div>
+</div>
+</header>
+</div>
+</div>
+</address>
+</div>
+</div>
 </div>
 <script type="text/javascript">
      $('#printInvoice').click(function(){

@@ -22,6 +22,9 @@
     <link href="../css/style-responsive.css" rel="stylesheet" />
     <link href="../css/xcharts.min.css" rel=" stylesheet">  
     <link href="../css/jquery-ui-1.10.4.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/r/dt/jq-2.1.4,jszip-2.5.0,pdfmake-0.1.18,dt-1.10.9,af-2.0.0,b-1.0.3,b-colvis-1.0.3,b-html5-1.0.3,b-print-1.0.3,se-1.0.1/datatables.min.css"/>
+ 
+<script type="text/javascript" src="https://cdn.datatables.net/r/dt/jq-2.1.4,jszip-2.5.0,pdfmake-0.1.18,dt-1.10.9,af-2.0.0,b-1.0.3,b-colvis-1.0.3,b-html5-1.0.3,b-print-1.0.3,se-1.0.1/datatables.min.js"></script>">
     <style type="">
       .dtHorizontalVerticalExampleWrapper {
         margin: 0 auto;
@@ -52,6 +55,18 @@ height: 50vh;
 width: 80vw;
 overflow: auto;
 }
+table tr:hover{
+  color: green;
+}
+.tablerow hover{
+  cursor: pointer;
+  background-color: #fff;
+  color: green;
+}
+.tablerow td:hover{
+  cursor: pointer;
+  
+}
 .table-wrapper-scroll-y {
 display: block;
 }
@@ -60,6 +75,14 @@ display: block;
 }
        .dropbtn {
   background-color: #3498DB;
+  color: white;
+  padding: 10px;
+  font-size: 12px;
+  border: none;
+  cursor: pointer;
+}
+.dropbtn0 {
+  background-color: green;
   color: white;
   padding: 10px;
   font-size: 12px;
@@ -259,7 +282,7 @@ display: block;
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="reports">
                                     <div class="task-info">
                                         <div class="desc">Reports</div>
                                         <div class="percent"></div>
@@ -374,7 +397,7 @@ display: block;
                       </a>
                   </li>
                   <li>                     
-                      <a class="" href="#">
+                      <a class="" href="reports">
                          <i class="fa fa-files-o" style="color: #FFDF00;"></i>
                           <span>Reports</span>
                       </a>                  
@@ -434,7 +457,7 @@ display: block;
                     <h2 style="text-align: center;">Invoices</h2> 
 <div class="container-fluid my-custom-scrollbar" style="justify-content: center;">  
   
-  <table class="table table-stripped" cellspacing="1"
+  <table class="table table-stripped display nowrap" cellspacing="1"
   width="100%" style="border: 1;background-color: #fff;" align="center">
     <thead>
       <tr style="text-transform: uppercase;">
@@ -448,7 +471,6 @@ display: block;
         <th>Date</th>
         <th>due date</th>
         <th>Client Phone</th>
-        <th></th>
         <th>Action</th>
       </tr>
     </thead>
@@ -457,24 +479,28 @@ display: block;
      if($fetch_invoices->num_rows()>0){
       foreach ($fetch_invoices->result() as $row) {
         ?>
-        <tr>
+        <tr class="tablerow" data-href="<?php echo base_url("user/clientinvoice/{$row->invoice_id}", "",['class'=>'']); ?>">
           <!-- <td><?php echo $row->no;  ?></td>
           <td><?php echo $row->product;  ?></td> -->
           <td><?php echo $row->product;  ?></td>
           <td><?php echo $row->quantity;  ?></td>
           <td><?php echo $row->unitprice; ?></td>
           <td><?php echo $row->amount;  ?></td>
-          <td><?php echo $row->amountpaid;  ?></td>
+          <td><?php
+                if($row->newamountpaid>0){
+                   echo $row->newamountpaid;
+                   }
+                   else{
+                    echo $row->amountpaid;
+                   }   
+                   ?>  
+          </td>
           <td><?php echo $row->balancedue;  ?></td>
           <td><?php echo $row->invoicedate;  ?></td>
           <td><?php echo $row->duedate;  ?></td>
-           <!-- <td><?php echo $row->billingaddress;  ?></td>
-            <td><?php echo $row->clientname;  ?></td>
-             <td><?php echo $row->clientemail;  ?></td> -->
              <td><?php echo $row->clientphone;  ?></td>
-          <td><?php echo anchor("user/clientinvoice/{$row->invoice_id}", "View",['class'=>'dropbtn']); ?></td>
           <td><?php echo anchor("user/payinvoice/{$row->invoice_id}", "Recieve Payment",['class'=>'dropbtn1']); ?></td>
-           <td><?php echo anchor("user/clientinvoice/{$row->invoice_id}", "Delete",['class'=>'dropbtn2']); ?></td>
+           <td><?php echo anchor("user/delete/{$row->invoice_id}", "Delete",['class'=>'dropbtn2']); ?></td>
           <td></td>
         </tr>
         <?php
@@ -489,6 +515,7 @@ display: block;
   </table>
 </div>
 </body>
+<a href="viewdeletedinvoices">View Deleted Invoices</a>
 </html>
                 </div>
               </div>
@@ -539,7 +566,15 @@ display: block;
     <script src="../js/sparklines.js"></script> 
     <script src="../js/charts.js"></script>
     <script src="../js/jquery.slimscroll.min.js"></script>
+    <script type="text/javascript">document.querySelector("#invoicedate").valueAsDate = new Date();</script>
   <script>
+    $('*[data-href]').on("click",function(){
+  window.location = $(this).data('href');
+  return false;
+});
+$("td > a").on("click",function(e){
+  e.stopPropagation();
+});
     $(document).ready(function () {
       $('#dtHorizontalVerticalExample').DataTable({
       "scrollX": true,

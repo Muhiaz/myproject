@@ -194,6 +194,10 @@ function handleSelect(elm)
       <td colspan="5" style="text-align: right">New Balance Due&nbsp;
       <td><input type="text" name="newbalancedue" id="newbalancedue" class='form-control' readonly="true">
     </tr>
+    <tr>
+      <td colspan="5" style="text-align: right">New Amount Paid&nbsp;
+      <td><input type="text" name="newamountpaid" id="newamountpaid" class='form-control' readonly="true">
+    </tr>
 </table>
 
 <div class="form-row ">
@@ -279,7 +283,7 @@ function handleSelect(elm)
     $('#newbalancedue').val($('#balancedue').val() - $('#amountrecieved').val());
   });
   $("#amountpaid,#amountrecieved").keyup(function () {
-    $('#newamountpaid').val(x + y);
+    $('#newamountpaid').val(Number($('#amountpaid').val()) + Number($('#amountrecieved').val()));
   });
     $(document).ready(function(e){
       $("input").change(function(){
@@ -292,7 +296,7 @@ function handleSelect(elm)
       });
 $(function(){
 var set_number = function(){
-  var table_len = $('#customersAdd tbody tr').length+1;
+  var table_len = $('#customersAdd tbody').length;
   $('#no').val(table_len);
 }
 set_number();
@@ -309,7 +313,7 @@ set_number();
 $('#save').click(function(){
   var table_data = [];
 //use .each to get all the data
-$('#customersAdd tr').each(function(row,tr){
+$('#customersAdd').each(function(row,tr){
 //create an array to store all the data in a row
 
 
@@ -318,11 +322,11 @@ var sub = {
   'invoice_id':$('#invoice_id').val(),
   // 'product':$('#product').val(),
   'tax':$('#tax').val(),
-   'clientname':$('#clientname').val(),
+  'clientname':$('#clientname').val(),
   'clientphone':$('#clientphone').val(),
-    'clientemail':$('#clientemail').val(),
+  'clientemail':$('#clientemail').val(),
   // 'duedate':$('#duedate').val(),
-  // 'invoicedate':$('#invoicedate').val(),
+  'newamountpaid':$('#newamountpaid').val(),
   'product':$('#product').val(),
   'total':$('#total').val(),
   'amountrecieved': $('#amountrecieved').val(),
@@ -360,14 +364,12 @@ swal({
   $.ajax({
     data : data,
     type : 'POST',
-    url : '<?php echo base_url('user/saveinvoicepayment');?>',
+    url : '<?php echo base_url("user/saveinvoicepayment/" .$invoicedata->invoice_id);?>',
     crossOrigin : false,
     dataType:'json',
     success : function(result){
       if(result.invoice == "success"){
-        
          window.location.href = '<?php echo base_url("user/accounts");?>';
-         swal('Successfully Updated Income Account','','success');
       }else{
         swal('Error Saving','','warning');
 

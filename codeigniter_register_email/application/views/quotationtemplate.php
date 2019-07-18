@@ -265,7 +265,7 @@
                            }
                        }     
                        ?>    </h4>
-                        <div class="date">Date of Quotation: <?php
+                        <div class="date">Date: <?php
                                  if(count($quotations)){
                                   foreach ($quotations as $row) {
                                     echo $row->invoicedate;

@@ -4,15 +4,105 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Users_model extends CI_Model {
 	private $_ID;
     private $_url;
+    var $table = 'invoices';
+    var $column_order = array(null, 'clientname','invoice_id','product','quantity','unitprice','amount','invoicedate'); //set column field database for datatable orderable
+    var $column_search = array('clientname','invoice_id','product','quantity','unitprice','amount','invoicedate'); //set column field database for datatable searchable 
+    var $order = array('invoice_id' => 'asc'); // default order
 	function __construct(){
 		parent::__construct();
 		$this->load->database();
 	}
+
+     private function _get_datatables_query()
+    {
+         
+        //add custom filter here
+        if($this->input->post('clientname'))
+        {
+            $this->db->like('clientname', $this->input->post('clientname'));
+        }
+        if($this->input->post('invoice_id'))
+        {
+            $this->db->like('invoice_id', $this->input->post('invoice_id'));
+        }
+        
+        $this->db->from($this->table);
+        $i = 0;
+     
+        foreach ($this->column_search as $item) // loop column 
+        {
+            if($_POST['search']['value']) // if datatable send POST for search
+            {
+                 
+                if($i===0) // first loop
+                {
+                    $this->db->group_start(); // open bracket. query Where with OR clause better with bracket. because maybe can combine with other WHERE with AND.
+                    $this->db->like($item, $_POST['search']['value']);
+                }
+                else
+                {
+                    $this->db->or_like($item, $_POST['search']['value']);
+                }
+ 
+                if(count($this->column_search) - 1 == $i) //last loop
+                    $this->db->group_end(); //close bracket
+            }
+            $i++;
+        }
+          if(isset($_POST['order'])) // here order processing
+        {
+            $this->db->order_by($this->column_order[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
+        } 
+        else if(isset($this->order))
+        {
+            $order = $this->order;
+            $this->db->order_by(key($order), $order[key($order)]);
+        }
+    }
+ 
+    public function get_datatables()
+    {
+        $this->_get_datatables_query();
+        if($_POST['length'] != -1)
+        $this->db->limit($_POST['length'], $_POST['start']);
+        $query = $this->db->get();
+        return $query->result();
+    }
+ 
+    public function count_filtered()
+    {
+        $this->_get_datatables_query();
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+ 
+    public function count_all()
+    {
+        $this->db->from($this->table);
+        return $this->db->count_all_results();
+    }
+ 
+    public function get_list_countries()
+    {
+        $this->db->select('clientname');
+        $this->db->from($this->table);
+        $this->db->order_by('clientname','asc');
+        $query = $this->db->get();
+        $result = $query->result();
+ 
+        $countries = array();
+        foreach ($result as $row) 
+        {
+            $countries[] = $row->country;
+             }
+        return $countries;
+    }
 	public function getAllUsers(){
 		$query = $this->db->get('users');
 		return $query->result(); 
 	}
 	public function save_invoice($invoice_data){
+		$this->load->helper('string');
 		$clientemail = $this->input->post('clientemail');
 		$clientname = $this->input->post('clientname');
 		$clientphone = $this->input->post('clientphone');
@@ -20,16 +110,20 @@ class Users_model extends CI_Model {
 		$duedate = $this->input->post('duedate');
 		$billingaddress = $this->input->post('billingaddress');
 		$total = $this->input->post('total');
+		$tax = $this->input->post('tax');
 		$amountpaid = $this->input->post('amount');
 		$balancedue = $this->input->post('balancedue');
-		$sql = "INSERT INTO invoices(clientname,clientphone,invoicedate,duedate,billingaddress,total,amount,balancedue) VALUES(
+		$invoice = random_string('alnum',5);
+		$sql = "INSERT INTO invoices(clientname,clientphone,invoicedate,duedate,billingaddress,total,amount,tax,balancedue,invoice) VALUES(
 		" . $this->db->escape($clientname).",
 		" . $this->db->escape($clientphone).",
 		" . $this->db->escape($invoicedate).",
 		" . $this->db->escape($duedate).",
 		" . $this->db->escape($billingaddress).",
 		" . $this->db->escape($total).",
+		" . $this->db->escape($tax).",
 		" . $this->db->escape($amountpaid).",
+		" . $this->db->escape($invoice).",
 		" . $this->db->escape($balancedue).")";
 		// $this->db->query($sql);
 		for ($i=0; $i < count($invoice_data); $i++) { 
@@ -51,12 +145,132 @@ class Users_model extends CI_Model {
 				'quantity'=>$invoice_data[$i]['quantity'],
 				'unitprice'=>$invoice_data[$i]['unitprice'],
 				'amount'=>$invoice_data[$i]['amount']
+
 			);
 		}
 		try{
 			//insert data into database...
 			for ($i=0; $i <count($invoice_data) ; $i++) { 
 				$this->db->insert('invoices',$data[$i]);
+				$this->db->insert('sales',$data[$i]);
+			}
+			return 'success';
+		}catch(Exception $e){
+			return 'failed';
+		}
+	}
+	public function save_purchase($invoice_data){
+		$email = $this->input->post('email');
+		$name = $this->input->post('name');
+		$phonenumber = $this->input->post('phonenumber');
+		$total = $this->input->post('total');
+		$amountpaid = $this->input->post('amountpaid');
+		$balancedue = $this->input->post('balancedue');
+		// $sql = "INSERT INTO purchases(name,phonenumber,email,no,product,total,amount,balancedue,amountpaid,description,quantity,unitprice) VALUES(
+		// " . $this->db->escape($name).",
+		// " . $this->db->escape($phonenumber).",
+		// " . $this->db->escape($email).",
+		// " . $this->db->escape($total).",
+		// " . $this->db->escape($amountpaid).",
+		// " . $this->db->escape($balancedue).")";
+		// // $this->db->query($sql);
+		for ($i=0; $i < count($invoice_data); $i++) { 
+			$data[]= array(
+				'no'=>$invoice_data[$i]['no'],
+				'product'=>$invoice_data[$i]['product'],
+				'name'=>$invoice_data[$i]['name'],
+				'email'=>$invoice_data[$i]['email'],
+				'phonenumber'=>$invoice_data[$i]['phonenumber'],
+				// 'description'=>$invoice_data[$i]['description'],
+				'balancedue'=>$invoice_data[$i]['balancedue'],
+				'amountpaid'=>$invoice_data[$i]['amountpaid'],
+				'total'=>$invoice_data[$i]['total'],
+				'quantity'=>$invoice_data[$i]['quantity'],
+				'unitprice'=>$invoice_data[$i]['unitprice'],
+				'amount'=>$invoice_data[$i]['amount']
+			);
+		}
+		try{
+			//insert data into database...
+			for ($i=0; $i <count($invoice_data) ; $i++) { 
+				$this->db->insert('purchases',$data[$i]);
+				$this->db->insert('totalexpenditure',$data[$i]);
+			}
+			return 'success';
+		}catch(Exception $e){
+			return 'failed';
+		}
+	}
+	public function save_expense($invoice_data){
+		$expensedate = $this->input->post('expensedate');
+		$total = $this->input->post('total');
+		$description = $this->input->post('description');
+		$sql = "INSERT INTO expenses(expensedate,no,product,quantity,unitprice,amount,description) VALUES(
+		" . $this->db->escape($expensedate).",
+		" . $this->db->escape($total).",
+		" . $this->db->escape($description).")";
+		// $this->db->query($sql);
+		for ($i=0; $i < count($invoice_data); $i++) { 
+			$data[]= array(
+				'no'=>$invoice_data[$i]['no'],
+				'product'=>$invoice_data[$i]['product'],
+				'expensedate'=>$invoice_data[$i]['expensedate'],
+				'total'=>$invoice_data[$i]['total'],
+				'quantity'=>$invoice_data[$i]['quantity'],
+				'unitprice'=>$invoice_data[$i]['unitprice'],
+				'amount'=>$invoice_data[$i]['amount']
+			);
+		}
+		try{
+			//insert data into database...
+			for ($i=0; $i <count($invoice_data) ; $i++) { 
+				$this->db->insert('expenses',$data[$i]);
+				$this->db->insert('totalexpenditure',$data[$i]);
+			}
+			return 'success';
+		}catch(Exception $e){
+			return 'failed';
+		}
+	}
+	public function save_cashtransaction($invoice_data){
+		$clientemail = $this->input->post('clientemail');
+		$clientname = $this->input->post('clientname');
+		$clientphone = $this->input->post('clientphone');
+		$invoicedate = $this->input->post('invoicedate');
+		$billingaddress = $this->input->post('billingaddress');
+		$total = $this->input->post('total');
+		$amountpaid = $this->input->post('amount');
+		$description = $this->input->post('description');
+		$sql = "INSERT INTO cashtransactions(clientname,clientphone,invoicedate,billingaddress,total,amount,description) VALUES(
+		" . $this->db->escape($clientname).",
+		" . $this->db->escape($clientphone).",
+		" . $this->db->escape($invoicedate).",
+		" . $this->db->escape($billingaddress).",
+		" . $this->db->escape($total).",
+		" . $this->db->escape($description).")";
+		// $this->db->query($sql);
+		for ($i=0; $i < count($invoice_data); $i++) { 
+			$data[]= array(
+				'no'=>$invoice_data[$i]['no'],
+				'tax'=>$invoice_data[$i]['tax'],
+				'product'=>$invoice_data[$i]['product'],
+				'clientname'=>$invoice_data[$i]['clientname'],
+				'clientemail'=>$invoice_data[$i]['clientemail'],
+				'clientphone'=>$invoice_data[$i]['clientphone'],
+				'transactiondate'=>$invoice_data[$i]['transactiondate'],
+				'total'=>$invoice_data[$i]['total'],
+				'billingaddress'=>$invoice_data[$i]['billingaddress'],
+				'quantity'=>$invoice_data[$i]['quantity'],
+				'unitprice'=>$invoice_data[$i]['unitprice'],
+				'amount'=>$invoice_data[$i]['amount']
+			);
+		}
+		try{
+			//insert data into database...
+			for ($i=0; $i <count($invoice_data) ; $i++) { 
+				$this->db->insert('cashtransactions',$data[$i]);
+				$this->db->insert('sales',$data[$i]);
+				$this->db->insert('totalincome',$data[$i]);
 			}
 			return 'success';
 		}catch(Exception $e){
@@ -73,7 +287,7 @@ class Users_model extends CI_Model {
 		$sql = "INSERT INTO editquotation(invoiceprefix) VALUES(" . $this->db->escape($invoiceprefix) . ")";
 		$result = $this->db->query($sql);
 	}
-	public function save_invoicepayment($invoice_data){
+	public function save_invoicepayment($invoice_data,$id){
 		$invoice_id = $this->input->post('invoice_id');
 		$amountrecieved = $this->input->post('amountrecieved');
 		$clientemail = $this->input->post('clientemail');
@@ -85,7 +299,7 @@ class Users_model extends CI_Model {
 		$total = $this->input->post('total');
 		$amountpaid = $this->input->post('amount');
 		$balancedue = $this->input->post('balancedue');
-		$sql = "INSERT INTO invoices(invoice_id,balancedue,amountpaid,description,clientname,clientphone,clientemail,quantity,unitprice,amount,tax) VALUES(
+		$sql = "INSERT INTO incomeaccount(invoice_id,balancedue,amountpaid,description,clientname,clientphone,clientemail,quantity,unitprice,amount,tax,newamountpaid) VALUES(
 		" . $this->db->escape($invoice_id).",
 		" . $this->db->escape($amountrecieved).",
 		" . $this->db->escape($total).")";
@@ -99,7 +313,7 @@ class Users_model extends CI_Model {
 				'clientemail'=>$invoice_data[$i]['clientemail'],
 				'clientphone'=>$invoice_data[$i]['clientphone'],
 				// 'duedate'=>$invoice_data[$i]['duedate'],
-				// 'invoicedate'=>$invoice_data[$i]['invoicedate'],
+				'newamountpaid'=>$invoice_data[$i]['newamountpaid'],
 				'product'=>$invoice_data[$i]['product'],
 				'balancedue'=>$invoice_data[$i]['newbalancedue'],
 				'amountpaid'=>$invoice_data[$i]['amountrecieved'],
@@ -114,7 +328,61 @@ class Users_model extends CI_Model {
 		try{
 			//insert data into database...
 			for ($i=0; $i <count($invoice_data) ; $i++) { 
-				$this->db->insert('incomeaccount',$data[$i]);
+				$this->db->where('invoice_id',$id);
+                $this->db->set($data[$i]);
+                $this->db->update('invoices', $data[$i]);
+                $this->db->insert('incomeaccount', $data[$i]);
+                $this->db->insert('totalincome', $data[$i]);
+			}
+			return 'success';
+		}catch(Exception $e){
+			return 'failed';
+		}
+	}
+public function save_deletedinvoice($invoice_data,$id){
+		$invoice_id = $this->input->post('invoice_id');
+		$amountrecieved = $this->input->post('amountrecieved');
+		$clientemail = $this->input->post('clientemail');
+		$clientname = $this->input->post('clientname');
+		$clientphone = $this->input->post('clientphone');
+		$invoicedate = $this->input->post('invoicedate');
+		$duedate = $this->input->post('duedate');
+		$billingaddress = $this->input->post('billingaddress');
+		$total = $this->input->post('total');
+		$amountpaid = $this->input->post('amount');
+		$balancedue = $this->input->post('balancedue');
+		$email = $this->input->post('email');
+		$sql = "INSERT INTO deletedinvoices(invoice_id,balancedue,amountpaid,description,clientname,clientphone,clientemail,quantity,unitprice,amount,tax,email) VALUES(
+		" . $this->db->escape($invoice_id).",
+		" . $this->db->escape($amountrecieved).",
+		" . $this->db->escape($email).",
+		" . $this->db->escape($total).")";
+		// $this->db->query($sql);
+		for ($i=0; $i < count($invoice_data); $i++) { 
+			$data[]= array(
+				'invoice_id'=>$invoice_data[$i]['invoice_id'],
+				'tax'=>$invoice_data[$i]['tax'],
+				// 'product'=>$invoice_data[$i]['product'],
+				'clientname'=>$invoice_data[$i]['clientname'],
+				'clientemail'=>$invoice_data[$i]['clientemail'],
+				'clientphone'=>$invoice_data[$i]['clientphone'],
+				// 'duedate'=>$invoice_data[$i]['duedate'],
+				'email'=>$invoice_data[$i]['email'],
+				'product'=>$invoice_data[$i]['product'],
+				'balancedue'=>$invoice_data[$i]['newbalancedue'],
+				'amountpaid'=>$invoice_data[$i]['amountrecieved'],
+				'total'=>$invoice_data[$i]['total'],
+				// 'billingaddress'=>$invoice_data[$i]['billingaddress'],
+				// 'description'=>$invoice_data[$i]['description'],
+				'quantity'=>$invoice_data[$i]['quantity'],
+				'unitprice'=>$invoice_data[$i]['unitprice'],
+				'amount'=>$invoice_data[$i]['amount']
+			);
+		}
+		try{
+			//insert data into database...
+			for ($i=0; $i <count($invoice_data) ; $i++) { 
+                $this->db->insert('deletedinvoices', $data[$i]);
 			}
 			return 'success';
 		}catch(Exception $e){
@@ -162,7 +430,10 @@ class Users_model extends CI_Model {
 		try{
 			//insert data into database...
 			for ($i=0; $i <count($invoice_data) ; $i++) { 
-				$this->db->update('incomeaccount',$data[$i]);
+				return $this->db->where('id',$id)
+				
+
+		                 ->update('products',$data);
 			}
 			return 'success';
 		}catch(Exception $e){
@@ -247,6 +518,59 @@ class Users_model extends CI_Model {
 	    $result=$this->db->query($sql);
 	    redirect("user/clients");
 	}
+	public function add_employee(){
+		$firstname = $this->input->post('firstname');
+		$secondname =$this->input->post('secondname');
+		$emailaddress =$this->input->post('emailaddress');
+		$phonenumber =$this->input->post('phonenumber');
+		$streetaddress =$this->input->post('streetaddress');
+		$employeenumber =$this->input->post('employeenumber');
+		$department =$this->input->post('department');
+		$jobtitle =$this->input->post('jobtitle');
+		$salary =$this->input->post('salary');
+		$allowances =$this->input->post('allowances');
+		$sql = "INSERT INTO employees(firstname,secondname,emailaddress,phonenumber,streetaddress,employeenumber,department,jobtitle,salary,allowances) VALUES(
+		" . $this->db->escape($firstname).",
+	    " . $this->db->escape($secondname).",
+	    " . $this->db->escape($emailaddress).",
+	    " . $this->db->escape($phonenumber).",
+	    " . $this->db->escape($streetaddress).",
+	    " . $this->db->escape($employeenumber).",
+	    " . $this->db->escape($department).",
+	    " . $this->db->escape($jobtitle).",
+	    " . $this->db->escape($salary).",
+	    " . $this->db->escape($allowances)."
+	)";
+
+	    $result=$this->db->query($sql);
+	    $this->session->set_flashdata('msg','Successfully Added Employee');
+	    redirect("user/humanresource");
+	}
+	public function getemployees(){
+		$query = $this->db->get('employees');
+		return $query;
+	}
+	public function add_supplier(){
+		$firstname = $this->input->post('firstname');
+		$secondname =$this->input->post('secondname');
+		$email =$this->input->post('email');
+		$street =$this->input->post('street');
+		$town =$this->input->post('town');
+		$phone =$this->input->post('phone');
+		$state =$this->input->post('state');
+		$sql = "INSERT INTO suppliers(firstname,secondname,email,street,town,phone,state) VALUES(
+		" . $this->db->escape($firstname).",
+	    " . $this->db->escape($secondname).",
+	    " . $this->db->escape($email).",
+	    " . $this->db->escape($street).",
+	    " . $this->db->escape($town).",
+	    " . $this->db->escape($phone).",
+	    " . $this->db->escape($state)."
+	)";
+
+	    $result=$this->db->query($sql);
+	    redirect("user/suppliers");
+	}
 	public function add_clientcompany(){
 		$name = $this->input->post('name');
 		$email =$this->input->post('email');
@@ -270,6 +594,30 @@ class Users_model extends CI_Model {
 
 	    $result=$this->db->query($sql);
 	    redirect("user/clients");
+	}
+	public function add_suppliercompany(){
+		$name = $this->input->post('name');
+		$email =$this->input->post('email');
+		$number =$this->input->post('phonenumber');
+		$street =$this->input->post('street');
+		$town =$this->input->post('town');
+		$postalcode =$this->input->post('postalcode');
+		$country =$this->input->post('country');
+		$state =$this->input->post('state');
+		$sql = "INSERT INTO suppliercompany(name,email,phonenumber,street,town,postalcode,country,state) VALUES(
+		" . $this->db->escape($name).",
+	    " . $this->db->escape($email).",
+	    " . $this->db->escape($number).",
+	    " . $this->db->escape($street).",
+	    " . $this->db->escape($town).",
+	    " . $this->db->escape($postalcode).",
+	    " . $this->db->escape($country).",
+	    " . $this->db->escape($state)."
+	  
+	)";
+
+	    $result=$this->db->query($sql);
+	    redirect("user/suppliers");
 	}
 	public function company_profile(){
 		$companyname = $this->input->post('companyname');
@@ -303,10 +651,47 @@ class Users_model extends CI_Model {
 	    $result=$this->db->query($sql);
 	    redirect("user/admin");
 	}
-	public function gettotals(){
-		$this->db->select_sum('total');
+	public function getunpaidinvoices(){
+		$this->db->select_sum('balancedue');
 	    $query = $this->db->get('invoices');
 	    return $query;
+	}
+	public function getsales(){
+		$this->db->select_sum('amount');
+	    $query = $this->db->get('sales');
+	    return $query;
+	}
+	public function getsales1(){
+	    $query = $this->db->get('sales');
+	    return $query;
+	}
+	
+	public function getexpenses(){
+		$this->db->select_sum('amount');
+	    $query = $this->db->get('expenses');
+	    return $query;
+	}
+	public function getcash(){
+		$this->db->select_sum('amount');
+	    $query = $this->db->get('cashtransactions');
+	    return $query;
+	}
+	public function getpurchases(){
+		$this->db->select_sum('amount');
+	    $query = $this->db->get('purchases');
+	    return $query;
+	}
+	public function getbank(){
+		$this->db->select_sum('amount');
+	    $query = $this->db->get('bankaccount');
+	    return $query;
+	}
+	public function getclients(){
+		$this->db->select('id');
+		$this->db->distinct();
+		$this->db->from('clients');
+		$query = $this->db->get();
+		return $query;
 	}
 	public function getincome(){
 		$this->db->select_sum('amountpaid');
@@ -317,6 +702,15 @@ class Users_model extends CI_Model {
 		$this->db->select_sum('amount');
 	    $query = $this->db->get('bankaccount');
 	    return $query;
+	}
+	public function gettotalincome(){
+		$this->db->select_sum('amountpaid');
+		$query = $this->db->get('totalincome');
+		return $query;
+	}
+	public function gettotalincome1(){
+		$query = $this->db->get('totalincome');
+		return $query;
 	}
 	public function add_invoice(){
 		$invoicenumber=$this->input->post('invoicenumber');
@@ -346,17 +740,31 @@ class Users_model extends CI_Model {
 	}
 	public function bankaccount(){
 		$receiptno=$this->input->post('receiptno');
-		$invoiceno=$this->input->post('invoiceno');
-		$depositdate=$this->input->post('date');
+		$bank=$this->input->post('bank');
+		$details=$this->input->post('details');
+		$depositdate=$this->input->post('depositdate');
 		$amount = $this->input->post('amount');
-		$sql = "INSERT INTO bankaccount(receiptno,invoiceno,depositdate,amount) VALUES(
+		$sql = "INSERT INTO bankaccount(receiptno,bank,details,depositdate,amount) VALUES(
 		" . $this->db->escape($receiptno).",
-		" . $this->db->escape($invoiceno).",
+		" . $this->db->escape($bank).",
+		" . $this->db->escape($details).",
 		" . $this->db->escape($depositdate).",
 		" . $this->db->escape($amount)."
 	    )";
 	    $result=$this->db->query($sql);
-	    $this->load->view('bankaccount');
+	}
+	public function pettycashaccount(){
+		$transferredby=$this->input->post('transferredby');
+		$details=$this->input->post('details');
+		$depositdate=$this->input->post('depositdate');
+		$amount = $this->input->post('amount');
+		$sql = "INSERT INTO pettycashaccount(transferredby,details,depositdate,amount) VALUES(
+		" . $this->db->escape($transferredby).",
+		" . $this->db->escape($details).",
+		" . $this->db->escape($depositdate).",
+		" . $this->db->escape($amount)."
+	    )";
+	    $result=$this->db->query($sql);
 	}
 	public function add_product(){
 		$productname=$this->input->post('productname');
@@ -423,8 +831,32 @@ class Users_model extends CI_Model {
 		$query = $this->db->get('incomeaccount');
 		return $query;
 	}
+	public function fetch_cashtransactions(){
+		$query = $this->db->get('cashtransactions');
+		return $query;
+	}
+	public function fetch_cashtransactions1(){
+		$query = $this->db->get('cashtransactions');
+		return $query->result();
+	}
 	public function fetch_serviceimage(){
 		$query = $this->db->get("table_serviceimg");
+		return $query;
+	}
+	public function fetch_expenses(){
+		$query = $this->db->get("expenses");
+		return $query;
+	}
+	public function fetch_supplier(){
+		$query = $this->db->get("suppliers");
+		return $query;
+	}
+	public function fetch_suppliercompany(){
+		$query = $this->db->get("suppliercompany");
+		return $query;
+	}
+	public function fetch_purchases(){
+		$query = $this->db->get("purchases");
 		return $query;
 	}
 	public function fetch_company(){
@@ -441,6 +873,23 @@ class Users_model extends CI_Model {
 	}
 	public function fetch_bankaccount(){
 		$query = $this->db->get("bankaccount");
+		return $query;
+	}
+	public function gettotalexpenditure(){
+		$this->db->select_sum('amount');
+		$query = $this->db->get('totalexpenditure');
+		return $query;
+	}
+	public function gettotalexpenditure1(){
+		$query = $this->db->get('totalexpenditure');
+		return $query;
+	}
+	public function fetch_pettycashaccount(){
+		$query = $this->db->get("pettycashaccount");
+		return $query;
+	}
+	public function fetch_deletedinvoices(){
+		$query = $this->db->get("deletedinvoices");
 		return $query;
 	}
 	public function update_profile($data,$id){
@@ -471,6 +920,13 @@ class Users_model extends CI_Model {
 		$query = $this->db->get("clientcompany");
 		return $query;
 	}
+	public function getsupplierdata($id){
+		$this->db->select(['suppliers.id','suppliers.firstname','suppliers.secondname','suppliers.email','suppliers.street','suppliers.town','suppliers.phone','suppliers.state']);
+		$this->db->from('suppliers');
+		$this->db->where(['suppliers.id'=>$id]);
+		$clients = $this->db->get();
+		return $clients->result();
+	}
 	public function getclientdata($id){
 		$this->db->select(['clients.id','clients.firstname','clients.secondname','clients.email','clients.street','clients.town','clients.company','clients.phone','clients.state','clients.products']);
 		$this->db->from('clients');
@@ -478,22 +934,33 @@ class Users_model extends CI_Model {
 		$clients = $this->db->get();
 		return $clients->result();
 	}
+	public function get_salesinfo(){
+		$query = $this->db->get('sales');
+		return $query->result();
+	}
+	public function getcashtransactionsdata($id){
+		$this->db->select(['cashtransactions.cash_id','cashtransactions.no','cashtransactions.product','cashtransactions.transactiondate','cashtransactions.quantity','cashtransactions.clientemail','cashtransactions.unitprice','cashtransactions.clientname','cashtransactions.clientphone','cashtransactions.total','cashtransactions.tax','cashtransactions.amount']);
+		$this->db->from('cashtransactions');
+		$this->db->where(['cashtransactions.cash_id'=>$id]);
+		$receipts = $this->db->get();
+		return $receipts->result();
+	}
 	public function getincomeaccountdata($id){
-		$this->db->select(['incomeaccount.id','incomeaccount.invoice_id','incomeaccount.product','incomeaccount.amountpaid','incomeaccount.dateofreceipt','incomeaccount.quantity','incomeaccount.clientemail','incomeaccount.unitprice','incomeaccount.clientname','incomeaccount.clientphone','incomeaccount.total','incomeaccount.tax','incomeaccount.balancedue']);
+		$this->db->select(['incomeaccount.id','incomeaccount.invoice_id','incomeaccount.product','incomeaccount.amountpaid','incomeaccount.dateofreceipt','incomeaccount.quantity','incomeaccount.clientemail','incomeaccount.unitprice','incomeaccount.clientname','incomeaccount.clientphone','incomeaccount.total','incomeaccount.tax','incomeaccount.balancedue','incomeaccount.newamountpaid']);
 		$this->db->from('incomeaccount');
 		$this->db->where(['incomeaccount.id'=>$id]);
 		$receipts = $this->db->get();
 		return $receipts->result();
 	}
 	public function getincomeaccountdata1($id){
-		$this->db->select(['incomeaccount.id','incomeaccount.invoice_id','incomeaccount.product','incomeaccount.amountpaid','incomeaccount.dateofreceipt','incomeaccount.quantity','incomeaccount.clientemail','incomeaccount.unitprice','incomeaccount.clientname','incomeaccount.clientphone','incomeaccount.total','incomeaccount.tax','incomeaccount.balancedue']);
+		$this->db->select(['incomeaccount.id','incomeaccount.invoice_id','incomeaccount.product','incomeaccount.amountpaid','incomeaccount.dateofreceipt','incomeaccount.quantity','incomeaccount.clientemail','incomeaccount.unitprice','incomeaccount.clientname','incomeaccount.clientphone','incomeaccount.total','incomeaccount.tax','incomeaccount.balancedue','incomeaccount.newamountpaid']);
 		$this->db->from('incomeaccount');
 		$this->db->where(['incomeaccount.id'=>$id]);
 		$receipts = $this->db->get();
 		return $receipts->row();
 	}
 	public function getinvoicedata($id){
-		$this->db->select(['invoices.invoice_id','invoices.no','invoices.clientname','invoices.clientemail','invoices.invoicedate','invoices.duedate','invoices.billingaddress','invoices.clientphone','invoices.product','invoices.quantity','invoices.unitprice','invoices.amount','invoices.total','invoices.tax','invoices.amountpaid','invoices.balancedue']);
+		$this->db->select(['invoices.invoice_id','invoices.no','invoices.clientname','invoices.clientemail','invoices.invoicedate','invoices.duedate','invoices.billingaddress','invoices.clientphone','invoices.product','invoices.quantity','invoices.unitprice','invoices.amount','invoices.total','invoices.tax','invoices.amountpaid','invoices.balancedue','invoices.newamountpaid']);
 		$this->db->from('invoices');
 		$this->db->where(['invoices.invoice_id'=>$id]);
 		$clients = $this->db->get();
@@ -519,6 +986,14 @@ class Users_model extends CI_Model {
 		$this->db->where(['services.id'=>$id]);
 		$services = $this->db->get();
 		return $services->result();
+	}
+	public function getsuppliercompanydata($id){
+		$this->db->select(['suppliercompany.id','suppliercompany.name','suppliercompany.email','suppliercompany.phonenumber','suppliercompany.street','suppliercompany.town','suppliercompany.postalcode','suppliercompany.country','suppliercompany.state']);
+		$this->db->from('suppliercompany');
+		$this->db->where(['suppliercompany.id'=>$id]);
+		$clients = $this->db->get();
+		return $clients->result();
+
 	}
 	public function getclientcompanydata($id){
 		$this->db->select(['clientcompany.id','clientcompany.name','clientcompany.email','clientcompany.phonenumber','clientcompany.street','clientcompany.town','clientcompany.postalcode','clientcompany.country','clientcompany.state']);
@@ -624,6 +1099,8 @@ class Users_model extends CI_Model {
 		if($result->num_rows()===1){
 			if($row->active ){
 				if ($row->password === sha1($this->config->item('salt') . $password)) {
+					$session_data=array('email','email');
+        		$this->session->set_userdata('email',$email);
 					return 'logged_in';
 				}
 				else{

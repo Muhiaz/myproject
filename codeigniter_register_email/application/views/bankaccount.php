@@ -6,25 +6,37 @@
     <meta name="description" content="Creative - Bootstrap 3 Responsive Admin Template">
     <meta name="author" content="GeeksLabs">
     <meta name="keyword" content="Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal">
-    <link rel="shortcut icon" href="../img/favicon.png">
+    <link rel="shortcut icon" href="../../img/favicon.png">
     <title></title>
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <link href="../../css/bootstrap.min.css" rel="stylesheet">
-    <link href="../../css/bootstrap-theme.css" rel="stylesheet">
-    <link href="../../css/elegant-icons-style.css" rel="stylesheet" />
-    <link href="../../css/font-awesome.min.css" rel="stylesheet" />    
-    <link href="../../assets/fullcalendar/fullcalendar/bootstrap-fullcalendar.css" rel="stylesheet" />
-	<link href="../../assets/fullcalendar/fullcalendar/fullcalendar.css" rel="stylesheet" />
-    <link href="../../assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css" media="screen"/>
-    <link rel="stylesheet" href="../../css/owl.carousel.css" type="text/css">
-	<link href="../../css/jquery-jvectormap-1.2.2.css" rel="stylesheet">
-	<link rel="stylesheet" href="../../css/fullcalendar.css">
-	<link href="../../css/widgets.css" rel="stylesheet">
-    <link href="../../css/style1.css" rel="stylesheet">
-    <link href="../../css/style-responsive.css" rel="stylesheet" />
-	<link href="../../css/xcharts.min.css" rel=" stylesheet">	
-	<link href="../../css/jquery-ui-1.10.4.min.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/bootstrap-theme.css" rel="stylesheet">
+    <link href="../css/elegant-icons-style.css" rel="stylesheet" />
+    <link href="../css/font-awesome.min.css" rel="stylesheet" />    
+    <link href="../assets/fullcalendar/fullcalendar/bootstrap-fullcalendar.css" rel="stylesheet" />
+	<link href="../assets/fullcalendar/fullcalendar/fullcalendar.css" rel="stylesheet" />
+    <link href="../assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="../css/owl.carousel.css" type="text/css">
+	<link href="../css/jquery-jvectormap-1.2.2.css" rel="stylesheet">
+	<link rel="stylesheet" href="../css/fullcalendar.css">
+	<link href="../css/widgets.css" rel="stylesheet">
+    <link href="../css/style1.css" rel="stylesheet">
+    <link href="../css/style-responsive.css" rel="stylesheet" />
+	<link href="../css/xcharts.min.css" rel=" stylesheet">	
+	<link href="../css/jquery-ui-1.10.4.min.css" rel="stylesheet">
   <style type="text/css">
+    .my-custom-scrollbar {
+position: relative;
+height: 50vh;
+width: 80vw;
+overflow: auto;
+}
+.table-wrapper-scroll-y {
+display: block;
+}
+.table-wrapper-scroll-x {
+display: block;
+}
     .fa-casual{
       font-color: #FFDF00;
     }
@@ -197,7 +209,7 @@
               <!-- sidebar menu start-->
               <ul class="sidebar-menu">                
                   <li class="active">
-                      <a class="" href="#">
+                      <a class="" href="admin">
                         <i class="fa fa-home" style="color: #FFDF00;"></i>
                           <span>Dashboard</span>
                       </a>
@@ -297,7 +309,7 @@
 				</div><br>
 			</div>			 
            </div>
-        
+        <div class="container-fluid my-custom-scrollbar" style="justify-content: center;margin-left:3%">
         <table class="table table-stripped" cellspacing="1"
   width="100%" style="border: 1;background-color: #fff;" align="center">
     <thead>
@@ -312,13 +324,13 @@
     <tbody>
      <?php 
      if($fetch_bankaccount->num_rows()>0){
-      foreach ($fetch_bankaccount->row() as $row) {
+      foreach ($fetch_bankaccount->result() as $row) {
         ?>
         <tr>
           <td><?php echo $row->receiptno;  ?></td>
-          <td><?php echo $row->invoiceno;  ?></td>
-          <td><?php echo $row->date; ?></td>
-          <td><?php echo $row->amount; ?../></td>
+          <td><?php echo $row->details;  ?></td>
+          <td><?php echo $row->depositdate; ?></td>
+          <td><?php echo $row->amount; ?></td>
         </tr>
         <?php
       }
@@ -330,6 +342,7 @@
     }?>
     </tbody>
   </table>
+</div>
 		  <!-- Today status end -->
 			<div class="row">
                	

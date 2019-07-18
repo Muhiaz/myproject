@@ -9,25 +9,64 @@
     <link rel="shortcut icon" href="../img/favicon.png">
     <title></title>
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <link href="../../css/bootstrap.min.css" rel="stylesheet">
-    <link href="../../css/bootstrap-theme.css" rel="stylesheet">
-    <link href="../../css/elegant-icons-style.css" rel="stylesheet" />
-    <link href="../../css/font-awesome.min.css" rel="stylesheet" />    
-    <link href="../../assets/fullcalendar/fullcalendar/bootstrap-fullcalendar.css" rel="stylesheet" />
-	<link href="../../assets/fullcalendar/fullcalendar/fullcalendar.css" rel="stylesheet" />
-    <link href="../../assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css" media="screen"/>
-    <link rel="stylesheet" href="../../css/owl.carousel.css" type="text/css">
-	<link href="../../css/jquery-jvectormap-1.2.2.css" rel="stylesheet">
-	<link rel="stylesheet" href="../../css/fullcalendar.css">
-	<link href="../../css/widgets.css" rel="stylesheet">
-    <link href="../../css/style1.css" rel="stylesheet">
-    <link href="../../css/style-responsive.css" rel="stylesheet" />
-	<link href="../../css/xcharts.min.css" rel=" stylesheet">	
-	<link href="../../css/jquery-ui-1.10.4.min.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/bootstrap-theme.css" rel="stylesheet">
+    <link href="../css/elegant-icons-style.css" rel="stylesheet" />
+    <link href="../css/font-awesome.min.css" rel="stylesheet" />    
+    <link href="../assets/fullcalendar/fullcalendar/bootstrap-fullcalendar.css" rel="stylesheet" />
+	<link href="../assets/fullcalendar/fullcalendar/fullcalendar.css" rel="stylesheet" />
+    <link href="../assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="../css/owl.carousel.css" type="text/css">
+	<link href="../css/jquery-jvectormap-1.2.2.css" rel="stylesheet">
+	<link rel="stylesheet" href="../css/fullcalendar.css">
+	<link href="../css/widgets.css" rel="stylesheet">
+    <link href="../css/style1.css" rel="stylesheet">
+    <link href="../css/style-responsive.css" rel="stylesheet" />
+	<link href="../css/xcharts.min.css" rel=" stylesheet">	
+	<link href="../css/jquery-ui-1.10.4.min.css" rel="stylesheet">
   <style type="text/css">
+    label{
+      color: #000;
+    }
     .fa-casual{
       font-color: #FFDF00;
     }
+    .salebtn {
+  background-color: #394a59;
+  height: 20px !important;
+  color: white;
+  font-weight: 300;
+  padding: 0px 98.5px 15px 10px;
+  width: 100%;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position:relative;
+  float: right;
+  background-color: #000000;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: #000;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1;}
+.dropdown:hover .dropdown-content {display: inline-block;float:right;}
+.dropdown:hover .dropbtn {background-color: #394a59;}
      .dropbtn1 {
   background-color: green;
   color: white;
@@ -38,6 +77,7 @@
   width: 20%;
 }
   </style>
+  <script type="text/javascript">document.getElementById('today').value = Date();</script>
   </head>
   <body>
   <section id="container" class=""> 
@@ -206,7 +246,7 @@
               <!-- sidebar menu start-->
               <ul class="sidebar-menu">                
                   <li class="active">
-                      <a class="" href="#">
+                      <a class="" href="admin">
                         <i class="fa fa-home" style="color: #FFDF00;"></i>
                           <span>Dashboard</span>
                       </a>
@@ -229,12 +269,16 @@
                           <span>Human Resource</span>
                       </a>
                   </li>       
-                  <li class="sub-menu">
-                      <a href="invoices" class="">
+                  <li class="sub-menu dropdown" style="float:right;">
+                      <a href="" class="">
                           <i class="fa fa-file" style="color: #FFDF00;"></i>
-                          <span>Invoices</span>
+                          <span> <button class="salebtn">Sales</button>
+                        <div class="dropdown-content" style="left:0;">
+                          <a href="invoices">Invoices</a>
+                          <a href="allcash">Cash</a>
+                        </div></span>
                       </a>
-                  </li>
+                  </li><br><br>
                   <li>
                       <a class="" href="#">
                          <i class="fa fa-pie-chart" style="color: #FFDF00;"></i>
@@ -277,24 +321,28 @@
       <section id="main-content">
 
           <section class="wrapper"> 
-			 <div class="container" style="background-color: #fff;box-shadow: 1px 1px 1px 1px #8888;width: 40%;margin-top: 05%;padding: 20px;">
+			 <div class="container" style="background-color: #fff;box-shadow: 1px 1px 1px 1px #8888;width: 40%;margin-top: 02%;padding: 20px;">
      <?php echo form_open_multipart('user/bankaccount') ?>
      <h3 class="page-header h3" style="text-align: center;">BANK</h3>
                    <div class="form-group">
-          <label for="email">Receipt No :</label>
-           <?php echo form_input(['name'=>'receiptno','type'=>'text','id'=>'receiptno','class'=>'form-control','value'=>set_value('receiptno',$receipts->id)]); ?><span class="text-danger"><?php echo form_error("receiptno"); ?></span>
+          <label for="email">Receipt No:</label>
+            <span class="text-danger"><input type="text" name="receiptno" class="form-control"><span class="ted"></span><?php echo form_error("receiptno"); ?></span>
         </div>
         <div class="form-group">
-          <label for="email">REF: Invoice No</label>
-           <?php echo form_input(['name'=>'invoiceno','type'=>'text','id'=>'invoiceno','class'=>'form-control','value'=>set_value('invoiceno',$receipts->invoice_id)]); ?><span class="text-danger"><?php echo form_error("invoiceno"); ?></span>
+          <label for="email">Bank:</label>
+            <span class="text-danger"><input type="text" name="bank" class="form-control"><span class="ted"></span><?php echo form_error("bank"); ?></span>
+        </div>
+        <div class="form-group">
+          <label for="email">Details</label>
+           <input type="text" name="details" class="form-control"><span class="text-danger"><?php echo form_error("details"); ?></span>
         </div>
         <div class="form-group">
           <label for="email">Date:</label>
-           <?php echo form_input(['name'=>'date','type'=>'text','id'=>'date','class'=>'form-control','value'=>set_value('date',$receipts->dateofreceipt)]); ?><span class="text-danger"><?php echo form_error("date"); ?></span>
+            <input type="date" name="depositdate" class="form-control">
         </div>  
         <div class="form-group">
-          <label for="password">Amount:</label>
-          <input type="text" name="amount" class="form-control"><?php echo form_error("amount"); ?></span>
+          <label for="password">Amount to transfer:</label>
+          <input type="text" name="amount" class="form-control"><span class="text-danger"><?php echo form_error("amount"); ?></span>
         </div>
         <button type="submit" class="dropbtn1">Submit</button>
                 <?php echo form_close() ?> 
@@ -355,6 +403,7 @@
 	<script src="../js/charts.js"></script>
 	<script src="../js/jquery.slimscroll.min.js"></script>
   <script>
+    document.querySelector("#today").valueAsDate = new Date();
       //knob
       $(function() {
         $(".knob").knob({
@@ -370,7 +419,7 @@
               slideSpeed : 300,
               paginationSpeed : 400,
               singleItem : true
-          });../
+          });
       });
       //custom select box
 

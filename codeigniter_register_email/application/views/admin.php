@@ -28,6 +28,63 @@
     .fa-casual{
       font-color: #FFDF00;
     }
+    .dropbtn {
+  background-color: #394a59;
+  height: 20px !important;
+  color: white;
+  font-weight: 300;
+  padding: 0px 98.5px 10px 10px;
+  width: 100%;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+.dropbtn1 {
+  background-color: #394a59;
+  height: 20px !important;
+  color: white;
+  font-weight: 300;
+  padding: 0px 50.5px 15px 10px;
+  width: 100%;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+.dropbtn2 {
+  background-color: #394a59;
+  height: 20px !important;
+  color: white;
+  font-weight: 300;
+  padding: 0px 75.5px 15px 10px;
+  width: 100%;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+.dropdown-content {
+  display: none;
+  position:relative;
+  margin-left: 100%;
+  background-color: #000000;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: #000;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1;}
+.dropdown:hover .dropdown-content {display: inline-block;float:right;}
+.dropdown:hover .dropbtn {background-color: #394a59;}
   </style>
   </head>
   <body>
@@ -108,7 +165,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="reports">
                                     <div class="task-info">
                                         <div class="desc">Reports</div>
                                         <div class="percent"></div>
@@ -214,18 +271,29 @@
                           <span>Products/Services</span>
                       </a>
                   </li>
-				  <li class="sub-menu">
-                      <a href="#" class="">
-                        <i class="fa fa-address-book" style="color: #FFDF00;"></i>
-                          <span>Human Resource</span>
-                      </a>
-                  </li>       
-                  <li class="sub-menu">
-                      <a href="invoices" class="">
+                  <li class="sub-menu dropdown" style="float:right;">
+                      <a href="" class="">
                           <i class="fa fa-file" style="color: #FFDF00;"></i>
-                          <span>Invoices</span>
+                          <span> <button class="dropbtn2">Acounts</button>
+                        <div class="dropdown-content" style="left:0;">
+                          <a href="accounts">Income</a>
+                          <a href="undeposited">Undeposited</a>
+                           <a href="pettycash">Petty Cash</a>
+                            <a href="bankaccount">Bank</a>
+
+                        </div></span>
                       </a>
-                  </li>
+                  </li><br><br>     
+                  <li class="sub-menu dropdown" style="float:left;">
+                      <a href="" class="">
+                          <i class="fa fa-file" style="color: #FFDF00;"></i>
+                          <span> <button class="dropbtn">Sales</button>
+                        <div class="dropdown-content" style="left:0;">
+                          <a href="invoices">Invoices</a>
+                          <a href="allcash">Cash</a>
+                        </div></span>
+                      </a>
+                  </li><br><br><br>
                   <li>
                       <a class="" href="#">
                          <i class="fa fa-pie-chart" style="color: #FFDF00;"></i>
@@ -233,23 +301,27 @@
                       </a>
                   </li>
                   <li>                     
-                      <a class="" href="#">
+                      <a class="" href="reports">
                          <i class="fa fa-files-o" style="color: #FFDF00;"></i>
                           <span>Reports</span>
                       </a>                  
                   </li>
-                  <li class="sub-menu">
-                      <a href="#" class="">
-                         <i class="fa fa-dollar" style="color: #FFDF00;"></i>
-                          <span>Expenses</span>
+                  <li class="sub-menu dropdown" style="float:right;">
+                      <a href="" class="">
+                          <i class="fa fa-file" style="color: #FFDF00;"></i>
+                          <span> <button class="dropbtn1">Expenditure</button>
+                        <div class="dropdown-content" style="left:0;">
+                          <a href="allexpenses">Expenses</a>
+                          <a href="allpurchases">Purchases</a>
+                        </div></span>
                       </a>
-                  </li> 
-                  <li class="sub-menu">
-                      <a href="#" class="">
-                         <i class="fa fa-bank" style="color: #FFDF00;"></i>
-                          <span>Bank</span>
+                  </li><br><br><br>
+                   <li class="sub-menu">
+                      <a href="humanresource" class="">
+                        <i class="fa fa-address-book" style="color: #FFDF00;"></i>
+                          <span>Human Resource</span>
                       </a>
-                  </li>                
+                  </li>       
                   <li class="sub-menu">
                       <a href="#" class="">
                           <i class="fa fa-user-circle" style="color: #FFDF00;"></i>
@@ -272,14 +344,7 @@
 				<div class="col-lg-12" style="background-color: #fff; border-radius: 10px;box-shadow: 1px 1px 1px 1px #8888;padding: 3px;">
           <!-- <a href="companyprofile"><button class="btn btn-primary"><h5 style="font-size: 14px;font-weight: 500;font-family:lato;:#000;">Add Company</h5></button></a> -->
           <div style="margin-left: 35%";>
-					 <?php 
-          if($fetch_company->num_rows()>0){
-            foreach ($fetch_company->result() as $row) {
-              echo "<span style='font-family:lato;font-size:30px;'>$row->companyname</span>";
-            }
-          }
-          else{  ?><a href="companyprofile"><button class="btn btn-primary"><h5 style="font-size: 14px;font-weight: 500;font-family:lato;:#000;">Add Company</h5></button></a><?php
-          }?> <?php 
+            <?php 
                                 if($fetch_logo->num_rows()>0){
                                   foreach ($fetch_logo->result() as $row) {
                                     $image_arr = explode(",", $row->logo);
@@ -288,47 +353,66 @@
                                        // echo base_url() .'uploads/' .$image_name;
                                       ?>
                                     <!-- <img src='"<php echo base_url().'images/'.$image_name?>"'>; -->
-                                     <img src="<?php echo base_url() .'uploads/' .$image_name ?>" style="width: 80px; height: 80px;margin-left:20px; ">
+                                     <img src="<?php echo base_url() .'uploads/' .$image_name ?>" style="width: 80px; height: 70px;margin-left:20px; ">
                                       <?php
                                     }
                                   }
                                 }?>
+					 <?php 
+          if($fetch_company->num_rows()>0){
+            foreach ($fetch_company->result() as $row) {
+              echo "<span style='font-family:lato;font-size:30px;'>$row->companyname</span>";
+            }
+          }
+          else{  ?><a href="companyprofile"><button class="btn btn-primary"><h5 style="font-size: 14px;font-weight: 500;font-family:lato;:#000;">Add Company</h5></button></a><?php
+          }?> 
                                 </div>
 				</div><br>
 			</div>			 
            </div>
         <div class="container" style="background-color: #fff;border-radius: 10px;">
-        <div class="container" style="width: 95%;margin-left: 0px;padding-top: 20px;">
+        <div class="container" style="width: 95%;margin-left: 0px;padding-top: 05px;">
            <a href="invoices"><div class="row ">
         <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
           <div class="info-box blue-bg">
             <i class="fa fa-file" style="color: #FFDF00;"></i>
-            <div class="count"><?php if($gettotals->num_rows()>0){
-              foreach ($gettotals->row() as $row) {
+            <div class="title">Unpaid Invoices</div> 
+            <div class="count"><?php if($getunpaidinvoices->num_rows()>0){
+              foreach ($getunpaidinvoices->row() as $row) {
+                 echo "<h2>";
                 echo "Kshs.";
                 print_r($row);
+                echo "</h2>";
               }
-            }?></div>
-            <div class="title">Invoices</div>           
+            }?></div>          
           </div><!--/.info-box-->     
         </div></a> 
-        <a href="clients"><div class="row">
-        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-          <div class="info-box blue-bg">
+        <a href="clients"><div class="row" style="height: 20%;">
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" >
+          <div class="info-box blue-bg" >
             <i class="fa fa-users" style="color: #FFDF00;"></i>
-            <div class="count"></div>
-            <div class="title">Clients</div>           
+            <div class="title">Clients</div>  
+            <div class="count"><?php if($getclients->num_rows()>0){
+              foreach ($getclients->row() as $row) {
+                 echo "<h2>";
+                print_r($row);
+                echo " clients";
+                echo "</h2>";
+              }
+            }?></div>         
           </div><!--/.info-box-->     
         </div></a>
-        <a href="products"><div class="row">
+        <a href="invoices"><div class="row">
         <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
           <div class="info-box blue-bg">
             <i class="fa fa-cloud" style="color: #FFDF00;"></i>
             <div class="title">Sales</div>
-            <div class="count"><?php if($gettotals->num_rows()>0){
-              foreach ($gettotals->row() as $row) {
+            <div class="count"><?php if($getsales->num_rows()>0){
+              foreach ($getsales->row() as $row) {
+                echo "<h2>";
                 echo "Kshs.";
                 print_r($row);
+                 echo "</h2>";
               }
             }?></div>           
           </div><!--/.info-box-->     
@@ -337,54 +421,79 @@
         <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
           <div class="info-box blue-bg">
             <i class="fa fa-clipboard" style="color: #FFDF00;"></i>
-            <div class="count"></div>
-            <div class="title">Accounts</div>           
+             <div class="title">Accounts</div>  
+            <div class="count"><?php if($getbank->num_rows()>0){
+              foreach ($getbank->row() as $row) {
+                 echo "<h2>";
+                echo "Kshs.0";
+                echo "</h2>";
+              }
+            }?></div>         
           </div><!--/.info-box-->     
         </div></a>
 </div>
 </div>
- <div class="container" style="background-color: #fff;border-radius: 10px;">
+ <div class="#" style="background-color: #fff;border-radius: 10px;">
         <div class="container" style="width: 100%;margin-left: 0px;padding-top: 20px;">
            <a href="invoices"><div class="row ">
         <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
           <div class="info-box blue-bg">
-            <i class="fa fa-file" style="color: #FFDF00;"></i>
-            <div class="count"></div>
-            <div class="title">Profit and Loss</div>           
+            <div class="title" style="margin-left: 55%">Profit & Loss</div> 
+            <img src="<?php echo base_url(); ?>images//14150518-gold-beam-balance-isolated-on-white-background.jpg" style="width: 120px;height: 65px;">
+            <div class="count"><?php if($getbank->num_rows()>0){
+              foreach ($getbank->row() as $row) {
+                 echo "<h2>";
+                echo "Kshs.0";
+                echo "</h2>";
+              }
+            }?></div>          
           </div><!--/.info-box-->     
         </div></a> 
         <a href="accounts"><div class="row">
         <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
           <div class="info-box blue-bg">
-            <i class="fa fa-cloud" style="color: #FFDF00;"></i>
-            <div class="count"><?php if($getincome->num_rows()>0){
-              foreach ($getincome->row() as $row) {
+            <div class="title" style="margin-left: 70%">Total Income</div> 
+           <img src="<?php echo base_url(); ?>images/money.jpeg" style="width: 120px;height: 60px;"> 
+            <div class="count"><?php if($gettotalincome->num_rows()>0){
+              foreach ($gettotalincome->row() as $row) {
+                 echo "<h3>";
                 echo "Kshs.";
                 print_r($row);
+                echo "</h3>";
               }
-            }?></div>
-            <div class="title">Income</div>           
+            }?></div>         
           </div><!--/.info-box-->     
         </div></a>
                 <a href="bankaccount"><div class="row">
         <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
           <div class="info-box blue-bg">
-            <i class="fa fa-clipboard" style="color: #FFDF00;"></i>
-            <div class="count"><?php if($getincome->num_rows()>0){
-              foreach ($getincome->row() as $row) {
+            <i class="fa fa-bank" style="color: #FFDF00;"></i>
+            <div class="title">Bank</div>
+            <div class="count"><?php if($getbank->num_rows()>0){
+              foreach ($getbank->row() as $row) {
+                 echo "<h2>";
                 echo "Kshs.";
                 print_r($row);
+                echo "</h2>";
               }
-            }?></div>
-            <div class="title">Bank</div>           
+            }?></div>           
           </div><!--/.info-box-->     
         </div></a>
-          <a href="accounts"><div class="row">
+          <a href="#"><div class="row">
         <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
           <div class="info-box blue-bg">
             <i class="fa fa-clipboard" style="color: #FFDF00;"></i>
-            <div class="count"></div>
-            <div class="title">Expenses</div>           
+            <div class="title">Expenditure</div>    
+            <div class="count">
+              <?php if($gettotalexpenditure->num_rows()>0){
+              foreach ($gettotalexpenditure->row() as $row) {
+                 echo "<h2>";
+                echo "Kshs.";
+                print_r($row);
+                echo "</h2>";
+              }
+            }?>
+            </div>       
           </div><!--/.info-box-->     
         </div></a>
 </div>

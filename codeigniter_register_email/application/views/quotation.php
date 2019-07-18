@@ -362,7 +362,7 @@ function handleSelect(elm)
       });
 $(function(){
 var set_number = function(){
-  var table_len = $('#customersAdd tbody tr').length+1;
+  var table_len = $('#customersAdd tbody').length;
   $('#no').val(table_len);
 }
 set_number();
@@ -379,7 +379,7 @@ set_number();
 $('#save').click(function(){
   var table_data = [];
 //use .each to get all the data
-$('#customersAdd tr').each(function(row,tr){
+$('#customersAdd').each(function(row,tr){
 //create an array to store all the data in a row
 
 
