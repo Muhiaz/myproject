@@ -474,41 +474,6 @@ body{
   <!-- container section start -->
     <!-- javascripts -->
     <!-- <script type="text/javascript" src="http://www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script> -->
-<script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
-    <script src="../js/jquery.js"></script>
-    <script type="text/javascript" src="../js/jquery-ui-1.9.2.custom.min.js"></script>
-    <!-- bootstrap -->
-    <!-- nice scroll -->
-    <script src="../js/jquery.scrollTo.min.js"></script>
-    <script src="../js/jquery.nicescroll.js" type="text/javascript"></script>
-    <!-- charts scripts -->
-    <script src="../assets/jquery-knob/js/jquery.knob.js"></script>
-    <script src="../js/jquery.sparkline.js" type="text/javascript"></script>
-    <script src="../assets/jquery-easy-pie-chart/jquery.easy-pie-chart.js"></script>
-    <script src="../js/owl.carousel.js" ></script>
-    <!-- jQuery full calendar -->
-    <<script src="../js/fullcalendar.min.js"></script> <!-- Full Google Calendar - Calendar -->
-	<script src="../assets/fullcalendar/fullcalendar/fullcalendar.js"></script>
-    <!--script for this page only-->
-    <script src="../js/calendar-custom.js"></script>
-	<script src="../js/jquery.rateit.min.js"></script>
-    <!-- custom select -->
-    <script src="../js/jquery.customSelect.min.js" ></script>
-	<script src="../assets/chart-master/Chart.js"></script>
-    <!--custome script for all page-->
-    <script src="../js/scripts.js"></script>
-    <!-- custom script for this page-->
-    <script src="../js/sparkline-chart.js"></script>
-    <script src="../js/easy-pie-chart.js"></script>
-	<script src="../js/jquery-jvectormap-1.2.2.min.js"></script>
-	<script src="../js/jquery-jvectormap-world-mill-en.js"></script>
-	<script src="../js/xcharts.min.js"></script>
-	<script src="../js/jquery.autosize.min.js"></script>
-	<script src="../js/jquery.placeholder.min.js"></script>
-	<script src="../js/gdp-data.js"></script>	
-	<script src="../js/morris.min.js"></script>
-	<script src="../js/sparklines.js"></script>	
-	<script src="../js/charts.js"></script>
   <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
   <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js
 "></script>
@@ -563,20 +528,21 @@ $(document).ready(function() {
                  ],
  
     });
-table.rows().every( function () {
-    this.child( 'Row details for row: '+this.index() );
-} );
- 
-$('#invoicestable tbody').on( 'click', 'tr', function () {
-    var child = table.row( this ).child;
- 
-    if ( child.isShown() ) {
-        child.hide();
-    }
-    else {
-        child.show();
-    }
-} );
+ $('#invoicestable tbody').on('click', 'tr', function () {
+    var result ='hll';
+          var tr = $(this).closest('tr');
+          var row = table.row(tr);
+
+          if (row.child.isShown()) {
+              // This row is already open - close it
+              row.child.hide();
+              tr.removeClass('shown');
+          } else {
+              // Open this row
+              row.child($(result)).show();
+              tr.addClass('shown');
+          }
+    }); 
    $('#btn-filter').click(function(){ 
     //button filter event click
         table.ajax.reload();  //just reload table
@@ -611,6 +577,7 @@ $('#invoicestable tbody').on( 'click', 'tr', function () {
 
     // Event listener to the two range filtering inputs to redraw on input
     </script>
+
 	<script src="../js/jquery.slimscroll.min.js"></script>
   <link rel="stylesheet" type="text/css" href="http://www.shieldui.com/shared/components/latest/css/light/all.min.css" />
 <script type="text/javascript" src="http://www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
@@ -638,22 +605,6 @@ $('#invoicestable tbody').on( 'click', 'tr', function () {
           $('select.styled').customSelect();
       });
 	  /* ---------- Map ---------- */
-	$(function(){
-	  $('#map').vectorMap({
-	    map: 'world_mill_en',
-	    series: {
-	      regions: [{
-	        values: gdpData,
-	        scale: ['#000', '#000'],
-	        normalizeFunction: 'polynomial'
-	      }]
-	    },
-		backgroundColor: '#eef3f7',
-	    onLabelShow: function(e, el, code){
-	      el.html(el.html()+' (GDP - '+gdpData[code]+')');
-	    }
-	  });
-	});
   /* Formatting function for row details - modify as you need */
   </script>
   </body>
