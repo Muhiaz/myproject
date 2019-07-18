@@ -1,1 +1,1 @@
-web: gunicorn codeigniter_register_email.wsgi --log-file -
+web: vendor/bin/heroku-php-apache2
