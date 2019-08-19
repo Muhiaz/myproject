@@ -320,7 +320,7 @@
                     <div class="col-md-6 form-group">
                     <label>Firstname Name</label>
                     <input type="text" name="fistname" class="form-control col-md-6"/>
-                    <span class="text-danger"><?php echo form_error("productname"); ?></span>
+                    <span class="text-danger"><?php echo form_error("fistname"); ?></span>
                     </div>
                     <div class="col-md-6 form-group">
                     <label>Second Name</label>
@@ -331,19 +331,19 @@
                     <div class="col-md-12 form-group">
                     <label>Email</label>
                     <input type="text" name="email" class="form-control col-md-6"/>
-                    <span class="text-danger"><?php echo form_error("productquantity"); ?></span>
+                    <span class="text-danger"><?php echo form_error("email"); ?></span>
                     </div>
                     <div class="col-md-6 form-group">
                     <label>Street Address</label>
                     <input type="text" name="street" class="form-control col-md-6"/>
-                    <span class="text-danger"><?php echo form_error("productdate"); ?></span>
+                    <span class="text-danger"><?php echo form_error("street"); ?></span>
                     </div>
                   </div>
                     <div class="form-row">
                     <div class="form-group col-md-6">
                     <label>Town</label>
                     <input type="text" name="town" class="form-control col-md-6"/>
-                    <span class="text-danger"><?php echo form_error("servicedescription"); ?></span>
+                    <span class="text-danger"><?php echo form_error("town"); ?></span>
                     </div>
                     <div class="col-md-6 form-group">
                     <label>Phone Number</label>

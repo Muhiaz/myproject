@@ -162,22 +162,29 @@
 
 @media print {
     .invoice {
-        font-size: 11px!important;
+        font-size: 16px!important;
         overflow: hidden!important
     }
 
     .invoice footer {
-        position: absolute;
-        bottom: 10px;
+        
+       margin-bottom: 0px;
         page-break-after: always
     }
 
-    .invoice>div:last-child {
+    .invoice:last-child {
         page-break-before: always
     }
 }
 </style>
-
+<style type="text/css" media="print">
+    body .toolbar{ visibility: hidden; display: none }
+    body .invoice{max-width: 100%;}
+    body .invoice .company-details .name {
+    margin-top: 0;
+    margin-bottom: 0px;
+}
+</style>
 </head>
 <body style="background-color: gray">
 <!--Author      : @arboshiki-->
@@ -375,15 +382,10 @@
                         <tr>
                              <td colspan="4">AMOUNT PAID</td>
                               <td><?php 
-                              if($row->newamountpaid>0){
-                                echo "KShs. " .$row->newamountpaid;
-                                }
-                                elseif($row->newamountpaid==0){
-                                  echo "KShs. " .$row->amountpaid;
-                                }
-                                else{
-                                  echo "Nothing to show";
-                                }
+                              $x = $row->amount;
+                              $y = $row->balancedue;
+                              $z = $x - $y;
+                              echo $z;
                                  ?></td>
                         </tr>
                         <tr>
@@ -396,7 +398,8 @@
                         }
                       ?>
                     </table>
-                    <hr style="width: 100%;background-color: blue;">
+                     <footer>
+                    <!-- <hr style="width: 100%;background-color: blue;"> -->
         <div class="">
         <div style="min-width: 600px">
             <header>
@@ -421,6 +424,7 @@
                                   }
                             ?></span></div>
                        </div>
+                       </footer>
                        <div class="col-md-6 ">
                        <div class="" style='margin-left: 45%;'>
                        

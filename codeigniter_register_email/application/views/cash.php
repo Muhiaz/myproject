@@ -61,6 +61,9 @@ function handleSelect(elm)
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.11.0/sweetalert2.css" />
 <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" >
 <style type="text/css">
+  label,td{
+    color: #000;
+  }
 </style>
   </head>
   <body>
@@ -271,17 +274,21 @@ function handleSelect(elm)
     </tr>
   <tr>
       <td colspan="5" style="text-align: right">Subtotal&nbsp;
-      <td><input name="total" id="total" >
+      <td><input name="amountpaid" id="amountpaid" >
     </tr>
 </table>
 <div class="form-row container">
                     <div class="col-md-4 form-group">
-                    <label><b>Additional Transaction Details</label>
-                      <textarea class="form-control col-md-6"></textarea>
+                    <label><b>Mode of Payment</label>
+                     <select class="form-control col-md-6" name="modeofpayment" id="modeofpayment">
+                        <option>Select Payment Mode</option>
+                        <option>Cash</option>
+                        <option>M-Pesa</option>
+                      </select>
                     </div>
                      <div class="col-md-4 form-group">
-                    <label><b>Terms</b></label>
-                    <input type="text" name="terms" class="form-control col-md-6">
+                    <label><b>Transaction Details</b></label>
+                    <input type="text" name="terms" id="terms" class="form-control col-md-6">
                     </div>
                     <div class="col-md-4 form-group">
                     <i class="fa fa-paperclip "></i>
@@ -362,8 +369,12 @@ function handleSelect(elm)
   $("#unitprice").keyup(function () {
     $('#tax').val(0.16 * $('#unitprice').val());
   });
-    $("#tax,#amount").keyup(function () {
-    $('#total').val($('#tax').val() - $('#amountpaid').val());
+
+//     $("#tax,#amount").keyup(function () {
+//     $('#total').val($('#tax').val() - $('#amountpaid').val());
+// });
+  $("#unitprice","#quantity").keyup(function () {
+    $('#amountpaid').val($('#unitprice').val() * Number($('#quantity').val()));
 });
     $(document).ready(function(e){
       $("input").change(function(){
@@ -411,7 +422,9 @@ var sub = {
   'billingaddress':$('#billingaddress').val(),
   'quantity' : $('#quantity').val(),
   'unitprice' : $('#unitprice').val(),
-  'amount' : $('#amount').val(),
+  'amountpaid' : $('#amount').val(),
+  'modeofpayment' : $('#modeofpayment').val(),
+  'terms' : $('#terms').val(),
 };
 table_data.push(sub);
 

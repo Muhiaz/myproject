@@ -318,6 +318,7 @@
                       </a>
                   </li><br><br>     
                   <li class="sub-menu dropdown" style="float:left;">
+                    
                       <a href="" class="">
                           <i class="fa fa-file" style="color: #FFDF00;"></i>
                           <span> <button class="dropbtn">Sales</button>
@@ -391,7 +392,7 @@
             <p>You can generate the sales report. To keep track of the sales transactions. Transacted both in terms of cash and on credit.</p>
             </div>
           <div class="divbtn">
-               <a href="salesreport"><button class="btnreport ">Clients and Suppliers Report</button></a>
+               <a href="clientreport"><button class="btnreport ">Clients and Suppliers Report</button></a>
             </div>
         </div>
 				<div class="col-md-3 items">

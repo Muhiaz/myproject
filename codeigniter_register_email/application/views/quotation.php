@@ -64,8 +64,7 @@ function handleSelect(elm)
 </style>
   </head>
   <body>
-    
-    <button type="button" class="dropbtn1" data-toggle="modal" data-target="#myModal" style="margin-left: 70%;">Change Quotation Appearance<i style="margin:10px;" class="fa fa-gear"></i></button>
+    <button type="button" class="dropbtn1" data-toggle="modal" data-target="#myModal" style="margin-left: 80%;">Change Quotation Appearance<i style="margin:10px;" class="fa fa-gear"></i></button>
 
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog" tabindex="-1" style="width: 50%;height: 100vh;margin-left: 50%;background-color: green">

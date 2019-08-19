@@ -4,14 +4,14 @@
  */
 class Crud_model extends CI_Model
 {
-	var $table = "invoices";
-	   var $select_column = array('clientname','invoice_id','product','quantity','unitprice','amount','invoicedate');
-	    var $order_column = array('clientname','invoice_id','product','quantity','unitprice','amount','invoicedate');
+	var $table = "sales";
+	   var $select_column = array('clientname','sales_id','product','quantity','unitprice','amount','date','amountpaid','balancedue');
+	    var $order_column = array('clientname','sales_id','product','quantity','unitprice','amount','date','amountpaid','balancedue');
 	    function make_query(){
 	    	$this->db->select($this->select_column);
 	    	$this->db->from($this->table);
 	    	if (isset($_POST["search"]["value"])) {
-	    		$this->db->like('invoice_id',$_POST["search"]["value"]);
+	    		$this->db->like('sales_id',$_POST["search"]["value"]);
 	    		$this->db->or_like('clientname',$_POST["search"]["value"]);
 	    	}
 	    	if (isset($_POST["order"])) {
@@ -19,7 +19,7 @@ class Crud_model extends CI_Model
 	    		// $this->db->or_like('clientname',$_POST["search"]["value"]);
 	    	}
 	    	else{
-	    		$this->db->order_by('invoice_id','DESC');
+	    		$this->db->order_by('sales_id','ASC');
 
 	    	}
 	    }

@@ -23,7 +23,7 @@
     <div class="form-group col-md-6">
       <label for="inputEmail4">First Name</label>
       <!-- <input type="text" class="form-control" id="" placeholder="Name" name="companyname" class="input"><span class="text-danger"><?php echo form_error("companyname"); ?></span> -->
-      <?php echo form_input(['name'=>'firstname','type'=>'text','id'=>'defaultForm-email','class'=>'form-control','value'=>set_value('firstname',$clientdata->firstname)]); ?><span class="text-danger"><?php echo form_error("firstname"); ?></span>
+      <?php echo form_input(['name'=>'firstname','type'=>'text','id'=>'defaultForm-email','class'=>'form-control','value'=>set_value('firstname',$clientdata->clientname)]); ?><span class="text-danger"><?php echo form_error("firstname"); ?></span>
     </div>
     <div class="form-group col-md-6">
       <label for="inputPassword4">Second Name</label>

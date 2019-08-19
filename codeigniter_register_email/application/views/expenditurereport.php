@@ -97,7 +97,22 @@
   text-decoration: none;
   display: block;
 }
-
+.dropbtn5 {
+  background-color: green;
+  color: white;
+  padding: 10px;
+  font-size: 12px;
+  border: none;
+  cursor: pointer;
+}
+.dropbtn6 {
+  background-color: blue;
+  color: white;
+  padding: 10px;
+  font-size: 12px;
+  border: none;
+  cursor: pointer;
+}
 .dropdown-content a:hover {background-color: #f1f1f1;}
 .dropdown:hover .dropdown-content {display: inline-block;float:right;}
 .dropdown:hover .dropbtn {background-color: #394a59;}
@@ -360,8 +375,10 @@
       <section id="main-content">
 
           <section class="wrapper">
-            <h2 style='font-family:lato;font-size:25px;font-weight: 500;color: #000;'>Invoices Report</h2>
-            <div class="row">
+            <h2 style='font-family:lato;font-size:25px;font-weight: 500;color: #000;'>Expenditure Report</h2>
+            <form id="form-filter" class="form-horizontal">
+                    <div class="row container">
+              <div class="datepicker">
               <div class="col-md-3" style="color: #000;">
                 <label>From</label>
                  <input name="min" id="min" class="form-control">
@@ -370,56 +387,17 @@
                 <label>To</label>
              <input name="max" id="max" class="form-control">
               </div>
-              <div></div>
-            </div>
-            <div><br>
-            <div class="container" style="background-color: #fff;width: 90%;border: 1px solid rgba(46, 204, 113, .3);"><div style="float: right;font-size: 20px;">
+                        <label for="LastName" class="col-sm-4 control-label"></label>
+                        <div class="col-md-4">
+                            <button type="button" id="btn-filter" class="dropbtn6" value="filter"><i class="fa fa-search fa-fw"></i></button>
+                            <a href="allexpensesreport"><button type="button" id="btn-reset" class="dropbtn5">All Expenditure</button></a>
+      </div>
+      </div>
+                          </div>
+                </form><br>
+            <div class="container" style="background-color: #fff;width: 100%;border: 1px solid rgba(46, 204, 113, .3);"><div style="float: right;font-size: 20px;">
               <div class="row">
-              <a href=""><i class="fa fa-envelope" title="Email" style="margin: 05px;" data-toggle="modal" data-target="#myModal"></i></a>
-              <div id="myModal" class="modal fade" role="dialog" style="padding: 20px;">
-                <div class="modal-dialog">
-
-                  <!-- Modal content-->
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <button type="button" class="close" data-dismiss="modal">&times;</button>
-                      <h4 class="modal-title modalheader">Email Report</h4>
-                    </div>
-                    <form method="post" action="<?php echo base_url('user/sendemailreport'); ?>" enctype="multipart/form-data">
-                    <div class="modal-body">
-                      <div class="form-group">
-                        <label>To</label>
-                        <input type="text" class="form-control" name="">
-                      </div>
-                       <div class="form-group">
-                        <label>Cc</label>
-                        <input type="text" class="form-control" name="">
-                      </div>
-                       <div class="form-group">
-                        <label>Heading</label>
-                        <textarea type="text" class="form-control" name="subject"></textarea>
-                      </div>
-                      <div class="form-group">
-                        <label>Subject</label>
-                        <textarea type="text" class="form-control" name="emailbody"></textarea>
-                      </div>
-                       <div class="form-group">
-                        <label><i class="fa fa-paperclip" style="margin: 5px;"></i>Report</label>
-                         <input type="file" name="attachment" accept=".doc,.docx,.ddf">
-                      </div>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="submit" class="dropbtn5">Submit</button>
-                      <button type="button" class="dropbtn0" data-dismiss="modal">Close</button>
-                    </div>
-                  </div>
-</form>
-  </div>
-</div>
-
-              <a href="" id="printreport"><i class="fa fa-print" title="Print" style="margin: 05px;"></i></a>
-              <a href=""><i class="fa fa-file-pdf-o" title="Generate PDF" style="margin: 05px;"></i></a>
-              <a href=""><i class="fa fa-table" title="Generate Excel" style="margin: 05px;"></i></a>
+              
               </div>
               </div><br>
               <div style="justify-content: center;">
@@ -553,29 +531,10 @@
                     'print'
               ]
     });
+   
    table.rows().every( function () {
-    this.child(' <?php if($fetch_invoices->num_rows()>0){foreach ($fetch_invoices->result() as $row) { echo "Receipt No :" .anchor("user/clientinvoice/{$row->invoice_id}", "$row->invoice_id"."<br>");echo "Amount: Kshs" .$row->amount;break;}} ?> ' );
+    this.child(' <?php if($fetch_incomeaccounts->num_rows()>0){foreach ($fetch_incomeaccounts->result() as $row) { echo "Receipt No :" .anchor("user/clientreceipt/{$row->id}", "$row->id"."<br>");echo "Amount: Kshs" .$row->amount;break;}} ?> ' );
 } );
- // $.fn.dataTable.ext.search.push(
- //        function (settings, data, dataIndex) {
- //            var min = $('#startdate').datepicker("getDate");
- //            var max = $('#enddate').datepicker("getDate");
- //            var startDate = new Date(data[4]);
- //            if (min == null && max == null) { return true; }
- //            if (min == null && startDate <= max) { return true;}
- //            if(max == null && startDate >= min) {return true;}
- //            if (startDate >= min && startDate <= max) { return data; }
- //            return false;
- //        }
- //        );
- //            $("#enddate").datepicker({ onSelect: function () { table.draw(); }, changeMonth: true, changeYear: true });
- //            $("#startdate").datepicker({ onSelect: function () { table.draw(); }, changeMonth: true, changeYear: true });
- //            var table = $('#invoicestable').DataTable();
-
- //            // Event listener to the two range filtering inputs to redraw on input
- //            $('#enddate,#startdate').change(function () {
- //                table.draw();
- //            });
   $.fn.dataTable.ext.search.push(
         function (settings, data, dataIndex) {
             var min = $('#min').datepicker("getDate");

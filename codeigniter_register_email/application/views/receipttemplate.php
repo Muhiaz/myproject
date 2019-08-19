@@ -1,5 +1,6 @@
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <style type="text/css">
+  body .toolbar{ visibility: hidden; display: none }
     body {
     margin-top: 10px;
     background-color: #000;
@@ -10,8 +11,10 @@
 <!------ Include the above in your HEAD tag ---------->
 
 <div class="container">
+  <div style="float: right;">
      <button id="printInvoice" class="btn btn-info"> Print</button>
     <button id="printInvoice" class="btn btn-info"> Email</button>
+  </div>
     <div class="row">
         <div class="well col-xs-12 col-sm-12 col-md-8 col-xs-offset-1 col-sm-offset-1 col-md-offset-3">
             <div class="row">
@@ -190,17 +193,14 @@
                             <td class="text-center text-danger"><h4><strong> <?php
                                  if(count($receipts)){
                                   foreach ($receipts as $row) {
-                                    if($row->newamountpaid>0){
-                                      echo $row->newamountpaid; 
+                                   
+                                      echo $row->amountpaid; 
                                     }
-                                    elseif($row->newamountpaid==0){
-                                    echo $row->amountpaid;
-                           }
+                                  }
+                                    
                            else{
                              echo "Nothing to display";
-                           }
-                       } 
-                       }    
+                           }  
                        ?> </strong></h4></td>
                         </tr>
                          <tr>

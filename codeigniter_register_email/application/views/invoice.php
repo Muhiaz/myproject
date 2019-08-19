@@ -61,6 +61,9 @@ function handleSelect(elm)
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.11.0/sweetalert2.css" />
 <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" >
 <style type="text/css">
+   label,td{
+    color: #000;
+  }
 </style>
   </head>
   <body>
@@ -129,7 +132,7 @@ function handleSelect(elm)
                      <option> <?php
      if ($fetch_clients->num_rows()>0) {
        foreach ($fetch_clients->result() as $value){
-            echo "<option value='" .$value->id . "'>" .$value->email . "</option>"; 
+            echo "<option value='" . $value->id . "'>" .$value->email . "</option>"; 
      }
    }
       ?>  </option>
@@ -275,6 +278,37 @@ function handleSelect(elm)
 </table>
 <div class="form-row container">
                     <div class="col-md-4 form-group">
+                    <label><b>Mode of Payment</label>
+                     <input type="text" name="modeofpayment" id="modeofpayment" class="form-control col-md-6">
+                    </div>
+                     <div class="col-md-4 form-group">
+                    <label><b>Transaction Reference</b></label>
+                    <input type="text" name="note" id="note" class="form-control col-md-6">
+                    </div>
+                    <div class="col-md-4 form-group">
+                    <label><b>Client Number</b></label>
+                     <select name="id" id="id" class="form-control col-md-6" readonly="true">
+                     <option><b>Select Client Number</b></option>
+                     <option> <?php
+     if ($fetch_clients->num_rows()>0) {
+       foreach ($fetch_clients->result() as $value){
+            echo "<option >" .$value->id . "</option>"; 
+     }
+   }
+      ?></option>
+                                <option><?php 
+                                if($fetch_clientcompany->num_rows()>0){
+                                  foreach ($fetch_clientcompany->result() as $row) {
+                                   echo "<option>" . $row->id . "</option"; 
+                                  }
+                                }
+                                ?>
+                                </option>
+                   </select>
+                    </div>
+                  </div>
+                  <div class="form-row container">
+                    <div class="col-md-4 form-group">
                     <label><b>Additional Message On Invoice</label>
                       <textarea class="form-control col-md-6"></textarea>
                     </div>
@@ -290,7 +324,7 @@ function handleSelect(elm)
                   </div>
                   <div class="row">
       <input type="submit" class="dropbtn0" id="save" value="Save Invoice" style="color: #fff;margin-left: 50%;">
-       <input type="submit" class="dropbtn" id="save" value="Save and Send" style="color: #fff;" >
+       <input type="submit" class="dropbtn1" id="save" value="Save and Send" style="color: #fff;" >
        </div>
       </div>
     </div>
@@ -317,7 +351,7 @@ function handleSelect(elm)
                     success:function(data) {
                         $('select[name="clientname"]').empty();
                         $.each(data, function(key, value) {
-                            $('select[name="clientname"]').append('<option value="'+ value.id +'">'+ value.firstname +'</option>');
+                            $('select[name="clientname"]').append('<option value="'+ value.id +'">'+ value.clientname +'</option>');
                         });
                     }
                 });
@@ -338,6 +372,21 @@ function handleSelect(elm)
                 });
             }else{
                 $('select[name="clientphone"]').empty();
+            }
+             if(stateID) {
+                $.ajax({
+                    url: '<?php echo base_url('user/myformAjax/');?>'+stateID,
+                    type: "GET",
+                    dataType: "json",
+                    success:function(data) {
+                        $('select[name="id"]').empty();
+                        $.each(data, function(key, value) {
+                            $('select[name="id"]').append('<option value="'+ value.id +'">'+ value.id +'</option>');
+                        });
+                    }
+                });
+            }else{
+                $('input[name="id"]').empty();
             }
         });
     });
@@ -384,6 +433,7 @@ var sub = {
   'no':$('#no').val(),
   'product':$('#product').val(),
   'tax':$('#tax').val(),
+  'id':$('#id').val(),
   'clientname':$('#clientname').val(),
   'clientphone':$('#clientphone').val(),
   'clientemail':$('#clientemail').val(),
@@ -398,6 +448,9 @@ var sub = {
   'quantity' : $('#quantity').val(),
   'unitprice' : $('#unitprice').val(),
   'amount' : $('#amount').val(),
+  'modeofpayment' : $('#modeofpayment').val(),
+  'note' : $('#note').val(),
+
 };
 table_data.push(sub);
 

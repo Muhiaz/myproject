@@ -21,13 +21,15 @@ class Crud extends CI_Controller{
 		$data= array();
 		foreach ($fetch_data as $row) {
 			$sub_array = array();
-			$sub_array[]=$row->clientname;
-			$sub_array[]=$row->invoice_id;
-			$sub_array[]=$row->product;
-			$sub_array[]=$row->quantity;
-			$sub_array[]=$row->unitprice;
-			$sub_array[]=$row->amount;
-			$sub_array[]=$row->invoicedate;
+			$sub_array["name"]=$row->clientname;
+			$sub_array["invoiceno"]=$row->sales_id;
+			$sub_array["product"]=$row->product;
+			$sub_array["quantity"]=$row->quantity;
+			$sub_array["unitprice"]=$row->unitprice;
+			$sub_array["amount"]=$row->amount;
+			$sub_array["date"]=$row->date;
+			$sub_array["amountpaid"]=$row->amountpaid;
+			$sub_array["balancedue"]=$row->balancedue;
 			$data[] = $sub_array;
 		}
 		$output = array(

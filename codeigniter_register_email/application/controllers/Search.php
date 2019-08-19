@@ -7,6 +7,8 @@ class Search extends CI_Controller {
     {
         parent::__construct();
         $this->load->model('custom_search','customers');
+        $this->load->model('users_model');
+
     }
  
     public function index()
@@ -20,10 +22,11 @@ class Search extends CI_Controller {
         foreach ($countries as $country) {
             $opt[$country] = $country;
         }
- 
+        $data['fetch_invoices'] = $this->users_model->fetch_invoices();
         $data['form_country'] = form_dropdown('',$opt,'','id="country" class="form-control"');
         $this->load->view('invoicesreport', $data);
     }
+    
  
     public function ajax_list()
     {
@@ -34,13 +37,17 @@ class Search extends CI_Controller {
             // $no++;
             $row = array();
              // $row[] = $no;
-            $row[] = $customers->clientname;
-            $row[] = $customers->invoice_id;
-            $row[] = $customers->product;
-            $row[] = $customers->quantity;
-            $row[] = $customers->unitprice;
-            $row[] = $customers->amount;
-             $row[] = $customers->invoicedate;
+            $row['name'] = $customers->clientname;
+            $row['invoiceno'] = $customers->invoice_id;
+            $row['product'] = $customers->product;
+            $row['quantity'] = $customers->quantity;
+            $row['unitprice'] = $customers->unitprice;
+            $row['amount'] = $customers->amount;
+             $row['amountpaid'] = $customers->amountpaid;
+            $row['date'] = $customers->invoicedate;
+            $row['balancedue'] = $customers->balancedue;
+            $row['clientemail'] = $customers->clientemail;
+            
  
             $data[] = $row;
         }

@@ -152,7 +152,7 @@
                             <td class="col-md-1 text-center"><?php
                                  if(count($cash)){
                                   foreach ($cash as $row) {
-                                    echo $row->amount;
+                                    echo $row->amountpaid;
                            }
                        }     
                        ?></td>
@@ -181,7 +181,7 @@
                                 <strong><?php
                                  if(count($cash)){
                                   foreach ($cash as $row) {
-                                    echo $row->amount;
+                                    echo $row->amountpaid;
                            }
                        }     
                        ?></strong>

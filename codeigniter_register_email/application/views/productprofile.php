@@ -28,12 +28,66 @@
     .fa-casual{
       font-color: #FFDF00;
     }
-    #profile-background{
-      background-color: gray;
-    }
+     .dropbtn {
+  background-color: #394a59;
+  height: 20px !important;
+  color: white;
+  font-weight: 300;
+  padding: 0px 98.5px 10px 10px;
+  width: 100%;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+.dropbtn1 {
+  background-color: #394a59;
+  height: 20px !important;
+  color: white;
+  font-weight: 300;
+  padding: 0px 50.5px 15px 10px;
+  width: 100%;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+.dropbtn2 {
+  background-color: #394a59;
+  height: 20px !important;
+  color: white;
+  font-weight: 300;
+  padding: 0px 75.5px 15px 10px;
+  width: 100%;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+.dropdown-content {
+  display: none;
+  position:relative;
+  margin-left: 100%;
+  background-color: #000000;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: #000;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1;}
+.dropdown:hover .dropdown-content {display: inline-block;float:right;}
+.dropdown:hover .dropbtn {background-color: #394a59;}
   </style>
   </head>
-  <body style="background-color: gray;">
+  <body >
   <section id="container-fluid" class=""> 
       <header class="header dark-bg">
             <div class="toggle-nav">

@@ -12,18 +12,13 @@
     <link href="../css/bootstrap-theme.css" rel="stylesheet">
     <link href="../css/elegant-icons-style.css" rel="stylesheet" />
     <link href="../css/font-awesome.min.css" rel="stylesheet" />    
-    <link href="../assets/fullcalendar/fullcalendar/bootstrap-fullcalendar.css" rel="stylesheet" />
-	<link href="../assets/fullcalendar/fullcalendar/fullcalendar.css" rel="stylesheet" />
-    <link href="../assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css" media="screen"/>
     <link rel="stylesheet" href="../css/owl.carousel.css" type="text/css">
 	<link href="../css/jquery-jvectormap-1.2.2.css" rel="stylesheet">
-	<link rel="stylesheet" href="../css/fullcalendar.css">
 	<link href="../css/widgets.css" rel="stylesheet">
     <link href="../css/style1.css" rel="stylesheet">
     <link href="../css/style-responsive.css" rel="stylesheet" />
 	<link href="../css/xcharts.min.css" rel=" stylesheet">
   <link rel="stylesheet" type="text/css" href="http://www.shieldui.com/shared/components/latest/css/light/all.min.css" />
-	<link href="../css/jquery-ui-1.10.4.min.css" rel="stylesheet">
   <style type="text/css">
     table tr:hover{
       color: green;
@@ -257,13 +252,8 @@ body{
                             </li>
                         </ul>
                     </li>
-                    <!-- alert notification end-->
-                    <!-- user login dropdown start-->
                     <li class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <span class="profile-ava">
-                                <img alt="" src="img/avatar1_small.jpg">
-                            </span>
                             <span class="username">
                               <?php 
                                 if($fetch_logo->num_rows()>0){
@@ -408,15 +398,24 @@ body{
                         <div class="col-md-2">
                             <label for="clientname">Client Name</label>
                             <input type="text" class="form-control" id="clientname">
+                              <ul class="list-group" id="result" style=
+                              "height:80px;
+                              overflow:hidden; 
+                              "></ul>
                         </div>
                         <div class="col-md-2">
                             <label for="invoice_id">Invoice No</label>
                             <input type="text" class="form-control" id="invoice_id">
+                            <ul class="list-group" id="result1" style=
+                              "height:80px;
+                              overflow:hidden;
+                              z-index: 1;
+                              "></ul>
                      </div>
                         <label for="LastName" class="col-sm-2 control-label"></label>
                         <div class="col-md-4">
-                            <button type="button" id="btn-filter" class="dropbtn6" value="filter"><i class="fa fa-search fa-fw"></i></button>
-                            <button type="button" id="btn-reset" class="dropbtn5">Reset</button>
+              
+                            <button type="button" id="btn-reset" class="dropbtn5" >Run Report</button>
       </div>
       </div>
                           </div>
@@ -432,6 +431,8 @@ body{
            <div class="container">
         <h3>Customers Data</h3>
         <br>
+
+<div id="div_result">
         <table id="invoicestable" class="table table-striped table-bordered" cellspacing="0" width="100%">
             <thead>
                 <tr>
@@ -445,7 +446,9 @@ body{
                     <th>Date</th>
                 </tr>
             </thead>
-          
+          <tbody>
+              
+          </tbody>
             <tfoot>
                 <tr>
                    
@@ -471,13 +474,13 @@ body{
       </section>
       <!--main content end-->
   </section>
+  </body>
   <!-- container section start -->
     <!-- javascripts -->
     <!-- <script type="text/javascript" src="http://www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script> -->
   <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
   <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js
 "></script>
-  <script type="text/javascript" src="https://raw.githubusercontent.com/crmaxx/datatables-editor/master/js/dataTables.editor.js"></script>
   <script type="text/javascript" src="https://cdn.datatables.net/select/1.3.0/js/dataTables.select.min.js"></script>
   <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js" ></script>
@@ -487,7 +490,17 @@ body{
   <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
  <script type="text/javascript" src=" https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
  <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <script type="text/javascript"> 
+ <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+
+  <script type="text/javascript">
+    $('#btn-reset').click(function(){
+  
+  var table = $('#invoicestable').DataTable();
+     
+    
+
+
+});
 $(document).ready(function() {
     $.datepicker.setDefaults({
         dateFormat:'yy-mm-dd'
@@ -498,9 +511,11 @@ $(document).ready(function() {
    var table = $('#invoicestable').DataTable({ 
  
         "processing": true,
-        "responsive": true, //Feature control the processing indicator.
+        "responsive": true,
+         "className":'details-control', //Feature control the processing indicator.
      //Feature control DataTables' server-side processing mode.
-        "order": [], //Initial no order.
+        "order": [],
+         //Initial no order.
 
         // Load data for the table's content from an Ajax source
             "ajax": {
@@ -513,44 +528,127 @@ $(document).ready(function() {
             }
         },
         //Set column definition initialisation properties.
-        "columnDefs": [
-        { 
-            "targets":[],//first column / numbering column
-            "orderable": false, //set not orderable
-        },
+         "columns": [
+            { "data": "name" },
+            { "data": "invoiceno" },
+            { "data": "product" },
+            { "data": "quantity" },
+            { "data": "unitprice" },
+            { "data": "amount" },
+            { "data": "date" }
+        ],
+        columnDefs: [
+            { orderable: false } //This part is ok now
         ],
         dom: 'lBfrtip',
-           buttons: [
-                       'copy',
-                        'excel',
-                        'pdf',
-                        'print'
-                 ],
+          buttons: [
+            {
+                extend: 'print',
+                customize: function ( win ) {
+                    $(win.document.body)
+                        .css( 'font-size', '10pt' )
+                        .prepend(
+                            '<?php if($fetch_logo->num_rows()>0){foreach ($fetch_logo->result() as $row) { $image_arr = explode(",", $row->logo);foreach($image_arr as $image_name)  {?> <img src="<?php echo base_url() .'uploads/' .$image_name ?>" style="width: 150px;margin-left:320px; height: 110px; margin-top: 5px;"> <?php   } }}?><h4></h4>'
+                        );
+
+ 
+                    $(win.document.body).find( 'table' )
+                        .addClass( 'compact' )
+                        .css( 'font-size', 'inherit' );
+
+
+                }
+            }
+        ],
+                  "fnInitComplete": function ( oSettings ) {
+                //On click in row, redirect to page Product of ID
+                $(table.rows().nodes()).click( function () {
+                    var iPos = table.row(this).index();
+                    var aData = oSettings.aoData[ iPos ]._aData;
+                    //redirect
+                    document.location.href = "clientinvoicereport/" + aData.invoiceno;
+                } );
+            },
+                  responsive: {
+            details: {
+                display: $.fn.dataTable.Responsive.display.modal( {
+                    header: function ( row ) {
+                        var data = row.data();
+                        return 'Details for '+data[0]+' '+data[1];
+                    }
+                } ),
+                renderer: $.fn.dataTable.Responsive.renderer.tableAll()
+            }
+        }
  
     });
- $('#invoicestable tbody').on('click', 'tr', function () {
-    var result ='hll';
-          var tr = $(this).closest('tr');
-          var row = table.row(tr);
+var filtereddata = table.rows( { filter : 'applied'} ).data();
+ $.ajax({
+    data : filtereddata,
+    type : 'POST',
+    url : '<?php echo base_url("user/allinvoicesreport");?>',
+    crossOrigin : false,
+    dataType:'json',
+    success : function(result){
+       console.log(filtereddata);
+     window.location = "allinvoicesreport";
+    }
+  });
+  $('#invoice_id').keyup( function () {
+    if (!!this.value) {
+        $('#result1').html('');
+        var searchField = $('#invoice_id').val();
+        var expression = new RegExp(searchField,"i");
+        $.ajax({
+            type : 'GET',
+            url : '<?php echo base_url("search/ajax_list");?>',
+            dataType:'json',
+            data : 'data',
+              success : function(data){
+              var data = data.data;
+              $.each(data,function(key,value){
+                // console.log(value.invoiceno);
+                if(value.invoiceno.search(expression) !=-1){
+                   $("#result1").selectable();
+                    $('#result1').append('<li class="list-group-item">'+value.invoiceno+'</li>');
+      }
+              })
+              
+    }
+  });
+        table.column(1).search(this.value).draw();
+   
+    }
+} );
+     
 
-          if (row.child.isShown()) {
-              // This row is already open - close it
-              row.child.hide();
-              tr.removeClass('shown');
-          } else {
-              // Open this row
-              row.child($(result)).show();
-              tr.addClass('shown');
-          }
-    }); 
-   $('#btn-filter').click(function(){ 
-    //button filter event click
-        table.ajax.reload();  //just reload table
-    });
-    $('#btn-reset').click(function(){ //button reset event click
-        $('#form-filter')[0].reset();
-        table.ajax.reload();  //just reload table
-    });
+   $('#clientname').keyup( function () {
+    if (!!this.value) {
+        $('#result').html('');
+        var searchField = $('#clientname').val();
+        var expression = new RegExp(searchField,"i");
+        $.ajax({
+            method : 'POST',
+            url : '<?php echo base_url("search/ajax_list");?>',
+            dataType:'json',
+            data : {'data':'name'},
+            success : function(data){
+              var data = data.data;
+              $.each(data,function(key,value){
+                // console.log(value.name);
+                if(value.name.search(expression) !=-1){
+                  $("#result").selectable();
+                    $('#result').append('<li class="list-group-item">'+value.name+'</li>');
+      }
+              })
+              
+    }
+  });
+        table.column(0).search(this.value).draw();
+   
+    }
+} );
+
    $.fn.dataTable.ext.search.push(
         function (settings, data, dataIndex) {
             var min = $('#min').datepicker("getDate");
@@ -581,31 +679,5 @@ $(document).ready(function() {
 	<script src="../js/jquery.slimscroll.min.js"></script>
   <link rel="stylesheet" type="text/css" href="http://www.shieldui.com/shared/components/latest/css/light/all.min.css" />
 <script type="text/javascript" src="http://www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
-   <script type="text/javascript">
-      //knob
-      $(function() {
-        $(".knob").knob({
-          'draw' : function () { 
-            $(this.i).val(this.cv + '%')
-          }
-        })
-      });
-      //carousel
-      $(document).ready(function() {
-          $("#owl-slider").owlCarousel({
-              navigation : true,
-              slideSpeed : 300,
-              paginationSpeed : 400,
-              singleItem : true
-          });
-      });
-      //custom select box
-
-      $(function(){
-          $('select.styled').customSelect();
-      });
-	  /* ---------- Map ---------- */
-  /* Formatting function for row details - modify as you need */
-  </script>
-  </body>
+  
 </html>

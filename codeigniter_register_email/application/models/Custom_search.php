@@ -23,18 +23,9 @@ class Custom_search extends CI_Model {
 
      public function _get_datatables_query()
     {
-         
-        //add custom filter here
-        if($this->input->post('clientname'))
-        {
-            $this->db->like('clientname', $this->input->post('clientname'));
-        }
-        if($this->input->post('invoice_id'))
-        {
-            $this->db->like('invoice_id', $this->input->post('invoice_id'));
-        }
-        
+   
         $this->db->from($this->table);
+
         $i = 0;
      
         foreach ($this->column_search as $item) // loop column 
@@ -82,6 +73,7 @@ class Custom_search extends CI_Model {
         $this->_get_datatables_query();
         $query = $this->db->get();
         return $query->num_rows();
+        
     }
  
     public function count_all()
@@ -105,6 +97,7 @@ class Custom_search extends CI_Model {
              }
         return $countries;
     }
+    
  
 }
 ?>

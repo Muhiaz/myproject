@@ -335,7 +335,7 @@
         </div>  
         <div class="form-group">
           <label for="password">Amount to transfer:</label>
-          <input type="text" name="amount" class="form-control"><span class="text-danger"><?php echo form_error("amount"); ?></span>
+          <input type="text" name="amount" id="amount" class="form-control"><span class="text-danger"><?php echo form_error("amount"); ?></span>
         </div>
         <button type="submit" class="dropbtn1">Submit</button>
                 <?php echo form_close() ?> 
@@ -396,6 +396,12 @@
   <script src="../js/charts.js"></script>
   <script src="../js/jquery.slimscroll.min.js"></script>
   <script>
+    $('#submit').click(function(){
+      if($('#amount').val() > $('#undeposited').val()){
+        alert('The Amount entered is more than what is present in the Account');
+      }
+      
+    });
     document.querySelector("#today").valueAsDate = new Date();
       //knob
       $(function() {
@@ -439,3 +445,5 @@
   </script>
   </body>
 </html>
+
+

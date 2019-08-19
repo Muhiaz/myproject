@@ -1,218 +1,155 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Creative - Bootstrap 3 Responsive Admin Template">
-    <meta name="author" content="GeeksLabs">
-    <meta name="keyword" content="Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal">
-    <link rel="shortcut icon" href="../img/favicon.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- <link rel="icon" href="images/favicon.ico" type="image/ico" /> -->
+
     <title></title>
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
-    <link href="../css/bootstrap-theme.css" rel="stylesheet">
-    <link href="../css/elegant-icons-style.css" rel="stylesheet" />
-    <link href="../css/font-awesome.min.css" rel="stylesheet" />    
-    <link href="../assets/fullcalendar/fullcalendar/bootstrap-fullcalendar.css" rel="stylesheet" />
-	<link href="../assets/fullcalendar/fullcalendar/fullcalendar.css" rel="stylesheet" />
-    <link href="../assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css" media="screen"/>
-    <link rel="stylesheet" href="../css/owl.carousel.css" type="text/css">
-	<link href="../css/jquery-jvectormap-1.2.2.css" rel="stylesheet">
-	<link rel="stylesheet" href="../css/fullcalendar.css">
-	<link href="../css/widgets.css" rel="stylesheet">
-    <link href="../css/style1.css" rel="stylesheet">
-    <link href="../css/style-responsive.css" rel="stylesheet" />
-	<link href="../css/xcharts.min.css" rel=" stylesheet">	
-	<link href="../css/jquery-ui-1.10.4.min.css" rel="stylesheet">
-  <style type="text/css">
-    .fa-casual{
-      font-color: #FFDF00;
-    }
-    .dropbtn {
-  background-color: #394a59;
-  height: 20px !important;
-  color: white;
-  font-weight: 300;
-  padding: 0px 98.5px 10px 10px;
-  width: 100%;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
-}
-.dropbtn1 {
-  background-color: #394a59;
-  height: 20px !important;
-  color: white;
-  font-weight: 300;
-  padding: 0px 50.5px 15px 10px;
-  width: 100%;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
-}
-.dropbtn2 {
-  background-color: #394a59;
-  height: 20px !important;
-  color: white;
-  font-weight: 300;
-  padding: 0px 75.5px 15px 10px;
-  width: 100%;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
-}
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-.dropdown-content {
-  display: none;
-  position:relative;
-  margin-left: 100%;
-  background-color: #000000;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
 
-.dropdown-content a {
-  color: #000;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
+    <!-- Bootstrap -->
+    <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+  
+    <!-- bootstrap-progressbar -->
+    <link href="../vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+    <!-- JQVMap -->
+    <link href="../vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
+    <!-- bootstrap-daterangepicker -->
+    <link href="../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
 
-.dropdown-content a:hover {background-color: #f1f1f1;}
-.dropdown:hover .dropdown-content {display: inline-block;float:right;}
-.dropdown:hover .dropbtn {background-color: #394a59;}
-  </style>
+    <!-- Custom Theme Style -->
+    <link href="../build/css/custom.min.css" rel="stylesheet">
   </head>
-  <body>
-  <section id="container" class=""> 
-      <header class="header dark-bg">
-            <div class="toggle-nav">
-                <div class="icon-reorder tooltips" data-original-title="Toggle Navigation" data-placement="bottom"><i class="icon_menu"></i></div>
+
+  <body class="nav-md">
+    <div class="container body">
+      <div class="main_container">
+        <div class="col-md-3 left_col">
+          <div class="left_col scroll-view">
+            <div class="clearfix"></div>
+
+            <!-- menu profile quick info -->
+            <div class="profile clearfix">
+              <div class="profile_pic">
+                <?php 
+                                if($fetch_logo->num_rows()>0){
+                                  foreach ($fetch_logo->result() as $row) {
+                                    $image_arr = explode(",", $row->logo);
+                                    foreach($image_arr as $image_name) 
+                                    {
+                                       // echo base_url() .'uploads/' .$image_name;
+                                      ?>
+                                    <!-- <img src='"<php echo base_url().'images/'.$image_name?>"'>; -->
+                                     <img src="<?php echo base_url() .'uploads/' .$image_name ?>" style="width: 100px; height: 80px;margin: 10px 0px 0px 20px;border: 5px solid #fff;">
+                                      <?php
+                                    }
+                                  }
+                                }?>
+              </div>
+              <div class="profile_info" style="margin-left:10px; ">
+                <span>Welcome,</span>
+                <h2> <?php 
+                                if($fetch_company->num_rows()>0){
+                                  foreach ($fetch_company->result() as $row) {
+                                    echo $row->companyname; 
+                                     }
+                                     }  // echo base_url() .'uploads/' .$image_name;
+                                      ?></h2>
+              </div>
             </div>
-            <a href="#" class="logo">RICH <span class="lite">TECH</span></a>
-             <div class="nav search-row" id="top_menu">
-                <!--  search form start -->
-                <ul class="nav top-menu">                    
-                    <li>
-                        <form class="navbar-form">
-                            <input class="form-control" placeholder="Search" type="text">
-                        </form>
-                    </li>                    
+            <!-- /menu profile quick info -->
+
+            <br />
+
+            <!-- sidebar menu -->
+            <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+              <div class="menu_section">
+                <h3>General</h3>
+                <ul class="nav side-menu">
+                  <li><a href="admin"><i class="fa fa-home"></i> Home </a>
+                  </li>
+                  <li><a href="clients"><i class="fa fa-edit"></i> Clients </a>
+                  </li>
+                  <li><a href="products"><i class="fa fa-desktop"></i> Products </a>
+                  </li>
+                  <li><a><i class="fa fa-table"></i> Accounts <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="accounts">Income</a></li>
+                      <li><a href="undeposited">Undeposited</a></li>
+                       <li><a href="gettotalpettycashaccount">Petty Cash</a></li>
+                      <li><a href="gettotalbankaccount">Bank</a></li>
+                    </ul>
+                  </li>
+                  <li><a><i class="fa fa-bar-chart-o"></i>Sales<span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="invoices">Invoices</a></li>
+                      <li><a href="allcash">Cash</a></li>
+                    </ul>
+                  </li>
+                  <li><a><i class="fa fa-clone"></i>Expenditure<span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="allexpenses">Expenses</a></li>
+                      <li><a href="allpurchases">Purchases</a></li>
+                    </ul>
+                  </li>
+                  <li><a><i class="fa fa-bug"></i> Projects </a>
+                  </li>
+                  <li><a href="reports"><i class="fa fa-clipboard"></i> Reports </a>
+                  </li>
+                  <li><a href="humanresource"><i class="fa fa-file"></i> Human Resource </a>
+                        </li>
+                        <li><a><i class="fa fa-user"></i> Admin </a>
+                        </li>
+                        <li><a href="companies"><i class="fa fa-user"></i> Company Profile </a>
+                        </li>
+                    </ul>
+                  </li>                  
                 </ul>
-                <!--  search form end -->                
+              </div>
+
             </div>
+            <!-- /sidebar menu -->
 
-            <div class="top-nav notification-row">                
-                <!-- notificatoin dropdown start-->
-                <ul class="nav pull-right top-menu">
-                    
-                    <!-- task notificatoin start -->
-                     <li id="task_notificatoin_bar" class="dropdown">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <i class="fa fa-comment"></i>
-                            <span class="badge bg-important">0</span>
-                        </a>
-                        <ul class="dropdown-menu extended tasks-bar">
-                            <div class="notify-arrow notify-arrow-blue"></div>
-                            <li>
-                                <a href="#">
-                                    <div class="task-info">
-                                        <div class="desc">SMS</div>
-                                        <div class="percent"></div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <div class="task-info">
-                                        <div class="desc">
-                                            Email
-                                        </div>
-                                        <div class="percent"></div>
-                                    </div>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li id="task_notificatoin_bar" class="dropdown">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <i class="icon-task-l" style="color: #FFDF00;"></i>
-                            <span class="badge bg-important">0</span>
-                        </a>
-                        <ul class="dropdown-menu extended tasks-bar">
-                            <div class="notify-arrow notify-arrow-blue"></div>
-                            <li>
-                                <p class="blue">Pending Approvals</p>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <div class="task-info">
-                                        <div class="desc">Invoices</div>
-                                        <div class="percent"></div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <div class="task-info">
-                                        <div class="desc">
-                                            Projects
-                                        </div>
-                                        <div class="percent"></div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="reports">
-                                    <div class="task-info">
-                                        <div class="desc">Reports</div>
-                                        <div class="percent"></div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="external">
-                                <a href="#">See All Tasks</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <!-- task notificatoin end -->
-                    <!-- inbox notificatoin start-->
-                    <!-- inbox notificatoin end -->
-                    <!-- alert notification start-->
-                    <li id="alert_notificatoin_bar" class="dropdown">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+            <!-- /menu footer buttons -->
+            <div class="sidebar-footer hidden-small">
+              <a data-toggle="tooltip" data-placement="top" title="Settings">
+                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+              </a>
+              <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+              </a>
+              <a data-toggle="tooltip" data-placement="top" title="Lock">
+                <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+              </a>
+              <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
+                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+              </a>
+            </div>
+            <!-- /menu footer buttons -->
+          </div>
+        </div>
 
-                            <i class="icon-bell-l" style="color: #FFDF00;"></i>
-                            <span class="badge bg-important">0</span>
-                        </a>
-                        <ul class="dropdown-menu extended notification">
-                            <div class="notify-arrow notify-arrow-blue"></div>
-                            <li>
-                                <p class="blue"></p>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <span class="label label-primary"><i class="icon_profile"></i></span> 
-                                    Overdue Payments
-                                    <span class="small italic pull-right"></span>
-                                </a>
-                            </li>                            
-                            <li>
-                                <a href="#">See all notifications</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <!-- alert notification end-->
-                    <!-- user login dropdown start-->
-                    <li class="dropdown">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <span class="profile-ava">
-                                <img alt="" src="img/avatar1_small.jpg">
-                            </span>
-                            <span class="username">
-                              <?php 
+        <!-- top navigation -->
+        <div class="top_nav">
+          <div class="nav_menu">
+            <nav>
+              <div class="nav toggle">
+                <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+              </div>
+
+              <ul class="nav navbar-nav navbar-right">
+                <li class="">
+                  <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                     <?php 
                                 if($fetch_logo->num_rows()>0){
                                   foreach ($fetch_logo->result() as $row) {
                                     $image_arr = explode(",", $row->logo);
@@ -225,374 +162,447 @@
                                       <?php
                                     }
                                   }
-                                }?></span></a></li>
-                            <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu extended logout">
-                            <div class="log-arrow-up"></div>
-                            <li class="eborder-top">
-                                <a href="uploadpic"><i class="icon_profile"></i>Add Company logo</a>
-                            </li>
-                            <li class="eborder-top">
-                              <?php
-
-                              ?>
-                                <a href="companies"><i class="icon_profile"></i> Company Profile</a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="icon_key_alt"></i> Log Out</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <!-- user login dropdown end -->
-                </ul>
-                <!-- notificatoin dropdown end-->
-            </div>
-      </header>     
-      <aside>
-          <div id="sidebar"  class="nav-collapse ">
-              <!-- sidebar menu start-->
-              <ul class="sidebar-menu">                
-                  <li class="active">
-                      <a class="" href="#">
-                        <i class="fa fa-home" style="color: #FFDF00;"></i>
-                          <span>Dashboard</span>
-                      </a>
-                  </li>
-                   <li class="sub-menu">
-                      <a href="clients" class="">
-                        <i class="fa fa-users" style="color: #FFDF00;"></i>
-                          <span>Clients</span>
-                      </a>
-                  </li>  
-                  <li class="sub-menu">
-                      <a href="<?php echo base_url();?>user/products" class="">
-                         <i class="fa fa-cloud" style="color: #FFDF00;"></i>
-                          <span>Products/Services</span>
-                      </a>
-                  </li>
-                  <li class="sub-menu dropdown" style="float:right;">
-                      <a href="" class="">
-                          <i class="fa fa-file" style="color: #FFDF00;"></i>
-                          <span> <button class="dropbtn2">Acounts</button>
-                        <div class="dropdown-content" style="left:0;">
-                          <a href="accounts">Income</a>
-                          <a href="undeposited">Undeposited</a>
-                           <a href="pettycash">Petty Cash</a>
-                            <a href="bankaccount">Bank</a>
-
-                        </div></span>
-                      </a>
-                  </li><br><br>     
-                  <li class="sub-menu dropdown" style="float:left;">
-                      <a href="" class="">
-                          <i class="fa fa-file" style="color: #FFDF00;"></i>
-                          <span> <button class="dropbtn">Sales</button>
-                        <div class="dropdown-content" style="left:0;">
-                          <a href="invoices">Invoices</a>
-                          <a href="allcash">Cash</a>
-                        </div></span>
-                      </a>
-                  </li><br><br><br>
-                  <li>
-                      <a class="" href="#">
-                         <i class="fa fa-pie-chart" style="color: #FFDF00;"></i>
-                          <span>Projects</span>
-                      </a>
-                  </li>
-                  <li>                     
-                      <a class="" href="reports">
-                         <i class="fa fa-files-o" style="color: #FFDF00;"></i>
-                          <span>Reports</span>
-                      </a>                  
-                  </li>
-                  <li class="sub-menu dropdown" style="float:right;">
-                      <a href="" class="">
-                          <i class="fa fa-file" style="color: #FFDF00;"></i>
-                          <span> <button class="dropbtn1">Expenditure</button>
-                        <div class="dropdown-content" style="left:0;">
-                          <a href="allexpenses">Expenses</a>
-                          <a href="allpurchases">Purchases</a>
-                        </div></span>
-                      </a>
-                  </li><br><br><br>
-                   <li class="sub-menu">
-                      <a href="humanresource" class="">
-                        <i class="fa fa-address-book" style="color: #FFDF00;"></i>
-                          <span>Human Resource</span>
-                      </a>
-                  </li>       
-                  <li class="sub-menu">
-                      <a href="#" class="">
-                          <i class="fa fa-user-circle" style="color: #FFDF00;"></i>
-                          <span>Admin</span>
-                      </a>
-                  </li>
-                  <li class="sub-menu">
-                      <a href="companies" class="">
-                          <i class="fa fa-user" style="color: #FFDF00;"></i>
-                          <span>Companyprofile</span>
-                      </a>
-                  </li>
-              </ul>
-          </div>
-      </aside>
-      <section id="main-content">
-
-          <section class="wrapper"> 
-			  <div class="row container" >
-				<div class="col-lg-12" style="background-color: #fff; border-radius: 10px;box-shadow: 1px 1px 1px 1px #8888;padding: 3px;">
-          <!-- <a href="companyprofile"><button class="btn btn-primary"><h5 style="font-size: 14px;font-weight: 500;font-family:lato;:#000;">Add Company</h5></button></a> -->
-          <div style="margin-left: 35%";>
-            <?php 
-                                if($fetch_logo->num_rows()>0){
-                                  foreach ($fetch_logo->result() as $row) {
-                                    $image_arr = explode(",", $row->logo);
-                                    foreach($image_arr as $image_name) 
-                                    {
-                                       // echo base_url() .'uploads/' .$image_name;
-                                      ?>
-                                    <!-- <img src='"<php echo base_url().'images/'.$image_name?>"'>; -->
-                                     <img src="<?php echo base_url() .'uploads/' .$image_name ?>" style="width: 80px; height: 70px;margin-left:20px; ">
-                                      <?php
-                                    }
-                                  }
                                 }?>
-					 <?php 
-          if($fetch_company->num_rows()>0){
-            foreach ($fetch_company->result() as $row) {
-              echo "<span style='font-family:lato;font-size:30px;'>$row->companyname</span>";
+                    <?php 
+                                if($fetch_company->num_rows()>0){
+                                  foreach ($fetch_company->result() as $row) {
+                                    echo $row->companyname; 
+                                     }
+                                     }  // echo base_url() .'uploads/' .$image_name;
+                                      ?>
+                    <span class=" fa fa-angle-down"></span>
+                  </a>
+                  <ul class="dropdown-menu dropdown-usermenu pull-right">
+                    <li><a href="javascript:;"> Profile</a></li>
+                    <li>
+                      <a href="javascript:;">
+                        <span class="badge bg-red pull-right">50%</span>
+                        <span>Settings</span>
+                      </a>
+                    </li>
+                    <li><a href="javascript:;">Help</a></li>
+                    <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                  </ul>
+                </li>
+
+                <li role="presentation" class="dropdown">
+                  <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                    <i class="fa fa-envelope-o"></i>
+                    <span class="badge bg-green">0</span>
+                  </a>
+                  
+            </nav>
+          </div>
+        </div>
+        <!-- /top navigation -->
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+          <!-- top tiles -->
+          <div class="row tile_count">
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+              <span class="count_top"><i class="fa fa-bar-chart-o"></i> Sales</span>
+              <div class="count"><?php if($getsales->num_rows()>0){
+                foreach ($getsales->result() as $value) {
+                  echo "<h4><b>";
+                  echo "Kshs. ";
+                  print_r($value->amount);
+                   echo "</b></h4>";
+                }
+              }?></div>
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+              <span class="count_top"><i class="fa fa-clock-o"></i> Unpaid Invoices</span>
+              <div class="count"><?php if($getunpaidinvoices->num_rows()>0){
+                foreach ($getunpaidinvoices->result() as $value) {
+                  echo "<h4><b>";
+                  echo "Kshs. ";
+                  print_r($value->balancedue);
+                   echo "</b></h4>";
+                }
+              }?></div>
+             <!--  <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>3% </i> From last Week</span> -->
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+              <span class="count_top"><i class="fa fa-table"></i> Total Income</span>
+              <div class="count green"><?php if($gettotalincome->num_rows()>0){
+                foreach ($gettotalincome->result() as $value) {
+                  echo "<h4><b>";
+                  echo "Kshs. ";
+                  print_r($value->amountpaid);
+                   echo "</b></h4>";
+                }
+              }?></div>
+              <!-- <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span> -->
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+              <span class="count_top"><i class="fa fa-clone"></i> Expenditure</span>
+              <div class="count"><?php if($gettotalexpenditure->num_rows()>0){
+                foreach ($gettotalexpenditure->result() as $value) {
+                  echo "<h4><b>";
+                  echo "Kshs. ";
+                  print_r($value->amount);
+                   echo "</b></h4>";
+                }
+              }?></div>
+              <!-- <span class="count_bottom"><i class="red"><i class="fa fa-sort-desc"></i>12% </i> From last Week</span> -->
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+              <span class="count_top"><i class="fa fa-building"></i> Bank</span>
+              <div class="count"> <h4><b><?php if($gettotalbankaccount->num_rows()>0){
+          $sum=0;
+           $sum1=0;
+            $sum2=0;
+                foreach ($gettotalbankaccount->result() as $value) {
+                  $sum += $value->amount;
+                  if($fetch_expenses->num_rows()>0){
+                foreach ($fetch_expenses->result() as $value1) {
+                  if($fetch_purchases->num_rows()>0){
+                foreach ($fetch_purchases->result() as $value2) {
+                  if($value1->paymentmode=='Cheque'){
+                    if($value2->modeofpayment=='Cheque')
+                   $sum1 = $value1->amount;
+                   $sum2 = $value2->amount;
+                }
+              }
             }
           }
-          else{  ?><a href="companyprofile"><button class="btn btn-primary"><h5 style="font-size: 14px;font-weight: 500;font-family:lato;:#000;">Add Company</h5></button></a><?php
-          }?> 
-                                </div>
-				</div><br>
-			</div>			 
-           </div>
-        <div class="container" style="background-color: #fff;border-radius: 10px;">
-        <div class="container" style="width: 95%;margin-left: 0px;padding-top: 05px;">
-           <a href="invoices"><div class="row ">
-        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-          <div class="info-box blue-bg">
-            <i class="fa fa-file" style="color: #FFDF00;"></i>
-            <div class="title">Unpaid Invoices</div> 
-            <div class="count"><?php if($getunpaidinvoices->num_rows()>0){
-              foreach ($getunpaidinvoices->row() as $row) {
-                 echo "<h2>";
-                echo "Kshs.";
-                print_r($row);
-                echo "</h2>";
-              }
-            }?></div>          
-          </div><!--/.info-box-->     
-        </div></a> 
-        <a href="clients"><div class="row" style="height: 20%;">
-        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" >
-          <div class="info-box blue-bg" >
-            <i class="fa fa-users" style="color: #FFDF00;"></i>
-            <div class="title">Clients</div>  
-            <div class="count"><?php if($getclients->num_rows()>0){
-              foreach ($getclients->row() as $row) {
-                 echo "<h2>";
-                print_r($row);
-                echo " clients";
-                echo "</h2>";
-              }
-            }?></div>         
-          </div><!--/.info-box-->     
-        </div></a>
-        <a href="invoices"><div class="row">
-        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-          <div class="info-box blue-bg">
-            <i class="fa fa-cloud" style="color: #FFDF00;"></i>
-            <div class="title">Sales</div>
-            <div class="count"><?php if($getsales->num_rows()>0){
-              foreach ($getsales->row() as $row) {
-                echo "<h2>";
-                echo "Kshs.";
-                print_r($row);
-                 echo "</h2>";
-              }
-            }?></div>           
-          </div><!--/.info-box-->     
-        </div></a>
-                <a href="accounts"><div class="row">
-        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-          <div class="info-box blue-bg">
-            <i class="fa fa-clipboard" style="color: #FFDF00;"></i>
-             <div class="title">Accounts</div>  
-            <div class="count"><?php if($getbank->num_rows()>0){
-              foreach ($getbank->row() as $row) {
-                 echo "<h2>";
-                echo "Kshs.0";
-                echo "</h2>";
-              }
-            }?></div>         
-          </div><!--/.info-box-->     
-        </div></a>
-</div>
-</div>
- <div class="#" style="background-color: #fff;border-radius: 10px;">
-        <div class="container" style="width: 100%;margin-left: 0px;padding-top: 20px;">
-           <a href="invoices"><div class="row ">
-        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-          <div class="info-box blue-bg">
-            <div class="title" style="margin-left: 55%">Profit & Loss</div> 
-            <img src="<?php echo base_url(); ?>images//14150518-gold-beam-balance-isolated-on-white-background.jpg" style="width: 120px;height: 65px;">
-            <div class="count"><?php if($getbank->num_rows()>0){
-              foreach ($getbank->row() as $row) {
-                 echo "<h2>";
-                echo "Kshs.0";
-                echo "</h2>";
-              }
-            }?></div>          
-          </div><!--/.info-box-->     
-        </div></a> 
-        <a href="accounts"><div class="row">
-        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-          <div class="info-box blue-bg">
-            <div class="title" style="margin-left: 70%">Total Income</div> 
-           <img src="<?php echo base_url(); ?>images/money.jpeg" style="width: 120px;height: 60px;"> 
-            <div class="count"><?php if($gettotalincome->num_rows()>0){
-              foreach ($gettotalincome->row() as $row) {
-                 echo "<h3>";
-                echo "Kshs.";
-                print_r($row);
-                echo "</h3>";
-              }
-            }?></div>         
-          </div><!--/.info-box-->     
-        </div></a>
-                <a href="bankaccount"><div class="row">
-        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-          <div class="info-box blue-bg">
-            <i class="fa fa-bank" style="color: #FFDF00;"></i>
-            <div class="title">Bank</div>
-            <div class="count"><?php if($getbank->num_rows()>0){
-              foreach ($getbank->row() as $row) {
-                 echo "<h2>";
-                echo "Kshs.";
-                print_r($row);
-                echo "</h2>";
-              }
-            }?></div>           
-          </div><!--/.info-box-->     
-        </div></a>
-          <a href="#"><div class="row">
-        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-          <div class="info-box blue-bg">
-            <i class="fa fa-clipboard" style="color: #FFDF00;"></i>
-            <div class="title">Expenditure</div>    
-            <div class="count">
-              <?php if($gettotalexpenditure->num_rows()>0){
-              foreach ($gettotalexpenditure->row() as $row) {
-                 echo "<h2>";
-                echo "Kshs.";
-                print_r($row);
-                echo "</h2>";
-              }
-            }?>
-            </div>       
-          </div><!--/.info-box-->     
-        </div></a>
-</div>
-</div>
-		  <!-- Today status end -->
-			<div class="row">
-               	
-				<div class="col-lg-9 col-md-12">	
-
-				</div>
-              </div>
-          </section>
-          <div class="text-right">
-          <div class="credits">
+        }
+      }
+         echo $sum -$sum1 - $sum2;
+      }
+      ?></b></h4></div>
+             <!--  <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span> -->
             </div>
-        </div>
-      </section>
-      <!--main content end-->
-  </section>
-  <!-- container section start -->
-    <!-- javascripts -->
-    <script src="../js/jquery.js"></script>
-	<script src="../js/jquery-ui-1.10.4.min.js"></script>
-    <script src="../js/jquery-1.8.3.min.js"></script>
-    <script type="text/javascript" src="../js/jquery-ui-1.9.2.custom.min.js"></script>
-    <!-- bootstrap -->
-    <script src="../js/bootstrap.min.js"></script>
-    <!-- nice scroll -->
-    <script src="../js/jquery.scrollTo.min.js"></script>
-    <script src="../js/jquery.nicescroll.js" type="text/javascript"></script>
-    <!-- charts scripts -->
-    <script src="../assets/jquery-knob/js/jquery.knob.js"></script>
-    <script src="../js/jquery.sparkline.js" type="text/javascript"></script>
-    <script src="../assets/jquery-easy-pie-chart/jquery.easy-pie-chart.js"></script>
-    <script src="../js/owl.carousel.js" ></script>
-    <!-- jQuery full calendar -->
-    <<script src="../js/fullcalendar.min.js"></script> <!-- Full Google Calendar - Calendar -->
-	<script src="../assets/fullcalendar/fullcalendar/fullcalendar.js"></script>
-    <!--script for this page only-->
-    <script src="../js/calendar-custom.js"></script>
-	<script src="../js/jquery.rateit.min.js"></script>
-    <!-- custom select -->
-    <script src="../js/jquery.customSelect.min.js" ></script>
-	<script src="../assets/chart-master/Chart.js"></script>
-    <!--custome script for all page-->
-    <script src="../js/scripts.js"></script>
-    <!-- custom script for this page-->
-    <script src="../js/sparkline-chart.js"></script>
-    <script src="../js/easy-pie-chart.js"></script>
-	<script src="../js/jquery-jvectormap-1.2.2.min.js"></script>
-	<script src="../js/jquery-jvectormap-world-mill-en.js"></script>
-	<script src="../js/xcharts.min.js"></script>
-	<script src="../js/jquery.autosize.min.js"></script>
-	<script src="../js/jquery.placeholder.min.js"></script>
-	<script src="../js/gdp-data.js"></script>	
-	<script src="../js/morris.min.js"></script>
-	<script src="../js/sparklines.js"></script>	
-	<script src="../js/charts.js"></script>
-	<script src="../js/jquery.slimscroll.min.js"></script>
-  <script>
-      //knob
-      $(function() {
-        $(".knob").knob({
-          'draw' : function () { 
-            $(this.i).val(this.cv + '%')
-          }
-        })
-      });
-      //carousel
-      $(document).ready(function() {
-          $("#owl-slider").owlCarousel({
-              navigation : true,
-              slideSpeed : 300,
-              paginationSpeed : 400,
-              singleItem : true
-          });
-      });
-      //custom select box
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+              <span class="count_top"><i class="fa fa-user"></i> Clients and Suppliers</span>
+               <div class="count"><?php 
+               echo "<h5><b>";
+               $clients = $getclients->num_rows() + $getclientcompanies->num_rows();
+                   echo $clients;
+                   echo " clients</b></h5>";
+                   echo "<h5><b>";
+               $clients = $getsuppliers->num_rows();
+                   echo $clients;
+                   echo " Suppliers</b></h5>";
+              ?></div>
+             <!--  <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span> -->
+            </div>
+          </div>
+          <!-- /top tiles -->
 
-      $(function(){
-          $('select.styled').customSelect();
-      });
-	  /* ---------- Map ---------- */
-	$(function(){
-	  $('#map').vectorMap({
-	    map: 'world_mill_en',
-	    series: {
-	      regions: [{
-	        values: gdpData,
-	        scale: ['#000', '#000'],
-	        normalizeFunction: 'polynomial'
-	      }]
-	    },
-		backgroundColor: '#eef3f7',
-	    onLabelShow: function(e, el, code){
-	      el.html(el.html()+' (GDP - '+gdpData[code]+')');
-	    }
-	  });
-	});
-  </script>
+          <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="dashboard_graph">
+
+                <div class="row ">
+                  <div class="col-md-6">
+                    <h3>Sales <small>Sale Transactions for this year.</small></h3>
+                  </div>
+                  <div class="col-md-6">
+                    <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
+                      <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                      <span>December 30, 2014 - January 28, 2015</span> <b class="caret"></b>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                  <div id="chart_plot_01" class="demo-placeholder"></div>
+                </div>
+                <div class="col-md-3 col-sm-3 col-xs-12 bg-white">
+                  <div class="x_title">
+                    <h2>Projects</h2>
+                    <div class="clearfix"></div>
+                  </div>
+
+                  <div class="col-md-12 col-sm-12 col-xs-6">
+                    <div>
+                      <p>Total Projects</p>
+                      <div class="">
+                        <div class="progress progress_sm" style="width: 76%;">
+                          <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="100"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <p>High Priority Projects</p>
+                      <div class="">
+                        <div class="progress progress_sm" style="width: 76%;">
+                          <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="60"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-12 col-sm-12 col-xs-6">
+                    <div>
+                      <p>Completed Projects</p>
+                      <div class="">
+                        <div class="progress progress_sm" style="width: 76%;">
+                          <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="40"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <p>Pending Projects</p>
+                      <div class="">
+                        <div class="progress progress_sm" style="width: 76%;">
+                          <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="50"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="clearfix"></div>
+              </div>
+            </div>
+
+          </div>
+          <br />
+
+          <div class="row">
+
+
+             <div class="col-md-4 col-sm-4 col-xs-12">
+              <div class="x_panel tile fixed_height_320 overflow_hidden">
+                <div class="x_title">
+                  <h2>Income vs Expenditure account</h2>
+                  <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                      <!-- <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">Settings 1</a>
+                        </li>
+                        <li><a href="#">Settings 2</a>
+                        </li>
+                      </ul> -->
+                    </li>
+                    <li><a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                  </ul>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                  <table class="" style="width:100%">
+                    <tr>
+                      <th style="width:37%;">
+                        <p>Top 5</p>
+                      </th>
+                      <th>
+                        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                          <p class="">Account</p>
+                        </div>
+                        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                          <p class="">Percentage</p>
+                        </div>
+                      </th>
+                    </tr>
+                    <tr>
+                      <td>
+                        <canvas class="canvasDoughnut" height="140" width="140" style="margin: 15px 10px 10px 0"></canvas>
+                      </td>
+                      <td>
+                        <table class="tile_info">
+                          <tr>
+                            <td>
+                              <p><i class="fa fa-square aero"></i>Income Account </p>
+                            </td>
+                            <td>15%</td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <p><i class="fa fa-square red"></i>Expenditure </p>
+                            </td>
+                            <td>30%</td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4 col-sm-4 col-xs-12">
+              <div class="x_panel tile fixed_height_320 overflow_hidden">
+                <div class="x_title">
+                  <h2>Undeposited vs Bank account</h2>
+                  <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                      <!-- <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">Settings 1</a>
+                        </li>
+                        <li><a href="#">Settings 2</a>
+                        </li>
+                      </ul> -->
+                    </li>
+                    <li><a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                  </ul>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                  <table class="" style="width:100%">
+                    <tr>
+                      <th style="width:37%;">
+                        <p>Top 5</p>
+                      </th>
+                      <th>
+                        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                          <p class="">Account</p>
+                        </div>
+                        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                          <p class="">Percentage</p>
+                        </div>
+                      </th>
+                    </tr>
+                    <tr>
+                      <td>
+                        <canvas class="canvasDoughnut" height="140" width="140" style="margin: 15px 10px 10px 0"></canvas>
+                      </td>
+                      <td>
+                        <table class="tile_info">
+                          <tr>
+                            <td>
+                              <p><i class="fa fa-square aero"></i>Undeposited Account</p>
+                            </td>
+                            <td>15%</td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <p><i class="fa fa-square red"></i>Bank Account </p>
+                            </td>
+                            <td>30%</td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+
+             <div class="col-md-4 col-sm-4 col-xs-12">
+              <div class="x_panel tile fixed_height_320 overflow_hidden">
+                <div class="x_title">
+                  <h2>Undeposited vs Petty Cash account</h2>
+                  <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                      <!-- <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">Settings 1</a>
+                        </li>
+                        <li><a href="#">Settings 2</a>
+                        </li>
+                      </ul> -->
+                    </li>
+                    <li><a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                  </ul>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                  <table class="" style="width:100%">
+                    <tr>
+                      <th style="width:37%;">
+                        <p>Top 5</p>
+                      </th>
+                      <th>
+                        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                          <p class="">Account</p>
+                        </div>
+                        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                          <p class="">Percentage</p>
+                        </div>
+                      </th>
+                    </tr>
+                    <tr>
+                      <td>
+                        <canvas class="canvasDoughnut" height="140" width="140" style="margin: 15px 10px 10px 0"></canvas>
+                      </td>
+                      <td>
+                        <table class="tile_info">
+                          <tr>
+                            <td>
+                              <p><i class="fa fa-square aero"></i>undeposited Account</p>
+                            </td>
+                            <td>15%</td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <p><i class="fa fa-square red"></i>Petty Cash Account </p>
+                            </td>
+                            <td>30%</td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+         
+        <footer>
+          <div class="pull-right">
+            Designed and Developed by Richtech ICT Company Limited.&copy; 2019 
+          </div>
+          <div class="clearfix"></div>
+        </footer>
+        <!-- /footer content -->
+      </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="../vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- FastClick -->
+    <script src="../vendors/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="../vendors/nprogress/nprogress.js"></script>
+    <!-- Chart.js -->
+    <script src="../vendors/Chart.js/dist/Chart.min.js"></script>
+    <!-- gauge.js -->
+    <script src="../vendors/gauge.js/dist/gauge.min.js"></script>
+    <!-- bootstrap-progressbar -->
+    <script src="../vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+    <!-- iCheck -->
+    <script src="../vendors/iCheck/icheck.min.js"></script>
+    <!-- Skycons -->
+    <script src="../vendors/skycons/skycons.js"></script>
+    <!-- Flot -->
+    <script src="../vendors/Flot/jquery.flot.js"></script>
+    <script src="../vendors/Flot/jquery.flot.pie.js"></script>
+    <script src="../vendors/Flot/jquery.flot.time.js"></script>
+    <script src="../vendors/Flot/jquery.flot.stack.js"></script>
+    <script src="../vendors/Flot/jquery.flot.resize.js"></script>
+    <!-- Flot plugins -->
+    <script src="../vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
+    <script src="../vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
+    <script src="../vendors/flot.curvedlines/curvedLines.js"></script>
+    <!-- DateJS -->
+    <script src="../vendors/DateJS/build/date.js"></script>
+    <!-- JQVMap -->
+    <script src="../vendors/jqvmap/dist/jquery.vmap.js"></script>
+    <script src="../vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+    <script src="../vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+    <!-- bootstrap-daterangepicker -->
+    <script src="../vendors/moment/min/moment.min.js"></script>
+    <script src="../vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+    <!-- Custom Theme Scripts -->
+    <script src="../build/js/custom.min.js"></script>
+  
   </body>
 </html>

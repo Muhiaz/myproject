@@ -387,26 +387,18 @@
             <form id="form-filter" class="form-horizontal">
                     <div class="row container">
               <div class="datepicker">
-              <div class="col-md-2" style="color: #000;">
+              <div class="col-md-3" style="color: #000;">
                 <label>From</label>
                  <input type="text" name="startdate" id="startdate" class="form-control">
               </div>
-              <div class="col-md-2">
+              <div class="col-md-3">
                 <label>To</label>
              <input type="text" name="enddate" id="enddate" class="form-control">
               </div>
-                        <div class="col-md-2">
-                            <label for="clientname">Client Name</label>
-                            <input type="text" class="form-control" id="clientname">
-                        </div>
-                        <div class="col-md-2">
-                            <label for="invoice_id">Invoice No</label>
-                            <input type="text" class="form-control" id="invoice_id">
-                     </div>
-                        <label for="LastName" class="col-sm-2 control-label"></label>
+                        <label for="LastName" class="col-sm-4 control-label"></label>
                         <div class="col-md-4">
                             <button type="button" id="btn-filter" class="dropbtn6" value="filter"><i class="fa fa-search fa-fw"></i></button>
-                            <button type="button" id="btn-reset" class="dropbtn5">Reset</button>
+                            <a href="allsalesreport"><button type="button" id="btn-reset" class="dropbtn5">All Sales</button></a>
       </div>
       </div>
                           </div>
@@ -493,14 +485,19 @@
           
         },
         //Set column definition initialisation properties.
-        "columnDefs": [
-        { 
-           //first column / numbering column
-          "target":[],
-            "orderable": false,
-            //set not orderable
-        },
+         "columns": [
+            { "data": "name" },
+            { "data": "invoiceno" },
+            { "data": "product" },
+            { "data": "quantity" },
+            { "data": "unitprice" },
+            { "data": "amount" },
+            { "data": "date" }
         ],
+        columnDefs: [
+            { orderable: false } //This part is ok now
+        ],
+      
         dom: 'lBfrtip',
         buttons: [
                     'copy',
@@ -510,20 +507,42 @@
               ]
     });
   
-   $('#invoicestable tbody').on('click', 'tr', function () {
-    var tr = $(this).parents('tr');
-    var row = table.row(tr);
+    function format (data) {
+    // `d` is the original data object for the row
+    return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+        '<tr>'+
+            '<td>Client Name:</td>'+
+            '<td>'+data.name+'</td>'+
+        '</tr>'+
+        '<tr>'+
+            '<td>Amount Paid:</td>'+
+            '<td>'+data.amountpaid+'</td>'+
+        '</tr>'+
+        '<tr>'+
+            '<td>Balance Due:</td>'+
+           '<td>'+data.balancedue+'</td>'+
+        '</tr>'+
+    '</table>';
+};
  
-    if ( row.child.isShown() ) {
-        // This row is already open - close it
-        row.child.hide();
-        tr.removeClass('shown');
-    }
-    else {
-        // Open this row (the format() function would return the data to be shown)
-        row.child.show();
-        tr.addClass('shown');
-    }
+$(document).ready(function() {
+
+    // Add event listener for opening and closing details
+    $('#invoicestable tbody').on('click', 'tr', function () {
+        var tr = $(this).closest('tr');
+        var row = table.row( tr );
+ 
+        if ( row.child.isShown() ) {
+            // This row is already open - close it
+            row.child.hide();
+            tr.removeClass('shown');
+        }
+        else {
+            // Open this row
+            row.child( format(row.data()) ).show();
+            tr.addClass('shown');
+        }
+    } );
 } );
    $('#btn-filter').click(function(){ 
 

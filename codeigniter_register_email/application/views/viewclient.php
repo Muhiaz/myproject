@@ -28,6 +28,63 @@
     .fa-casual{
       font-color: #FFDF00;
     }
+     .dropbtn {
+  background-color: #394a59;
+  height: 20px !important;
+  color: white;
+  font-weight: 300;
+  padding: 0px 98.5px 10px 10px;
+  width: 100%;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+.dropbtn1 {
+  background-color: #394a59;
+  height: 20px !important;
+  color: white;
+  font-weight: 300;
+  padding: 0px 50.5px 15px 10px;
+  width: 100%;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+.dropbtn2 {
+  background-color: #394a59;
+  height: 20px !important;
+  color: white;
+  font-weight: 300;
+  padding: 0px 75.5px 15px 10px;
+  width: 100%;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+.dropdown-content {
+  display: none;
+  position:relative;
+  margin-left: 100%;
+  background-color: #000000;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: #000;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1;}
+.dropdown:hover .dropdown-content {display: inline-block;float:right;}
+.dropdown:hover .dropbtn {background-color: #394a59;}
   </style>
   </head>
   <body>
@@ -264,7 +321,7 @@
                                 }?> <?php 
           if(count($clients)){
             foreach ($clients as $row) {
-              echo "<span style='text-transform:uppercase;font-family:lato;font-size:40px;margin:80px;'>$row->firstname</span>";
+              echo "<span style='text-transform:uppercase;font-family:lato;font-size:40px;margin:80px;'>$row->clientname</span>";
             }
           }
           else{  ?><a href="companyprofile"><button class="btn btn-primary"><h5 style="font-size: 14px;font-weight: 500;font-family:lato;:#000;">Add Company</h5></button></a><?php
@@ -284,7 +341,7 @@
     <?php
      }
      ?>
-        <h1 style="text-transform: uppercase;"><?php echo $client->firstname. 's'; ?> Details</h1>
+        <h1 style="text-transform: uppercase;"><?php echo $client->clientname; ?> Details</h1>
         <table class="table table-striped">
     <tbody>
      <?php
@@ -296,7 +353,7 @@
                 <time datetime="08:30:00">First name:</time>
               </th>
               <td class="schedule-offset" colspan="2" style="padding: 10px;">
-                <?php echo $row->firstname; ?>
+                <?php echo $row->clientname; ?>
               </td></tr>
         <tr><th style="padding: 10px;">
                 <time datetime="08:30:00">Second Name:</time>

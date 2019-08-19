@@ -60,65 +60,13 @@ function handleSelect(elm)
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.11.0/sweetalert2.css" />
 <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" >
 <style type="text/css">
+  label,td{
+    color: #000;
+  }
 </style>
   </head>
   <body>
     
-    <button type="button" class="dropbtn1" data-toggle="modal" data-target="#myModal" style="margin-left: 75%;">Change Invoice Appearance<i style="margin:10px;" class="fa fa-gear"></i></button>
-
-<!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog" tabindex="-1" style="width: 50%;height: 100vh;margin-left: 50%;background-color: green">
-  <div class="modal-dialog">
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" style="font-color: #000000" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Edit Invoice</h4>
-      </div>
-      <div class="modal-body">
-        <form style="color: #000;" method="post" action="<?php echo base_url('user/edit_invoice'); ?>">
-          <div class="container">
-            <div class="col-md-12 form-group">
-          <label>Add Prefix for Invoice</label>
-          <input type="text" name="invoiceprefix" class="form-control">
-          <span class="text-danger"><?php echo form_error("invoiceprefix"); ?></span>
-          </div>
-          <hr>
-          <div class="col-md-12 form-group">
-          <a><label><i class="fa fa-plus" style="padding: 3px"></i>Add Input field</label></a>
-          </div>
-          <hr>
-          <div class="col-md-12 form-group">
-          <label>Terms</label>
-          <textarea type="checkbox" name="" class="form-control"></textarea> 
-          </div>
-          <hr>
-          <div class="col-md-12 form-group">
-          <label><i class="fa fa-plus" style="padding: 3px"></i>Optional fields</label>
-          </div>
-           <div class="col-md-12 form-group">
-            <input type="checkbox" name="">
-          <label>To</label>
-          </div>
-          <div class="col-md-12 form-group">
-            <input type="checkbox" name="">
-          <label>From</label>
-          </div>
-          <div class="col-md-12 form-group">
-            <input type="checkbox" name="">
-          <label>Discount</label>
-          </div>
-          </div>
-  <input type="submit" value="Submit"/>
-      </form>
-      </div>
-      <div class="modal-footer">
-        <button style="margin-top: 100vh" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-
-  </div>
-</div>
     <div class="form-row container">
                   </b></label>
                   </div>
@@ -148,7 +96,7 @@ function handleSelect(elm)
     <tr>
       <td><br>
         <input class="dropbtn text" type="button" 
-         align="middle"value="Add Aditional Row" class="form-control input-sm text-right" onclick="addRow(this)" onsubmit="return checkforblank()" id="add_data">
+         align="middle"value="Add Aditional Row" class="form-control input-sm text-right btn btn-primary" onclick="addRow(this)" onsubmit="return checkforblank()" id="add_data">
       </td>
     </tr>
     <tr>
@@ -194,6 +142,17 @@ function handleSelect(elm)
                     <label><b>Additional Message</label>
                       <textarea class="form-control col-md-6"></textarea>
                     </div>
+                    <div class="col-md-4 form-group">
+                    <label><b>Pay Via</label>
+                      <select class="form-control col-md-6" name="paymentmode" id="paymentmode">
+                        <option>Cash</option>
+                        <option>Cheque</option>
+                      </select>
+                    </div>
+                    <div class="col-md-4 form-group">
+                    <label><b>Cheque</label>
+                      <input type="text" class="form-control col-md-6">
+                    </div>
                   </div>
                   <div class="row">
                     <div class="col-md-6">
@@ -204,7 +163,7 @@ function handleSelect(elm)
        </div>
       </div>
     </div>
-
+1
     </div>
 <br>
 <div class="container">
@@ -300,6 +259,7 @@ var sub = {
   'quantity' : $('#quantity').val(),
   'unitprice' : $('#unitprice').val(),
   'amount' : $('#amount').val(),
+  'paymentmode' : $('#paymentmode').val(),
 };
 table_data.push(sub);
 

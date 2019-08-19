@@ -20,52 +20,22 @@ class User extends CI_Controller {
         $data['title'] = 'Upload Image | TechArise';         
         // $this->load->view('img/index', $data);
 	}
-	 // public function getinvoiceslist() { $data['fetch_company'] = $this->users_model->fetch_company();
-		// $data['fetch_logo'] = $this->users_model->fetch_logo();
-		// $data['gettotals'] = $this->users_model->getunpaidinvoices();
-		// $data['getincome'] = $this->users_model->getincome();
-		// $data['getbank'] = $this->users_model->getbank();
-		// $data['getexpenses'] = $this->users_model->getexpenses();
-		// $data['getpurchases'] = $this->users_model->getpurchases();
-		// $data['getcash'] = $this->users_model->getcash();
-		// $data['fetch_invoices'] = $this->users_model->fetch_invoices();
-		// $data['getclients'] = $this->users_model->getclients();
-		// $data['getsales'] = $this->users_model->getsales();
-		// $this->load->view('invoicesreport',$data);  
-  //       $orderID = $this->input->post('invoice_id');
-  //       $name = $this->input->post('clientname');
-  //       $startDate = $this->input->post('startdate');
-  //       $endDate = $this->input->post('enddate');        
-  //       if(!empty($orderID)){
-  //           $this->site->setinvoiceno($orderID);
-  //       }        
-  //       if(!empty($name)){
-  //           $this->site->setname($name);
-  //       }                
-  //       if(!empty($startDate) && !empty($endDate)) {
-  //           $this->site->setstartdate(date('Y-m-d', strtotime($startDate)));
-  //           $this->site->setenddate(date('Y-m-d', strtotime($endDate)));
-  //       }        
-  //       $getOrderInfo = $this->site->getinvoices();
-  //       $dataArray = array();
-  //       foreach ($getOrderInfo as $element) {            
-  //           $dataArray[] = array(
-  //               $element['invoice_id'],
-  //               date($element['invoicedate']),
-  //               $element['clientname'],
-  //               $element['product'],
-  //               $element['amount']
-  //           );
-  //       }
-  //       echo json_encode(array("data" => $dataArray));
-  //   }
+	
 	public function clientreceipt($id){
 		$data['fetch_clients'] = $this->users_model->fetch_clients();
 		$data['fetch_company'] = $this->users_model->fetch_company();
 		$data['fetch_logo'] = $this->users_model->fetch_logo();
-		$data['receipts']=$this->users_model->getincomeaccountdata($id);
+		$data['receipts']=$this->users_model->getexpenseaccountdata($id);
 		$data['fetch_editinvoice'] = $this->users_model->fetch_editinvoice();
 		$this->load->view('receipttemplate',$data);
+	}
+	public function voucher($id){
+		$data['fetch_clients'] = $this->users_model->fetch_clients();
+		$data['fetch_company'] = $this->users_model->fetch_company();
+		$data['fetch_logo'] = $this->users_model->fetch_logo();
+		$data['cash']=$this->users_model->getexpenseaccountdata($id);
+		$data['fetch_editinvoice'] = $this->users_model->fetch_editinvoice();
+		$this->load->view('voucher',$data);
 	}
 	public function deletedinvoices($id){
 		$invoice_data = $this->input->post('data_table');
@@ -90,6 +60,14 @@ class User extends CI_Controller {
 	public function deletecash($id){
 		$this->db->delete('cashtransactions', array('cash_id' => $id));
 		return redirect('user/allcash');
+		}
+		public function updateexpense($id){
+		$this->users_model->updateexpense($id);
+		return redirect('user/allexpenses');
+		}
+		public function updatepurchase($id){
+		$this->users_model->updatepurchase($id);
+		return redirect('user/allpurchases');
 		}
 	public function cashsalereceipt($id){
 		$data['fetch_clients'] = $this->users_model->fetch_clients();
@@ -126,8 +104,16 @@ class User extends CI_Controller {
 		$this->load->view('allcash', $data);
 	}
 	public function deleteemployee($id){
-		$this->db->delete('employees',array('id' =>$id , ));
+		$this->db->delete('employees',array('id' =>$id));
 		return redirect('user/humanresource');
+	}
+	public function deleteexpense($id){
+		$this->db->delete('expenses',array('id' =>$id));
+		return redirect('user/allexpenses');
+	}
+	public function deletepurchase($id){
+		$this->db->delete('purchases',array('id' =>$id));
+		return redirect('user/allpurchases');
 	}
 	public function viewdeletedinvoices(){
 		$this->load->model('users_model');
@@ -150,8 +136,22 @@ class User extends CI_Controller {
 		$data['fetch_clients'] = $this->users_model->fetch_clients();
 		$data['fetch_clientcompany'] = $this->users_model->fetch_clientcompany();
 		$data['fetch_cashtransactions'] = $this->users_model->fetch_cashtransactions();
+		$data['getbank'] = $this->users_model->getbank();
 		$data['fetch_expenses'] = $this->users_model->fetch_expenses();
 		$this->load->view('allexpenses', $data);
+	}
+	public function deleteeditexpense($id){
+		$this->load->model('users_model');
+		$data['fetch_product'] = $this->users_model->fetch_product();
+		$data['fetch_invoices'] = $this->users_model->fetch_invoices();
+		$data['fetch_company'] = $this->users_model->fetch_company();
+		$data['fetch_logo'] = $this->users_model->fetch_logo();
+		$data['fetch_clients'] = $this->users_model->fetch_clients();
+		$data['fetch_clientcompany'] = $this->users_model->fetch_clientcompany();
+		$data['fetch_cashtransactions'] = $this->users_model->fetch_cashtransactions();
+		$data['getbank'] = $this->users_model->getbank();
+		$data['fetch_expenses'] = $this->users_model->fetch_expenses();
+		$this->load->view('allexpensesdeleteedit', $data);
 	}
 	public function allpurchases(){
 		$this->load->model('users_model');
@@ -188,13 +188,15 @@ class User extends CI_Controller {
 		$data['fetch_logo'] = $this->users_model->fetch_logo();
 		$data['fetch_incomeaccounts'] = $this->users_model->fetch_incomeaccounts();
 		$data['fetch_editinvoice'] = $this->users_model->fetch_editinvoice();
+		$data['gettotalincome'] = $this->users_model->gettotalincome();
 		$this->load->view('accounts',$data);
 	}
 	public function undeposited(){
 		$data['fetch_company'] = $this->users_model->fetch_company();
-		$data['gettotals'] = $this->users_model->gettotalincome();
+		$data['gettotals'] = $this->users_model->getincome();
 		$data['getincome'] = $this->users_model->getincome();
 		$data['getbank'] = $this->users_model->getbank();
+		$data['getpettycash'] = $this->users_model->getpettycash();
 		$data['getexpenses'] = $this->users_model->getexpenses();
 		$data['getpurchases'] = $this->users_model->getpurchases();
 		$data['getcash'] = $this->users_model->getcash();
@@ -202,9 +204,13 @@ class User extends CI_Controller {
 		$data['fetch_clients'] = $this->users_model->fetch_clients();
 		$data['fetch_company'] = $this->users_model->fetch_company();
 		$data['fetch_logo'] = $this->users_model->fetch_logo();
+		$data['gettotalbankaccount'] = $this->users_model->gettotalbankaccount();
 		$data['fetch_incomeaccounts'] = $this->users_model->fetch_incomeaccounts();
+		$data['fetch_cashtransactions'] = $this->users_model->fetch_cashtransactions();
 		$data['fetch_editinvoice'] = $this->users_model->fetch_editinvoice();
+		$data['gettotalpettycashaccount'] = $this->users_model->gettotalpettycashaccount();
 		$data['gettotalincome'] = $this->users_model->gettotalincome();
+		$data['gettotalincome1'] = $this->users_model->gettotalincome1();
 		$this->load->view('undeposited',$data);
 	}
 	public function reports(){
@@ -407,8 +413,13 @@ class User extends CI_Controller {
 		$data1['getpurchases'] = $this->users_model->getpurchases();
 		$data1['getcash'] = $this->users_model->getcash();
 		$data1['getclients'] = $this->users_model->getclients();
+		$data1['getclientcompanies'] = $this->users_model->getclientcompanies();
+		$data1['getsuppliers'] = $this->users_model->getsuppliers();
 		$data1['getsales'] = $this->users_model->getsales();
+		$data1['gettotalbankaccount'] = $this->users_model->gettotalbankaccount();
 		$data1['gettotalincome'] = $this->users_model->gettotalincome();
+		$data1['fetch_expenses'] = $this->users_model->fetch_expenses();
+		$data1['fetch_purchases'] = $this->users_model->fetch_purchases();
 		$data1['gettotalexpenditure'] = $this->users_model->gettotalexpenditure();
 		$this->load->view('admin',$data1);
 	}
@@ -438,7 +449,101 @@ class User extends CI_Controller {
 		$data['invoices']=$this->users_model->getinvoicedata($id);
 		$this->load->view('invoicetemplate',$data);
 	}
-
+	public function allinvoicesreport(){
+		$data['fetch_invoices'] = $this->users_model->fetch_invoices();
+		$data['fetch_logo'] = $this->users_model->fetch_logo();
+		$data['fetch_company'] = $this->users_model->fetch_company();
+		$data['fetch_logo'] = $this->users_model->fetch_logo();
+		$data['totalinvoices'] = $this->users_model->getinvoices();
+		$data['getincome'] = $this->users_model->getincome();
+		$data['getunpaidinvoices'] = $this->users_model->getunpaidinvoices(); 
+		$filtereddata = $this->input->post('filtereddata');
+		echo json_encode(array('invoice'=>$filtereddata));
+		$this->load->view('allinvoicesreporttemplate',$data);
+	}
+	public function allsalesreport(){
+		$this->load->model('users_model');
+		$data['fetch_product'] = $this->users_model->fetch_product();
+		$data['fetch_invoices'] = $this->users_model->fetch_invoices();
+		$data['fetch_company'] = $this->users_model->fetch_company();
+		$data['fetch_logo'] = $this->users_model->fetch_logo();
+		$data['fetch_sales'] = $this->users_model->fetch_sales();
+		$data['fetch_clientcompany'] = $this->users_model->fetch_clientcompany();
+		$data['fetch_company'] = $this->users_model->fetch_company();
+		$data['fetch_product'] = $this->users_model->fetch_product();
+		$data['fetch_logo'] = $this->users_model->fetch_logo();
+		$data['fetch_productimage'] = $this->users_model->fetch_productimage();
+		$data['totalinvoices'] = $this->users_model->getinvoices();
+		$data['getincome'] = $this->users_model->getincome();
+		$data['getcash'] = $this->users_model->getcash();
+		$data['getsales'] = $this->users_model->getsales();
+		$data['getunpaidinvoices'] = $this->users_model->getunpaidinvoices();
+		$this->load->view('allsalesreporttemplate',$data);
+	}
+	
+	public function allassetsreport(){
+		$this->load->model('users_model');
+		$data['fetch_product'] = $this->users_model->fetch_product();
+		$data['fetch_invoices'] = $this->users_model->fetch_invoices();
+		$data['fetch_company'] = $this->users_model->fetch_company();
+		$data['fetch_logo'] = $this->users_model->fetch_logo();
+		$data['fetch_sales'] = $this->users_model->fetch_sales();
+		$data['fetch_clientcompany'] = $this->users_model->fetch_clientcompany();
+		$data['fetch_company'] = $this->users_model->fetch_company();
+		$data['fetch_product'] = $this->users_model->fetch_product();
+		$data['fetch_purchases'] = $this->users_model->fetch_purchases();
+		$data['fetch_logo'] = $this->users_model->fetch_logo();
+		$data['fetch_productimage'] = $this->users_model->fetch_productimage();
+		$data['totalinvoices'] = $this->users_model->getinvoices();
+		$data['getincome'] = $this->users_model->getincome();
+		$data['getcash'] = $this->users_model->getcash();
+		$data['getpurchases'] = $this->users_model->getpurchases();
+		$data['getunpaidpurchases'] = $this->users_model->getunpaidpurchases();
+		$data['getpaidpurchases'] = $this->users_model->getpaidpurchases();
+		$data['getsales'] = $this->users_model->getsales();
+		$data['getunpaidinvoices'] = $this->users_model->getunpaidinvoices();
+		$this->load->view('allassetsreporttemplate',$data);
+	}
+	public function allexpensesreport(){
+		$this->load->model('users_model');
+		$data['fetch_product'] = $this->users_model->fetch_product();
+		$data['fetch_invoices'] = $this->users_model->fetch_invoices();
+		$data['fetch_company'] = $this->users_model->fetch_company();
+		$data['fetch_logo'] = $this->users_model->fetch_logo();
+		$data['fetch_sales'] = $this->users_model->fetch_sales();
+		$data['fetch_clientcompany'] = $this->users_model->fetch_clientcompany();
+		$data['fetch_company'] = $this->users_model->fetch_company();
+		$data['fetch_product'] = $this->users_model->fetch_product();
+		$data['fetch_logo'] = $this->users_model->fetch_logo();
+		$data['fetch_productimage'] = $this->users_model->fetch_productimage();
+		$data['totalinvoices'] = $this->users_model->getinvoices();
+		$data['getincome'] = $this->users_model->getincome();
+		$data['fetch_expenses'] = $this->users_model->fetch_expenses();
+		$data['getcash'] = $this->users_model->getcash();
+		$data['getsales'] = $this->users_model->getsales();
+		$data['getunpaidinvoices'] = $this->users_model->getunpaidinvoices();
+		$this->load->view('allexpensesreporttemplate',$data);
+	}
+public function clientinvoicereport($id){
+		$data['fetch_clients'] = $this->users_model->fetch_clients();
+		$data['fetch_company'] = $this->users_model->fetch_company();
+		$data['fetch_logo'] = $this->users_model->fetch_logo();
+		$data['fetch_editinvoice'] = $this->users_model->fetch_editinvoice();
+		// $data['getclientdata'] = $this->users_model->getclientdata($id);
+		$data['invoices']=$this->users_model->getinvoicedata($id);
+		$data['receipts']=$this->users_model->getreceiptdata($id);
+		$this->load->view('invoicereporttemplate',$data);
+	}
+	public function clientindividualreport($id){
+		$data['fetch_clients'] = $this->users_model->fetch_clients();
+		$data['fetch_company'] = $this->users_model->fetch_company();
+		$data['fetch_logo'] = $this->users_model->fetch_logo();
+		$data['fetch_editinvoice'] = $this->users_model->fetch_editinvoice();
+		$data['getclientdata'] = $this->users_model->clientindividualreport($id);
+		$data['invoices']=$this->users_model->clientindividualinvoicereport($id);
+		$data['receipts']=$this->users_model->getreceiptdata($id);
+		$this->load->view('clientreporttemplate',$data);
+	}
 	 public function get_clientname(){
 	 	$email = $this->input->get('clientemail');
 	 	$name = $this->input->get('clientname');
@@ -547,15 +652,13 @@ class User extends CI_Controller {
 		$data1['fetch_company'] = $this->users_model->fetch_company();
 		$data1['fetch_logo'] = $this->users_model->fetch_logo();
 		$this->load->library('form_validation');
-		$this->form_validation->set_rules('firstname', 'First Name', 'required|min_length[4]|max_length[15]');
-		$this->form_validation->set_rules('secondname', 'Second Name', 'required|min_length[4]|max_length[15]');
-		$this->form_validation->set_rules('email', 'Email', 'required|min_length[8]|max_length[500]|valid_email|is_unique[clients.email]');
-		$this->form_validation->set_rules('street', 'Street', 'required|min_length[1]|max_length[150]');
-		$this->form_validation->set_rules('town', 'Town', 'required|min_length[1]|max_length[15]');
-		$this->form_validation->set_rules('company', 'Company', 'required|min_length[1]|max_length[150]');
-		$this->form_validation->set_rules('phone', 'Phone', 'required|min_length[1]|max_length[150]');
-		$this->form_validation->set_rules('state', 'State', 'required|min_length[1]|max_length[150]');
-		$this->form_validation->set_rules('products', 'Products', 'required|min_length[4]|max_length[150]');
+		$this->form_validation->set_rules('firstname', 'First Name', 'required');
+		$this->form_validation->set_rules('secondname', 'Second Name', 'required');
+		$this->form_validation->set_rules('email', 'Email', 'required');
+		$this->form_validation->set_rules('street', 'Street', 'required');
+		$this->form_validation->set_rules('town', 'Town', 'required');
+		$this->form_validation->set_rules('phone', 'Phone', 'required');
+		$this->form_validation->set_rules('state', 'State', 'required');
 		if ($this->form_validation->run()) {
 			$this->load->model('users_model');
 			$this->users_model->add_client();
@@ -772,6 +875,39 @@ class User extends CI_Controller {
 		$data['fetch_cashtransactions'] = $this->users_model->fetch_cashtransactions();
 		$this->load->view('allcash', $data);
 	}
+	public function gettotalbankaccount(){
+		$this->load->model('users_model');
+		$data['fetch_product'] = $this->users_model->fetch_product();
+		$data['fetch_expenses'] = $this->users_model->fetch_expenses();
+		$data['fetch_purchases'] = $this->users_model->fetch_purchases1();
+		$data['fetch_invoices'] = $this->users_model->fetch_invoices();
+		$data['fetch_company'] = $this->users_model->fetch_company();
+		$data['fetch_logo'] = $this->users_model->fetch_logo();
+		$data['fetch_clients'] = $this->users_model->fetch_clients();
+		$data['getbank'] = $this->users_model->getbank();
+		$data['gettotals'] = $this->users_model->gettotalincome();
+		$data['gettotalbankaccount'] = $this->users_model->gettotalbankaccount();
+		$data1['getexpenses'] = $this->users_model->getexpenses();
+		$data['fetch_bankaccount'] = $this->users_model->fetch_bankaccount();
+		$this->load->view('gettotalbankaccount', $data);
+		}
+		public function gettotalpettycashaccount(){
+		$this->load->model('users_model');
+		$data['fetch_product'] = $this->users_model->fetch_product();
+		$data['fetch_invoices'] = $this->users_model->fetch_invoices();
+		$data['fetch_company'] = $this->users_model->fetch_company();
+		$data['fetch_logo'] = $this->users_model->fetch_logo();
+		$data['fetch_clients'] = $this->users_model->fetch_clients();
+		$data['getbank'] = $this->users_model->getbank();
+		$data['gettotals'] = $this->users_model->gettotalincome();
+		$data['getexpenses'] = $this->users_model->getexpenses();
+		$data['fetch_expenses'] = $this->users_model->fetch_expenses();
+         $data['fetch_purchases'] = $this->users_model->fetch_purchases1();
+		$data['gettotalpettycashaccount'] = $this->users_model->gettotalpettycashaccount();
+		$data['gettotalpettycashaccountamount'] = $this->users_model->gettotalpettycashaccountamount();
+		$data['fetch_bankaccount'] = $this->users_model->fetch_bankaccount();
+		$this->load->view('gettotalpettycashaccount', $data);
+		}
 	public function bankaccount(){
 		$this->load->model('users_model');
 		$data['fetch_product'] = $this->users_model->fetch_product();
@@ -779,6 +915,8 @@ class User extends CI_Controller {
 		$data['fetch_company'] = $this->users_model->fetch_company();
 		$data['fetch_logo'] = $this->users_model->fetch_logo();
 		$data['fetch_clients'] = $this->users_model->fetch_clients();
+		$data['getbank'] = $this->users_model->getbank();
+		$data['gettotals'] = $this->users_model->gettotalincome();
 		$data['fetch_bankaccount'] = $this->users_model->fetch_bankaccount();
 		$this->load->library('form_validation');
 		$this->form_validation->set_rules('receiptno','Receipt No','required');
@@ -837,6 +975,19 @@ class User extends CI_Controller {
 		$data['invoicedata'] = $this->users_model->getinvoicerecords($id);
 		$data['fetch_editinvoice'] = $this->users_model->fetch_editinvoice();
 		$this->load->view('payinvoice',$data);
+
+	}
+	public function editexpense($id){
+		$data['fetch_product'] = $this->users_model->fetch_product();
+		$data['fetch_invoices'] = $this->users_model->fetch_invoices();
+		$data['fetch_company'] = $this->users_model->fetch_company();
+		$data['fetch_logo'] = $this->users_model->fetch_logo();
+		$data['fetch_clients'] = $this->users_model->fetch_clients();
+		$data['fetch_clientcompany'] = $this->users_model->fetch_clientcompany();
+		
+		$data['expensedata'] = $this->users_model->getexpenserecords($id);
+		$data['fetch_editinvoice'] = $this->users_model->fetch_editinvoice();
+		$this->load->view('editexpense',$data);
 
 	}
 	public function editcompany($id){
@@ -1227,55 +1378,7 @@ class User extends CI_Controller {
         $data=$this->mautocomplete->GetRow($keyword);        
         echo json_encode($data);
     }
-      public function data()
-    {
-    	$this->load->model('custom_search');
-        $customer = $this->custom_search->get_all();
-    	$orderID = $this->input->post('invoice_id');
-        $name = $this->input->post('clientname');
-        $startDate = $this->input->post('startdate');
-        $endDate = $this->input->post('enddate');        
-        if(!empty($orderID)){
-            $this->site->setOrderID($orderID);
-        }        
-        if(!empty($name)){
-            $this->site->setName($name);
-        }                
-        if(!empty($startDate) && !empty($endDate)) {
-            $this->site->setStartDate(date('Y-m-d', strtotime($startDate)));
-            $this->site->setEndDate(date('Y-m-d', strtotime($endDate)));
-        }        
-        $getOrderInfo = $this->site->get_all();
-        $dataArray = array();
-        foreach ($getOrderInfo as $element) {            
-            $dataArray[] = array(
-                $element['invoice_id'],
-                date($element['invoicedate']),
-                $element['clientname'],
-                $element['product'],
-                $element['quantity'],
-                $element['amount'],
-            );
-        }
-        $arr = array();
-        $arr['data'] = array();
-        if(!empty($customer)):
-            foreach($customer as $element):
-                $arr['data'][] = array(
-                    $element['clientname'],
-	                date($element['invoice_id']),
-	                $element['product'],
-	                $element['quantity'],
-	                $element['unitprice'],
-	                $element['amount'],
-	                $element['balancedue'],
-	                $element['invoicedate']
-                );
-            endforeach;
-        endif;
-        $json = json_encode($arr);
-        echo $json;
-    }
+   
     public function salesreport(){
 		$data1['fetch_company'] = $this->users_model->fetch_company();
 		$data1['fetch_logo'] = $this->users_model->fetch_logo();
@@ -1316,6 +1419,7 @@ class User extends CI_Controller {
 		$data1['getcash'] = $this->users_model->getcash();
 		$data1['fetch_invoices'] = $this->users_model->fetch_invoices();
 		$data1['getclients'] = $this->users_model->getclients();
+		$data1['fetch_incomeaccounts'] = $this->users_model->fetch_incomeaccounts();
 		$data1['gettotalexpenditure'] = $this->users_model->gettotalexpenditure1();
 		$this->load->view('expenditurereport',$data1);
 	}
@@ -1362,7 +1466,7 @@ class User extends CI_Controller {
 	public function accountsreport(){
 		$data1['fetch_company'] = $this->users_model->fetch_company();
 		$data1['fetch_logo'] = $this->users_model->fetch_logo();
-		$data1['gettotals'] = $this->users_model->gettotals();
+		$data1['gettotals'] = $this->users_model->gettotalincome();
 		$data1['getincome'] = $this->users_model->getincome();
 		$data1['getbank'] = $this->users_model->getbank();
 		$data1['getexpenses'] = $this->users_model->getexpenses();
@@ -1371,15 +1475,28 @@ class User extends CI_Controller {
 		$data1['getclients'] = $this->users_model->getclients();
 		$this->load->view('accountsreport',$data1);
 	}
-	public function assetsreport(){
+	public function clientreport(){
 		$data1['fetch_company'] = $this->users_model->fetch_company();
 		$data1['fetch_logo'] = $this->users_model->fetch_logo();
-		$data1['gettotals'] = $this->users_model->gettotals();
+		$data1['gettotals'] = $this->users_model->gettotalincome();
 		$data1['getincome'] = $this->users_model->getincome();
 		$data1['getbank'] = $this->users_model->getbank();
 		$data1['getexpenses'] = $this->users_model->getexpenses();
 		$data1['getpurchases'] = $this->users_model->getpurchases();
 		$data1['getcash'] = $this->users_model->getcash();
+		$data1['getclients'] = $this->users_model->getclients();
+		$this->load->view('clientreport',$data1);
+	}
+	public function assetsreport(){
+		$data1['fetch_company'] = $this->users_model->fetch_company();
+		$data1['fetch_logo'] = $this->users_model->fetch_logo();
+		$data1['gettotals'] = $this->users_model->gettotalincome();
+		$data1['getincome'] = $this->users_model->getincome();
+		$data1['getbank'] = $this->users_model->getbank();
+		$data1['getexpenses'] = $this->users_model->getexpenses();
+		$data1['getpurchases'] = $this->users_model->getpurchases();
+		$data1['getcash'] = $this->users_model->getcash();
+		$data1['fetch_purchases'] = $this->users_model->fetch_purchases();
 		$data1['getclients'] = $this->users_model->getclients();
 		$this->load->view('assetsreport',$data1);
 	}

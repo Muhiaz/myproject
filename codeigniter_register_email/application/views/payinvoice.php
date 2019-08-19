@@ -201,19 +201,30 @@ function handleSelect(elm)
 </table>
 
 <div class="form-row ">
-                     <div class="col-md-4 form-group">
-                    <label><b>Terms</b></label>
-                    <input type="text" name="terms" class="form-control col-md-12">
+                     <div class="col-md-3 form-group">
+                    <label><b>Mode of Payment</b></label>
+                    <!-- <input type="text" name="modeofpayment" id="modeofpayment" class="form-control col-md-12"> -->
+                    <select type="text" name="modeofpayment" id="modeofpayment" class="form-control col-md-12">
+                      <option>Select Mode of Payment</option>
+                      <option>Cash</option>
+                      <option>Cheque</option>
+                      <option>M-Pesa</option>
+                    </select>
                     </div>
-                    <div class="col-md-4 form-group">
+                    <div class="col-md-3 form-group">
                     <i class="fa fa-paperclip "></i>
                     <label><b>Enter Amount Recieved</b></label>
                     <input type="text" name="amountrecieved" id="amountrecieved" class="form-control col-md-12">
                     </div>
-                    <div class="col-md-4 form-group">
-                    <label><b>Additional Message On Invoice</label>
-                    <input type="text" name="" class="form-control col-md-12">
+                      <div class="col-md-3 form-group">
+                    <label><b>Reference</b></label>
+                    <input type="text" name="note" id="note" class="form-control col-md-12">
                     </div>
+                      <div class="col-md-3 form-group">
+                    <label><b>Note</b></label>
+                    <input type="text" name="reference" id="reference" class="form-control col-md-12">
+                    </div>
+                  
                   </div>
                   <div class="row">
                     <div class="col-md-6">
@@ -281,6 +292,7 @@ function handleSelect(elm)
    var y = $('#amountrecieved').val();
   $("#amountrecieved,#balancedue").keyup(function () {
     $('#newbalancedue').val($('#balancedue').val() - $('#amountrecieved').val());
+     $('#amountpaid').val($('#amount').val() - $('#balancedue').val());
   });
   $("#amountpaid,#amountrecieved").keyup(function () {
     $('#newamountpaid').val(Number($('#amountpaid').val()) + Number($('#amountrecieved').val()));
@@ -331,6 +343,8 @@ var sub = {
   'total':$('#total').val(),
   'amountrecieved': $('#amountrecieved').val(),
   'newbalancedue':$('#newbalancedue').val(),
+  'modeofpayment':$('#modeofpayment').val(),
+  'note':$('#note').val(),
   // 'billingaddress':$('#billingaddress').val(),
   // 'description' : $('#description').find('td:eq(0)').text(),
   'quantity' : $('#quantity').val(),

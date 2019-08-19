@@ -1,65 +1,45 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Creative - Bootstrap 3 Responsive Admin Template">
-    <meta name="author" content="GeeksLabs">
-    <meta name="keyword" content="Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal">
-    <link rel="shortcut icon" href="../img/favicon.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- <link rel="icon" href="images/favicon.ico" type="image/ico" /> -->
+
     <title></title>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
-    <link href="../css/bootstrap-theme.css" rel="stylesheet">
-    <link href="../css/elegant-icons-style.css" rel="stylesheet" />
-    <link href="../css/font-awesome.min.css" rel="stylesheet" />    
-    <link rel="stylesheet" href="../css/owl.carousel.css" type="text/css">
-    <link href="../css/jquery-jvectormap-1.2.2.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/fullcalendar.css">
-    <link href="../css/widgets.css" rel="stylesheet">
-    <link href="../css/style1.css" rel="stylesheet">
-    <link href="../css/style-responsive.css" rel="stylesheet" />
-    <link href="../css/xcharts.min.css" rel=" stylesheet">  
-    <link href="../css/jquery-ui-1.10.4.min.css" rel="stylesheet">
-    <style type="">
-      .dtHorizontalVerticalExampleWrapper {
-        margin: 0 auto;
-        height: 100vh;
-        width: 100vw;
-        }
-#dtHorizontalVerticalExample th, td {
-white-space: nowrap;
+
+    <!-- Bootstrap -->
+    <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+  
+    <!-- bootstrap-progressbar -->
+    <link href="../vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+    <!-- JQVMap -->
+    <link href="../vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
+    <!-- bootstrap-daterangepicker -->
+    <link href="../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="../build/css/custom.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <style type="text/css">
+      .dropbtn0 {
+  background-color: green;
+  color: white;
+  padding: 10px;
+  font-size: 12px;
+  border: none;
+  cursor: pointer;
 }
-table.dataTable thead .sorting:after,
-table.dataTable thead .sorting:before,
-table.dataTable thead .sorting_asc:after,
-table.dataTable thead .sorting_asc:before,
-table.dataTable thead .sorting_asc_disabled:after,
-table.dataTable thead .sorting_asc_disabled:before,
-table.dataTable thead .sorting_desc:after,
-table.dataTable thead .sorting_desc:before,
-table.dataTable thead .sorting_desc_disabled:after,
-table.dataTable thead .sorting_desc_disabled:before {
-bottom: .5em;
-}
-      .tr{
-        width: 300px;
-      }
-      .my-custom-scrollbar {
-position: relative;
-height: 50vh;
-width: 80vw;
-overflow: auto;
-}
-.table-wrapper-scroll-y {
-display: block;
-}
-.table-wrapper-scroll-x {
-display: block;
-}
-       .dropbtn {
-  background-color: #3498DB;
+ .deletebtn {
+  background-color: red;
   color: white;
   padding: 10px;
   font-size: 12px;
@@ -75,16 +55,23 @@ display: block;
   cursor: pointer;
   width: 20%;
 }
- .dropbtn2 {
-  background-color: red;
+       .bankbtn {
+  background-color: green;
   color: white;
-  padding: 7px;
+  padding: 10px;
   font-size: 12px;
   border: none;
   cursor: pointer;
-  width: 20%;
 }
-      .modal-dialog {
+ .pettybtn {
+  background-color: blue;
+  color: white;
+  padding: 10px;
+  font-size: 12px;
+  border: none;
+  cursor: pointer;
+}
+  .modal-dialog {
       width: 100%;
       height: 100%;
       padding: 0;
@@ -181,125 +168,127 @@ display: block;
     }
     </style>
   </head>
-  <body>
-  <section id="container" class=""> 
-      <header class="header dark-bg">
-            <div class="toggle-nav">
-                <div class="icon-reorder tooltips" data-original-title="Toggle Navigation" data-placement="bottom"><i class="icon_menu"></i></div>
+
+  <body class="nav-md">
+    <div class="container body">
+      <div class="main_container">
+        <div class="col-md-3 left_col">
+          <div class="left_col scroll-view">
+            <div class="clearfix"></div>
+
+            <!-- menu profile quick info -->
+            <div class="profile clearfix">
+              <div class="profile_pic">
+                <?php 
+                                if($fetch_logo->num_rows()>0){
+                                  foreach ($fetch_logo->result() as $row) {
+                                    $image_arr = explode(",", $row->logo);
+                                    foreach($image_arr as $image_name) 
+                                    {
+                                       // echo base_url() .'uploads/' .$image_name;
+                                      ?>
+                                    <!-- <img src='"<php echo base_url().'images/'.$image_name?>"'>; -->
+                                     <img src="<?php echo base_url() .'uploads/' .$image_name ?>" style="width: 100px; height: 80px;margin: 10px 0px 0px 20px;border: 5px solid #fff;">
+                                      <?php
+                                    }
+                                  }
+                                }?>
+              </div>
+              <div class="profile_info" style="margin-left:10px; ">
+                <span>Welcome,</span>
+                <h2> <?php 
+                                if($fetch_company->num_rows()>0){
+                                  foreach ($fetch_company->result() as $row) {
+                                    echo $row->companyname; 
+                                     }
+                                     }  // echo base_url() .'uploads/' .$image_name;
+                                      ?></h2>
+              </div>
             </div>
-            <a href="#" class="logo">RICH <span class="lite">TECH</span></a>
-            <div class="nav search-row" id="top_menu">
-                <!--  search form start -->
-                <ul class="nav top-menu">                    
-                    <li>
-                       <!--  <form class="navbar-form">
-                            <input class="form-control" placeholder="Search" type="text">
-                        </form> -->
-                    </li>                    
+            <!-- /menu profile quick info -->
+
+            <br />
+
+            <!-- sidebar menu -->
+            <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+              <div class="menu_section">
+                <h3>General</h3>
+                <ul class="nav side-menu">
+                  <li><a href="admin"><i class="fa fa-home"></i> Home </a>
+                  </li>
+                  <li><a href="clients"><i class="fa fa-edit"></i> Clients </a>
+                  </li>
+                  <li><a href="products"><i class="fa fa-desktop"></i> Products </a>
+                  </li>
+                  <li><a><i class="fa fa-table"></i> Accounts <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="accounts">Income</a></li>
+                      <li><a href="undeposited">Undeposited</a></li>
+                       <li><a href="pettycash">Petty Cash</a></li>
+                      <li><a href="bankaccount">Bank</a></li>
+                    </ul>
+                  </li>
+                  <li><a><i class="fa fa-bar-chart-o"></i>Sales<span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="invoices">Invoices</a></li>
+                      <li><a href="allcash">Cash</a></li>
+                    </ul>
+                  </li>
+                  <li><a><i class="fa fa-clone"></i>Expenditure<span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="allexpenses">Expenses</a></li>
+                      <li><a href="allpurchases">Purchases</a></li>
+                    </ul>
+                  </li>
+                  <li><a><i class="fa fa-bug"></i> Projects </a>
+                  </li>
+                  <li><a href="reports"><i class="fa fa-clipboard"></i> Reports </a>
+                  </li>
+                  <li><a href="humanresource"><i class="fa fa-file"></i> Human Resource </a>
+                        </li>
+                        <li><a><i class="fa fa-user"></i> Admin </a>
+                        </li>
+                        <li><a href="companies"><i class="fa fa-user"></i> Company Profile </a>
+                        </li>
+                    </ul>
+                  </li>                  
                 </ul>
-                <!--  search form end -->                
+              </div>
+
             </div>
+            <!-- /sidebar menu -->
 
-            <div class="top-nav notification-row">                
-                <!-- notificatoin dropdown start-->
-                <ul class="nav pull-right top-menu">
-                    
-                    <!-- task notificatoin start -->
-                    <li id="task_notificatoin_bar" class="dropdown">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <i class="fa fa-comment"></i>
-                            <span class="badge bg-important">0</span>
-                        </a>
-                        <ul class="dropdown-menu extended tasks-bar">
-                            <div class="notify-arrow notify-arrow-blue"></div>
-                            <li>
-                                <a href="#">
-                                    <div class="task-info">
-                                        <div class="desc">SMS</div>
-                                        <div class="percent"></div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <div class="task-info">
-                                        <div class="desc">
-                                            Email
-                                        </div>
-                                        <div class="percent"></div>
-                                    </div>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li id="task_notificatoin_bar" class="dropdown">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <i class="icon-task-l"></i>
-                            <span class="badge bg-important">0</span>
-                        </a>
-                        <ul class="dropdown-menu extended tasks-bar">
-                            <div class="notify-arrow notify-arrow-blue"></div>
-                            <li>
-                                <p class="blue">Pending Approvals</p>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <div class="task-info">
-                                        <div class="desc">Invoices</div>
-                                        <div class="percent"></div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <div class="task-info">
-                                        <div class="desc">
-                                            Projects
-                                        </div>
-                                        <div class="percent"></div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <div class="task-info">
-                                        <div class="desc">Reports</div>
-                                        <div class="percent"></div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="external">
-                                <a href="#">See All Tasks</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li id="alert_notificatoin_bar" class="dropdown">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+            <!-- /menu footer buttons -->
+            <div class="sidebar-footer hidden-small">
+              <a data-toggle="tooltip" data-placement="top" title="Settings">
+                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+              </a>
+              <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+              </a>
+              <a data-toggle="tooltip" data-placement="top" title="Lock">
+                <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+              </a>
+              <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
+                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+              </a>
+            </div>
+            <!-- /menu footer buttons -->
+          </div>
+        </div>
 
-                            <i class="icon-bell-l"></i>
-                            <span class="badge bg-important">0</span>
-                        </a>
-                        <ul class="dropdown-menu extended notification">
-                            <div class="notify-arrow notify-arrow-blue"></div>
-                            <li>
-                                <p class="blue"></p>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <span class="label label-primary"><i class="icon_profile"></i></span> 
-                                    Overdue Payments
-                                    <span class="small italic pull-right"></span>
-                                </a>
-                            </li>                            
-                            <li>
-                                <a href="#">See all notifications</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <span class="profile-ava">
-                                <img alt="" src="img/avatar1_small.jpg">
-                            </span>
-                            <span class="username"><?php 
+        <!-- top navigation -->
+        <div class="top_nav">
+          <div class="nav_menu">
+            <nav>
+              <div class="nav toggle">
+                <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+              </div>
+
+              <ul class="nav navbar-nav navbar-right">
+                <li class="">
+                  <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                     <?php 
                                 if($fetch_logo->num_rows()>0){
                                   foreach ($fetch_logo->result() as $row) {
                                     $image_arr = explode(",", $row->logo);
@@ -312,107 +301,43 @@ display: block;
                                       <?php
                                     }
                                   }
-                                }?></span>
-                            <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu extended logout">
-                            <div class="log-arrow-up"></div>
-                            <li class="eborder-top">
-                                <a href="uploadpic"><i class="icon_profile"></i>Add Company logo</a>
-                            </li>
-                            <li class="eborder-top">
-                                <a href="#"><i class="icon_profile"></i> My Profile</a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="icon_key_alt"></i> Log Out</a>
-                            </li>
-                        </ul>
+                                }?>
+                    <?php 
+                                if($fetch_company->num_rows()>0){
+                                  foreach ($fetch_company->result() as $row) {
+                                    echo $row->companyname; 
+                                     }
+                                     }  // echo base_url() .'uploads/' .$image_name;
+                                      ?>
+                    <span class=" fa fa-angle-down"></span>
+                  </a>
+                  <ul class="dropdown-menu dropdown-usermenu pull-right">
+                    <li><a href="javascript:;"> Profile</a></li>
+                    <li>
+                      <a href="javascript:;">
+                        <span class="badge bg-red pull-right">50%</span>
+                        <span>Settings</span>
+                      </a>
                     </li>
-                    <!-- user login dropdown end -->
-                </ul>
-                <!-- notificatoin dropdown end-->
-            </div>
-      </header>      
-      <aside>
-          <div id="sidebar"  class="nav-collapse ">
-              <!-- sidebar menu start-->
-              <ul class="sidebar-menu">                
-                  <li class="active">
-                      <a class="" href="admin">
-                        <i class="fa fa-home" style="color: #FFDF00;"></i>
-                          <span>Dashboard</span>
-                      </a>
-                  </li>
-                  <li class="sub-menu">
-                      <a href="clients" class="">
-                         <i class="fa fa-users" style="color: #FFDF00;"></i>
-                          <span>Clients</span>
-                      </a>
-                  </li>  
-                  <li class="sub-menu">
-                      <a href="<?php echo base_url();?>user/products" class="">
-                         <i class="fa fa-cloud" style="color: #FFDF00;"></i>
-                          <span>Products/Services</span>
-                      </a>
-                  </li>
-                  <li class="sub-menu">
-                      <a href="#" class="">
-                         <i class="fa fa-address-book" style="color: #FFDF00;"></i>
-                          <span>Human Resource</span>
-                      </a>
-                  </li>       
-                  <li class="sub-menu">
-                      <a href="invoices" class="">
-                          <i class="fa fa-file" style="color: #FFDF00;"></i>
-                          <span>Invoices</span>
-                      </a>
-                  </li>
-                  <li>
-                      <a class="" href="#">
-                         <i class="fa fa-pie-chart" style="color: #FFDF00;"></i>
-                          <span>Projects</span>
-                      </a>
-                  </li>
-                  <li>                     
-                      <a class="" href="#">
-                         <i class="fa fa-files-o" style="color: #FFDF00;"></i>
-                          <span>Reports</span>
-                      </a>                  
-                  </li> 
-                  <li class="sub-menu">
-                      <a href="#" class="">
-                         <i class="fa fa-dollar" style="color: #FFDF00;"></i>
-                          <span>Expenses</span>
-                      </a>
-                  </li> 
-                  <li class="sub-menu">
-                      <a href="#" class="">
-                         <i class="fa fa-bank" style="color: #FFDF00;"></i>
-                          <span>Bank</span>
-                      </a>
-                  </li>                 
-                  <li class="sub-menu">
-                      <a href="#" class="">
-                          <i class=""></i>
-                           <i class="fa fa-user-circle" style="color: #FFDF00;"></i>
-                          <span>Admin</span>
-                      </a>
-                  </li>
-                   <li class="sub-menu">
-                      <a href="companies" class="">
-                          <i class="fa fa-user" style="color: #FFDF00;"></i>
-                          <span>Companyprofile</span>
-                      </a>
-                  </li>
-              </ul>
+                    <li><a href="javascript:;">Help</a></li>
+                    <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                  </ul>
+                </li>
+
+                <li role="presentation" class="dropdown">
+                  <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                    <i class="fa fa-envelope-o"></i>
+                    <span class="badge bg-green">0</span>
+                  </a>
+                  
+            </nav>
           </div>
-      </aside>
-      <section id="main-content">
-          <section class="wrapper">            
-              <div class="row">
-                <div class="col-lg-12">
-</div>
-<div class="col-xs-6 col-md-6 " id="first-child">
+        </div>
+        <!-- /top navigation -->
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+          <div class="col-xs-6 col-md-6 " id="first-child">
           <a href="#"><button class="dropbtn1" data-toggle="modal" data-target="#modal1" style="margin-left: 100%">Add Transaction</button></a>
           <!-- Modal -->
           <div class="modal fade" id="modal1" role="dialog" aria-labelledby="myModalLabel" tabindex="-1" aria-hidden="true">
@@ -420,26 +345,20 @@ display: block;
               <div class="modal-content modal-content-one">
                 <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true" style="color: #000;">×</span><span class="sr-only">Close</span></button>
-                  <h4 class="modal-title" id="myModalLabel" style="text-align: center;"><b>Transaction Details</b></h4>
+                  <h4 class="modal-title" id="myModalLabel" style="text-align: center;color: #000;"><b>Transaction Details</b></h4>
                    <?php
                   $this->load->view("cash");
                   ?>
                 </div>
-                </div>
-            </div>           
-           </div>
-          <!-- Today status end -->
-            <div class="row">
-                <div class="col-lg-9 col-md-12" style="justify-content: center;margin-left: 03%;margin-top: 10vh;">
-                    <h2 style="text-align: center;">Cash Sales</h2> 
-<div class="container-fluid my-custom-scrollbar" style="justify-content: center;">  
-  
-  <table class="table table-stripped" cellspacing="1"
-  width="100%" style="border: 1;background-color: #fff;" align="center">
-    <thead>
-      <tr style="text-transform: uppercase;">
-       
-        <th>Product</th>
+                </div>          
+          <!-- top tiles -->
+          <a href="<?php echo base_url('user/suppliers'); ?>"><button class="dropbtn0">Suppliers</button></a>
+                     <h3 class="page-header">Cash Sales</h3>
+         <h2 style="text-align: center;">Cash Sales</h2>
+                <table id="bankaccount">
+         <thead>
+          <tr>
+       <th>Product</th>
          <th>Quantity</th>
          <th>Unitprice</th>
         <th>Total</th>
@@ -447,10 +366,11 @@ display: block;
         <th>Client Phone</th>
         <th>Client Name</th>
         <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-     <?php 
+        <th></th>
+</tr>
+         </thead>
+         <tbody>
+          <?php 
      if($fetch_cashtransactions->num_rows()>0){
       foreach ($fetch_cashtransactions->result() as $row) {
         ?>
@@ -458,13 +378,12 @@ display: block;
           <td><?php echo $row->product;  ?></td>
           <td><?php echo $row->quantity;  ?></td>
           <td><?php echo $row->unitprice; ?></td>
-          <td><?php echo $row->amount;  ?></td>
+          <td><?php echo $row->amountpaid;  ?></td>
           <td><?php echo $row->transactiondate;  ?></td>
            <td><?php echo $row->clientphone;  ?></td>
           <td><?php echo $row->clientname;  ?></td>
-          <td><?php echo anchor("user/cashsalereceipt/{$row->cash_id}", "Receipt",['class'=>'dropbtn']); ?></td>
-           <td><?php echo anchor("user/deletecash/{$row->cash_id}", "Delete",['class'=>'dropbtn2','id'=>'delete']); ?></td>
-          <td></td>
+          <td><?php echo anchor("user/cashsalereceipt/{$row->cash_id}", "Receipt",['class'=>'dropbtn0']); ?></td>
+           <td><?php echo anchor("user/deletecash/{$row->cash_id}", "<i class='fa fa-trash'></i>",['class'=>'deletebtn','id'=>'delete']); ?></td>
         </tr>
         <?php
       }
@@ -474,108 +393,67 @@ display: block;
         <tr colspan="3"> No data Found!</tr>
 <?php
     }?>
-    </tbody>
-  </table>
-</div>
-</body>
-</html>
-                </div>
-              </div>
-          </section>
-          <div class="text-right">
-          <div class="credits">
-            </div>
-        </div>
-      </section>
-      <!--main content end-->
-  </section>
-  <!-- container section start -->
-    <!-- javascripts -->
-    <script src="../js/jquery.js"></script>
-    <script src="../js/jquery-1.8.3.min.js"></script>
-    <script type="text/javascript" src="../js/jquery-ui-1.9.2.custom.min.js"></script>
-    <!-- bootstrap -->
-    <script src="../js/bootstrap.min.js"></script>
-    <!-- nice scroll -->
-    <script src="../js/jquery.scrollTo.min.js"></script>
-    <script src="../js/jquery.nicescroll.js" type="text/javascript"></script>
-    <!-- charts scripts -->
-    <script src="../assets/jquery-knob/js/jquery.knob.js"></script>
-    <script src="../js/jquery.sparkline.js" type="text/javascript"></script>
-    <script src="../assets/jquery-easy-pie-chart/jquery.easy-pie-chart.js"></script>
-    <script src="../js/owl.carousel.js" ></script>
-    <!-- jQuery full calendar -->
-    <<script src="../js/fullcalendar.min.js"></script> <!-- Full Google Calendar - Calendar -->
-    <script src="../assets/fullcalendar/fullcalendar/fullcalendar.js"></script>
-    <!--script for this page only-->
-    <script src="../js/calendar-custom.js"></script>
-    <script src="../js/jquery.rateit.min.js"></script>
-    <!-- custom select -->
-    <script src="../js/jquery.customSelect.min.js" ></script>
-    <script src="../assets/chart-master/Chart.js"></script>
-    <!--custome script for all page-->
-    <script src="../js/scripts.js"></script>
-    <!-- custom script for this page-->
-    <script src="../js/sparkline-chart.js"></script>
-    <script src="../js/easy-pie-chart.js"></script>
-    <script src="../js/jquery-jvectormap-1.2.2.min.js"></script>
-    <script src="../js/jquery-jvectormap-world-mill-en.js"></script>
-    <script src="../js/xcharts.min.js"></script>
-    <script src="../js/jquery.autosize.min.js"></script>
-    <script src="../js/jquery.placeholder.min.js"></script>
-    <script src="../js/gdp-data.js"></script>   
-    <script src="../js/morris.min.js"></script>
-    <script src="../js/sparklines.js"></script> 
-    <script src="../js/charts.js"></script>
-    <script src="../js/jquery.slimscroll.min.js"></script>
-    <script type="text/javascript">document.querySelector("#transactiondate").valueAsDate = new Date();</script>
-  <script>
-    $(document).ready(function () {
-      $('#dtHorizontalVerticalExample').DataTable({
-      "scrollX": true,
-      "scrollY": 200,
-      });
-      $('.dataTables_length').addClass('bs-select');
-      });
-      //knob
-      $(function() {
-        $(".knob").knob({
-          'draw' : function () { 
-            $(this.i).val(this.cv + '%')
-          }
-        })
-      });
-      //carousel
-      $(document).ready(function() {
-          $("#owl-slider").owlCarousel({
-              navigation : true,
-              slideSpeed : 300,
-              paginationSpeed : 400,
-              singleItem : true
-          });
-      });
-      //custom select box
+         </tbody>
+       </table>                     
+        <footer>
+          <div class="pull-right">
+            Designed and Developed by Richtech ICT Company Limited.&copy; 2019 <a href="https://colorlib.com">Colorlib</a>
+          </div>
+          <div class="clearfix"></div>
+        </footer>
+        <!-- /footer content -->
+      </div>
+    </div>
 
-      $(function(){
-          $('select.styled').customSelect();
-      });
-      /* ---------- Map ---------- */
-    $(function(){
-      $('#map').vectorMap({
-        map: 'world_mill_en',
-        series: {
-          regions: [{
-            values: gdpData,
-            scale: ['#000', '#000'],
-            normalizeFunction: 'polynomial'
-          }]
-        },
-        backgroundColor: '#eef3f7',
-        onLabelShow: function(e, el, code){
-          el.html(el.html()+' (GDP - '+gdpData[code]+')');
-        }
-      });
-    });
-  </script>
+    <!-- jQuery -->
+     <script type="text/javascript">document.querySelector("#today").valueAsDate = new Date();</script>
+     <script type="text/javascript">document.getElementById('expensedate').value = Date();</script>
+    <script src="../vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- FastClick -->
+    <script src="../vendors/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="../vendors/nprogress/nprogress.js"></script>
+    <!-- Chart.js -->
+    <script src="../vendors/Chart.js/dist/Chart.min.js"></script>
+    <!-- gauge.js -->
+    <script src="../vendors/gauge.js/dist/gauge.min.js"></script>
+    <!-- bootstrap-progressbar -->
+    <script src="../vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+    <!-- iCheck -->
+    <script src="../vendors/iCheck/icheck.min.js"></script>
+    <!-- Skycons -->
+    <script src="../vendors/skycons/skycons.js"></script>
+    <!-- Flot -->
+    <script type="text/javascript" src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="../vendors/Flot/jquery.flot.js"></script>
+    <script src="../vendors/Flot/jquery.flot.pie.js"></script>
+    <script src="../vendors/Flot/jquery.flot.time.js"></script>
+    <script src="../vendors/Flot/jquery.flot.stack.js"></script>
+    <script src="../vendors/Flot/jquery.flot.resize.js"></script>
+    <!-- Flot plugins -->
+    <script src="../vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
+    <script src="../vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
+    <script src="../vendors/flot.curvedlines/curvedLines.js"></script>
+    <!-- DateJS -->
+    <script src="../vendors/DateJS/build/date.js"></script>
+    <!-- JQVMap -->
+    <script src="../vendors/jqvmap/dist/jquery.vmap.js"></script>
+    <script src="../vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+    <script src="../vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+    <!-- bootstrap-daterangepicker -->
+    <script src="../vendors/moment/min/moment.min.js"></script>
+    <script src="../vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+    <!-- Custom Theme Scripts -->
+    <script src="../build/js/custom.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready( function () {
+    $('#bankaccount').DataTable();
+} );
+    </script>
+  
   </body>
 </html>
+

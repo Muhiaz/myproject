@@ -74,6 +74,9 @@ document.getElementById('today').value = Date();
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.11.0/sweetalert2.css" />
 <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" >
 <style type="text/css">
+  label,td{
+    color: #000;
+  }
 </style>
 <script type="text/javascript">document.getElementById('today').value = Date();</script>
   </head>
@@ -252,12 +255,21 @@ document.getElementById('today').value = Date();
 </table>
 <div class="form-row container">
                     <div class="col-md-4 form-group">
-                    <label><b>Additional Message</label>
-                      <textarea class="form-control col-md-6"></textarea>
+                    <label><b>Mode of Payment</label>
+                      <select class="col-md-6 form-control" name="modeofpayment" id="modeofpayment">
+                        <option>Select Mode of payment</option>
+                        <option>Cheque</option>
+                        <option>Cash</option>
+                        <option>M-Pesa</option>
+                      </select>
                     </div>
                     <div class="col-md-4 form-group">
                       <label for="email">Date:</label>
             <input type="date" id="today" name="depositdate" class="form-control"></span>
+                    </div>
+                    <div class="col-md-4 form-group">
+                       <label><b>Terms</label>
+                      <input type="text" name="terms" id="terms" class="form-control col-md-6">
                     </div>
                   </div>
                   <div class="row">
@@ -373,6 +385,8 @@ var sub = {
   'quantity' : $('#quantity').val(),
   'unitprice' : $('#unitprice').val(),
   'amount' : $('#amount').val(),
+  'terms' : $('#terms').val(),
+  'modeofpayment' : $('#modeofpayment').val(),
 };
 table_data.push(sub);
 
